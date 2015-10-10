@@ -23,7 +23,6 @@ class VerifySerializer(serializers.ModelSerializer):
     		Verify.objects.filter(phone=validated_data.get('phone')).update(valid=1)
     		
 		
-
         return validated_data
 
     def update(self, instance, validated_data):
