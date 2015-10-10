@@ -80,13 +80,24 @@ WSGI_APPLICATION = 'vzcards.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'vzcards',                      
-        'USER': 'postgres',
-        'PASSWORD': 'qwerty',
-        'HOST': '0.0.0.0',
+        'NAME': 'dbs3oq88qmdblr',                      
+        'USER': 'yqjzvrxqstqvuo',
+        'PASSWORD': 'VvI_OSk4NlEy4-GC02qSOtjU0u',
+        'HOST': 'ec2-54-225-201-25.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'vzcards',                      
+#         'USER': 'postgres',
+#         'PASSWORD': 'qwerty',
+#         'HOST': '0.0.0.0',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Internationalization
