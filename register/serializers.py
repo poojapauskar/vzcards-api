@@ -29,7 +29,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         
         Register.objects.create(**validated_data)
         otp_generated=str(random.randint(100000, 999999));
-        Register.objects.filter(phone='918792213479').update(otp_generated=otp_generated)
+        Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
         #phone =  validated_data
         message = client.messages.create(
          body="Your OTP "+otp_generated,  # Message body, if any

@@ -20,7 +20,7 @@ class VerifyDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 from django.contrib.auth.models import User
-from create_object.serializers import UserSerializer
+from verify.serializers import UserSerializer
 from rest_framework import permissions
 
 

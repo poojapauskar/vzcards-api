@@ -22,7 +22,7 @@ class Verify(models.Model):
  phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
  phone = models.CharField(max_length=15,validators=[phone_regex], blank=False) # validators should be a list
  otp = models.CharField(max_length=100, blank=False,editable=True)
- valid = models.CharField(blank=True,max_length=2,default=0,editable=False)
+ valid = models.CharField(blank=True,max_length=2,default='',editable=False)
 
 
 
