@@ -15,7 +15,8 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+TWILIO_ACCOUNT_SID = 'ACa6846885206cb0041afeef5d0405ba25'
+TWILIO_AUTH_TOKEN = 'b41ecb043ce77678cac28c828e6d056e'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -37,6 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'register',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -76,8 +79,12 @@ WSGI_APPLICATION = 'vzcards.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'vzcards',                      
+        'USER': 'postgres',
+        'PASSWORD': 'qwerty',
+        'HOST': '0.0.0.0',
+        'PORT': '5432',
     }
 }
 
@@ -101,9 +108,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Parse database configuration from $DATABASE_URL
-import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
+if os.environ.get('DATABASE_URL', None):
+    import dj_database_url
+    DATABASES['default'] = dj_database_url.config()
+
+
+DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
