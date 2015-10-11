@@ -41,6 +41,13 @@ INSTALLED_APPS = (
     'rest_framework',
     'register',
     'verify',
+    'friends',
+    'api',
+    'connect',
+    'ticket',
+    'get_list',
+    'get_my_tickets'
+    
 )
 
 MIDDLEWARE_CLASSES = (

@@ -19,4 +19,10 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^', include('register.urls')),
     url(r'^', include('verify.urls')),
+    url(r'^', include('friends.urls')),
+    url(r'^', include('ticket.urls')),
+    url(r'^', include('api.urls')),
+    url(r'^', include('connect.urls')),
+    url(r'^', include('get_list.urls')),
+    url(r'^', include('get_my_tickets.urls')),
 ]
