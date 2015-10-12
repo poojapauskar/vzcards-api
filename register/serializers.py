@@ -6,6 +6,7 @@ from twilio.rest import TwilioRestClient
 import random
 from random import randint
 import json
+import time
 
 
 
@@ -27,9 +28,11 @@ class RegisterSerializer(serializers.ModelSerializer):
         """
         
         
-        Register.objects.create(**validated_data)
-        otp_generated=str(random.randint(100000, 999999));
+        #Register.objects.create(**validated_data)
+        otp_generated=str(random.randint(100000, 999999))
+        vz_id='VZ'+str(time.time())
         Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
+        Register.objects.filter(phone=validated_data.get('phone')).update(vz_id=vz_id)
         #phone =  validated_data
         message = client.messages.create(
          body="Your OTP "+otp_generated,  # Message body, if any
@@ -49,8 +52,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         #  from_="+17028002480",
         # )
 
-
-        return validated_data
+        objects=Register.objects.create(firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),phone=validated_data.get('phone'),vz_id=validated_data.get('vz_id'),otp_generated=validated_data.get('otp_generated'))
+        return objects
 
 
     def update(self, instance, validated_data):
