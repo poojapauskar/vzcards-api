@@ -10,4 +10,7 @@ psycopg2==2.6.1
 static3==0.6.1
 wsgiref==0.1.2
 django-twilio==0.4
+httplib2==0.8
+six==1.4.1
 twilio==3.6.3
+unittest2==0.5.1

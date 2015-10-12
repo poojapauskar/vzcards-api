@@ -25,7 +25,7 @@ class Register(models.Model):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
     phone = models.CharField(max_length=15,validators=[phone_regex], blank=False) # validators should be a list
     vz_id = models.CharField(blank=True,max_length=15,default='',editable=False)
-    otp_generated = models.CharField(max_length=100, blank=True,default ='',editable=False)
+    otp_generated = models.CharField(blank=True,max_length=15,default='',editable=False)
     
     class Meta:
         ordering = ('created',)
