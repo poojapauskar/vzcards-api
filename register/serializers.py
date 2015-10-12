@@ -31,8 +31,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         #Register.objects.create(**validated_data)
         otp_generated=str(random.randint(100000, 999999))
         vz_id='VZ'+str(time.time())
-        Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
-        Register.objects.filter(phone=validated_data.get('phone')).update(vz_id=vz_id)
+        # Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
+        # Register.objects.filter(phone=validated_data.get('phone')).update(vz_id=vz_id)
         #phone =  validated_data
         message = client.messages.create(
          body="Your OTP "+otp_generated,  # Message body, if any
@@ -52,7 +52,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         #  from_="+17028002480",
         # )
 
-        objects=Register.objects.create(firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),phone=validated_data.get('phone'),vz_id=validated_data.get('vz_id'),otp_generated=validated_data.get('otp_generated'))
+        objects=Register.objects.create(firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated)
         return objects
 
 
