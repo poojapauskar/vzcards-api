@@ -17,3 +17,4 @@ unittest2==0.5.1
 django-oauth-toolkit==0.7.2
 django-oauth2-provider==0.2.4
 oauthlib==0.7.2
+requests==2.8.0

@@ -39,6 +39,10 @@ class RegisterSerializer(serializers.ModelSerializer):
          to="+"+validated_data.get('phone'), #7798899252
          from_="+17028002480",
         )
+
+    
+
+        
         #print message.sid
 
         #otp_generated=str(random.randint(100000, 999999));
@@ -51,6 +55,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         #  to="+918792213479",
         #  from_="+17028002480",
         # )
+
+        
 
         objects=Register.objects.create(firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated='otp_generated')
         #Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=validated_data.get('otp_generated'))

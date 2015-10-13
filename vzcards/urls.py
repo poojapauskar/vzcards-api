@@ -69,4 +69,5 @@ urlpatterns = patterns('',
     url(r'^', include('connect.urls')),
     url(r'^', include('get_list.urls')),
     url(r'^', include('get_my_tickets.urls')),
+    url(r'^', include('send_again.urls')),
 )

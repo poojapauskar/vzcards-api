@@ -23,13 +23,19 @@ TWILIO_AUTH_TOKEN = 'b41ecb043ce77678cac28c828e6d056e'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'b4d(3@)wr&*1(smokkl!@hwir(ij+wnt4r5ia#(fms+t4xnltg'
 
+sid = 'bitjini'
+token = '85dbbbc18dfaf078290eeee3c185ac6dfd8a208f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
+NEXMO_USERNAME = 'pooja'
+NEXMO_PASSWORD = 'Pooja22222'
+NEXMO_FROM = 'vzcards'
 
 # Application definition
+
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -48,6 +54,8 @@ INSTALLED_APPS = (
     'get_list',
     'get_my_tickets',
     'oauth2_provider',
+    'nexmo',
+    'send_again'
     
 )
 

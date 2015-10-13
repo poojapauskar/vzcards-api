@@ -18,7 +18,7 @@ class VerifySerializer(serializers.ModelSerializer):
         
         #details=validated_data
         #valid=0
-        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('firstname')).exists():
+        if (Register.objects.filter(phone=validated_data.get('phone')).values('firstname')).exists():
     	 Verify.objects.filter(phone=validated_data.get('phone')).delete()
 
         if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('firstname')).exists():
@@ -26,7 +26,7 @@ class VerifySerializer(serializers.ModelSerializer):
     	 #objects=validated_data	
             #Verify.objects.filter(phone=validated_data.get('phone')).update(valid=1)
     	else:
-         objects=validated_data
+         objects=Verify.objects.create(phone=validated_data.get('phone'),otp=validated_data.get('otp'),valid=0)
 		
         return objects
 
