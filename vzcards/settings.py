@@ -54,7 +54,6 @@ INSTALLED_APPS = (
     'get_list',
     'get_my_tickets',
     'oauth2_provider',
-    'nexmo',
     'send_again'
     
 )
