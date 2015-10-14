@@ -14,8 +14,8 @@ class Get_listSerializer(serializers.ModelSerializer):
     	model = Friends
     	fields = ('vz_id', 'contacts')
 
-        #model = Ticket
-        #fields = ('question', 'item', 'description', 'cost','date_created','date_validity','ticket_id')
+        model = Ticket
+        fields = ('question', 'item', 'description', 'cost','date_created','date_validity','ticket_id')
         
         
 

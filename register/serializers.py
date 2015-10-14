@@ -19,7 +19,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Register
-        fields = ('pk', 'firstname', 'lastname', 'email', 'phone','vz_id')
+        fields = ('pk', 'firstname', 'lastname', 'email', 'phone','vz_id','otp_generated')
         #write_only_fields = ('firstame', 'lastname')
 
     def create(self, validated_data):
@@ -30,7 +30,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         
         #Register.objects.create(**validated_data)
         otp_generated=str(random.randint(100000, 999999))
-        vz_id='VZ'+str(time.time())
+        vz_id='VZ'+str(int(time.time()))
+       
         # Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
         # Register.objects.filter(phone=validated_data.get('phone')).update(vz_id=vz_id)
         #phone =  validated_data
