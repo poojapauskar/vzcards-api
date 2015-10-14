@@ -3,7 +3,7 @@ import random
 from random import randint
 
 from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
-
+from django.http import HttpResponse
 
 
 class Send_againSerializer(serializers.ModelSerializer):
@@ -72,9 +72,7 @@ class Send_againSerializer(serializers.ModelSerializer):
         pprint(r.json())
 
         
-
-
-
+ 
 
 
         return validated_data
