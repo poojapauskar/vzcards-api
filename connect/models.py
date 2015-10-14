@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 from pygments.lexers import get_all_lexers
 from pygments.styles import get_all_styles
+from django.core.validators import RegexValidator
 
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters.html import HtmlFormatter
@@ -17,11 +18,11 @@ highlighted = models.TextField()
 
 class Connect(models.Model):
  connecter_vz_id = models.CharField(max_length=100, blank=True, default='')
- phone_1 = models.CharField(max_length=100, blank=True, default='')
+ phone_regex = RegexValidator(regex=r'^\+?1?\d{12}$', message="Enter country code. Phone number must be entered in the format: '919999999'.")
+ phone_1 = models.CharField(max_length=12,validators=[phone_regex], blank=False)
  ticket_id_1 = models.CharField(max_length=100, blank=True, default='')
- phone_2 = models.CharField(max_length=100, blank=True, default='')
+ phone_2 = models.CharField(max_length=12,validators=[phone_regex], blank=False)
  ticket_id_2 = models.CharField(max_length=100, blank=True, default='')
- 
 
 
 def save(self, *args, **kwargs):

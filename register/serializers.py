@@ -58,7 +58,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         
 
-        objects=Register.objects.create(firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated='otp_generated')
+        objects=Register.objects.create(firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated)
         #Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=validated_data.get('otp_generated'))
         return objects
 
