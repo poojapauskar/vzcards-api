@@ -1,25 +1,29 @@
 from rest_framework import serializers
 from ticket.models import Ticket, LANGUAGE_CHOICES, STYLE_CHOICES
+from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
 
 
 
 class TicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
-        fields = ('vz_id', 'question', 'item', 'description', 'cost','date_created','date_validity','ticket_id')
+        fields = ('vz_id','user_details', 'question', 'item', 'description', 'cost','date_created','date_validity','ticket_id')
     
 
     def create(self, validated_data):
         """
         Create and return a new `Snippet` instance, given the validated data.
         """
-        return Ticket.objects.create(**validated_data)
+
+        user_details= Register.objects.filter(vz_id=validated_data.get('vz_id')).values('firstname','lastname','email','phone')
+        return Ticket.objects.create(vz_id=validated_data.get('vz_id'),user_details=user_details,question=validated_data.get('question'),item=validated_data.get('item'),description=validated_data.get('description'),date_validity=validated_data.get('date_validity'))
 
     def update(self, instance, validated_data):
         """
         Update and return an existing `Snippet` instance, given the validated data.
         """
         instance.vz_id = validated_data.get('vz_id', instance.vz_id)
+        instance.user_details = validated_data.get('user_details', instance.user_details)
         instance.question = validated_data.get('question', instance.question)
         instance.item = validated_data.get('item', instance.item)
         instance.description = validated_data.get('description', instance.description)

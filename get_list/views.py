@@ -24,23 +24,26 @@ class Get_listDetail(generics.ListAPIView):
  def get_queryset(self):
   vz_id = self.kwargs['vz_id']
         
-  contacts= Friends.objects.filter(vz_id=vz_id).values('contacts')
+  #contacts= Friends.objects.filter(vz_id=vz_id).values('contacts')
         
         #vz_id= Register.objects.filter(phone=contacts).values('vz_id')
         #tickets = Ticket.objects.filter(vz_id=vz_id)
 
   #detail=[]    
 
-  phone_list = Friends.objects.filter(vz_id=vz_id).values('contacts')
+  friends_list = Friends.objects.filter(vz_id=vz_id).values('contacts')
   # for friend in friends:
   #  detail = Register.objects.filter(phone=friends).values('vz_id')
  	
 
   
-  vz_id_list= Register.objects.filter(phone__in=phone_list).values('vz_id')       
+  vz_id_list= Register.objects.filter(phone__in=friends_list).values('vz_id')       
 
+  users=Register.objects.filter(vz_id__in=vz_id_list)
   tickets = Ticket.objects.filter(vz_id__in=vz_id_list)
 
+  
+  
   return tickets
        
 

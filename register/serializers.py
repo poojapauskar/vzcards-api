@@ -19,7 +19,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Register
-        fields = ('pk', 'firstname', 'lastname', 'email', 'phone','vz_id','otp_generated')
+        fields = ('pk', 'firstname', 'lastname', 'email', 'phone','vz_id')
         #write_only_fields = ('firstame', 'lastname')
 
     def create(self, validated_data):

@@ -20,12 +20,13 @@ highlighted = models.TextField()
 class Ticket(models.Model):
  created = models.DateTimeField(auto_now_add=True)
  vz_id = models.CharField(max_length=100, blank=False)
+ user_details = models.CharField(max_length=10000, blank=True,editable=False)
  question = models.CharField(max_length=100, blank=False)
  item = models.CharField(max_length=100, blank=False)
  description = models.TextField()
  cost = models.CharField(max_length=100, blank=False)
  date_created = models.DateTimeField(auto_now_add=True)
- date_validity = models.DateTimeField(blank=False)
+ date_validity = models.DateField(blank=False)
  ticket_id = models.CharField(max_length=100, blank=True,default =str(random.randint(100000, 999999)),editable=False)
 
  class Meta:
