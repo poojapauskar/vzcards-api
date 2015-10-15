@@ -17,7 +17,7 @@ owner = models.ForeignKey('auth.User', related_name='register')
 highlighted = models.TextField()
 
 class My_profile(models.Model):
- created = models.DateTimeField(auto_now_add=True)
+ created = models.DateTimeField(auto_now_add=True) # validators should be a list
  firstname = models.CharField(max_length=100, blank=False)
  lastname = models.CharField(max_length=100, blank=False)
  email = models.EmailField(max_length=100, blank=False)

@@ -22,6 +22,8 @@ class My_profileDetail(generics.ListCreateAPIView):
 
  def get_queryset(self):
   vz_id = self.kwargs['vz_id']
+  
+
         
   # Register.objects.filter(vz_id=vz_id).update(firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),industry=validated_data.get('industry'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
  
@@ -30,8 +32,10 @@ class My_profileDetail(generics.ListCreateAPIView):
   profile=Register.objects.filter(vz_id=vz_id)
 
    
- #def create(self, validated_data):
-        
+ # def create(self, validated_data):
+ #  return validated_data
+ #  if validated_data.exists()
+ #   return validated_data       
  # 	#vz_id = self.kwargs['vz_id']
 
  # 	     # if (validated_data.get('firstname') != ''):
@@ -55,6 +59,28 @@ class My_profileDetail(generics.ListCreateAPIView):
  #  # Register.objects.filter(vz_id=vz_id).update(firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),industry=validated_data.get('industry'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
  #  return validated_data
   return profile
+
+class My_profileUpdate(generics.ListCreateAPIView):
+ serializer_class = My_profileSerializer
+
+ def get_queryset(self):
+  vz_id = self.kwargs['vz_id']
+  firstname = self.kwargs['firstname']
+  lastname = self.kwargs['lastname']
+  email = self.kwargs['email']
+  industry = self.kwargs['industry']
+  address_line_1 = self.kwargs['address_line_1']
+  address_line_2 = self.kwargs['address_line_2']
+  city = self.kwargs['city']
+  pin_code = self.kwargs['pin_code']
+        
+  Register.objects.filter(vz_id=vz_id).update(firstname=firstname,lastname=lastname,email=email,industry=industry,address_line_1=address_line_1,address_line_2=address_line_2,city=city,pin_code=pin_code)
+ 
+  profile=Register.objects.filter(vz_id=vz_id)
+
+  return profile
+
+
        
 
 from django.contrib.auth.models import User
