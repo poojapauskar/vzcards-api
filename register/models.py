@@ -26,6 +26,13 @@ class Register(models.Model):
     phone = models.CharField(max_length=12,validators=[phone_regex], blank=False) # validators should be a list
     vz_id = models.CharField(blank=True,max_length=15,default='',editable=False)
     otp_generated = models.CharField(blank=True,max_length=15,default='',editable=False)
+    industry = models.CharField(max_length=100, blank=True,default='')
+    address_line_1 = models.CharField(max_length=100, blank=True,default='')
+    address_line_2 = models.CharField(max_length=100, blank=True,default='')
+    city = models.CharField(max_length=100, blank=True,default='')
+    pin_regex = RegexValidator(regex=r'^\+?1?\d{6}$', message="Enter pin code.")
+    pin_code = models.CharField(max_length=6,validators=[pin_regex], blank=True,default='')
+    
     
     class Meta:
         ordering = ('created',)

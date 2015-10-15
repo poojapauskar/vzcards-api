@@ -19,7 +19,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Register
-        fields = ('pk', 'firstname', 'lastname', 'email', 'phone','vz_id')
+        fields = ('pk', 'firstname', 'lastname', 'email', 'phone','vz_id','industry','address_line_1','address_line_2','city','pin_code')
         #write_only_fields = ('firstame', 'lastname')
 
     def create(self, validated_data):
@@ -59,7 +59,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         
 
-        objects=Register.objects.create(firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated)
+        objects=Register.objects.create(firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
         #Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=validated_data.get('otp_generated'))
         return objects
 
@@ -74,6 +74,11 @@ class RegisterSerializer(serializers.ModelSerializer):
         instance.phone = validated_data.get('phone', instance.phone)
         instance.vz_id = validated_data.get('vz_id', instance.vz_id)
         instance.otp_generated = validated_data.get('otp_generated', instance.otp_generated)
+        instance.industry = validated_data.get('industry', instance.industry)
+        instance.address_line_1 = validated_data.get('address_line_1', instance.address_line_1)
+        instance.address_line_2 = validated_data.get('address_line_2', instance.address_line_2)
+        instance.city = validated_data.get('city', instance.city)
+        instance.pin_code = validated_data.get('pin_code', instance.pin_codes)
         instance.save()
         return instance
 

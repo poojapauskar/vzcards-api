@@ -54,7 +54,8 @@ INSTALLED_APPS = (
     'get_list',
     'get_my_tickets',
     'oauth2_provider',
-    'send_again'
+    'send_again',
+    'my_profile',
     
 )
 
