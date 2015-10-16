@@ -25,6 +25,7 @@ class My_profile(models.Model):
  lastname = models.CharField(max_length=100, blank=False)
  email = models.EmailField(max_length=100, blank=False)
  industry = models.CharField(max_length=100, blank=True,default='')
+ company = models.CharField(max_length=100, blank=True,default='')
  address_line_1 = models.CharField(max_length=100, blank=True,default='')
  address_line_2 = models.CharField(max_length=100, blank=True,default='')
  city = models.CharField(max_length=100, blank=True,default='')

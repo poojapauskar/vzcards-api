@@ -27,6 +27,7 @@ class Register(models.Model):
     vz_id = models.CharField(blank=True,max_length=15,default='',editable=True)
     otp_generated = models.CharField(blank=True,max_length=15,default='',editable=False)
     industry = models.CharField(max_length=100, blank=True,default='')
+    company = models.CharField(max_length=100, blank=True,default='')
     address_line_1 = models.CharField(max_length=100, blank=True,default='')
     address_line_2 = models.CharField(max_length=100, blank=True,default='')
     city = models.CharField(max_length=100, blank=True,default='')
