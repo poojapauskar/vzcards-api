@@ -57,6 +57,7 @@ INSTALLED_APPS = (
     'send_again',
     'my_profile',
     'response',
+    'ticket_details',
 )
 
 MIDDLEWARE_CLASSES = (
