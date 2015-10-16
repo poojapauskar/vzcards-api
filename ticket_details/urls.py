@@ -5,7 +5,7 @@ from ticket_details import views
 
 urlpatterns = [
     #url(r'^my_profile/$', views.My_profileList.as_view()),
-    url(r'^ticket_details/(?P<ticket_id>(\w+))/$', views.Ticket_detailsDetail.as_view()),
+    url(r'^ticket_details/?vz_id=(?P<ticket_id>(\w+))/$', views.Ticket_detailsDetail.as_view()),
     #url(r'^get_list/(?P<vz_id>\d+)/$', views.Get_listDetail.as_view(), name='urlname'),
 
     

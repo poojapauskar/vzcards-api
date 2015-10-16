@@ -5,7 +5,7 @@ from response import views
 
 urlpatterns = [
     #url(r'^my_profile/$', views.My_profileList.as_view()),
-    url(r'^response/(?P<vz_id>(\w+))/$', views.ResponseDetail.as_view()),
+    url(r'^response/vz_id=(?P<vz_id>(\w+))/$', views.ResponseDetail.as_view()),
     #url(r'^get_list/(?P<vz_id>\d+)/$', views.Get_listDetail.as_view(), name='urlname'),
 
     
