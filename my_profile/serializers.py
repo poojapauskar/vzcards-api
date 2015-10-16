@@ -7,7 +7,7 @@ class My_profileSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = Register
-        fields = ('firstname','lastname','email','industry','address_line_1','address_line_2','city','pin_code')
+        fields = ('phone','vz_id','firstname','lastname','email','industry','address_line_1','address_line_2','city','pin_code')
         
     # def create(self, validated_data): 
  	  # vz_id = self.kwargs['vz_id']

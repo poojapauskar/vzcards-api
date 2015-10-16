@@ -73,8 +73,10 @@ class My_profileUpdate(generics.ListCreateAPIView):
   address_line_2 = self.kwargs['address_line_2']
   city = self.kwargs['city']
   pin_code = self.kwargs['pin_code']
+
+  obj=Register.objects.get(vz_id=vz_id)
         
-  Register.objects.filter(vz_id=vz_id).update(firstname=firstname,lastname=lastname,email=email,industry=industry,address_line_1=address_line_1,address_line_2=address_line_2,city=city,pin_code=pin_code)
+  Register.objects.filter(vz_id=vz_id).update(phone=obj.phone,firstname=firstname,lastname=lastname,email=email,industry=industry,address_line_1=address_line_1,address_line_2=address_line_2,city=city,pin_code=pin_code)
  
   profile=Register.objects.filter(vz_id=vz_id)
 
