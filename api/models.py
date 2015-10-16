@@ -20,6 +20,7 @@ class Api(models.Model):
  register = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/register/')
  verify = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/verify/')
  send_again = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/send_again/')
+ response = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/response/')
  ticket = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/ticket/')
  my_profile = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/my_profile/')
  friends = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/friends/')

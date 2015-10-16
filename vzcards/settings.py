@@ -56,7 +56,7 @@ INSTALLED_APPS = (
     'oauth2_provider',
     'send_again',
     'my_profile',
-    
+    'response',
 )
 
 MIDDLEWARE_CLASSES = (
