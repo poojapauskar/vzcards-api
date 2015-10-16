@@ -1,37 +1,20 @@
 from rest_framework import serializers
 from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
+from my_profile.models import My_profile, LANGUAGE_CHOICES, STYLE_CHOICES
 
 
 
 class My_profileSerializer(serializers.ModelSerializer):
     class Meta:
-
         model = Register
         fields = ('phone','vz_id','firstname','lastname','email','industry','address_line_1','address_line_2','city','pin_code')
         
-    # def create(self, validated_data): 
- 	  # vz_id = self.kwargs['vz_id']
+    def create(self, validated_data): 
+ 	   
 
- 	  #    # if (validated_data.get('firstname') != ''):
-    #    #   	objects=Register.objects.filter(vz_id=vz_id).update(firstname=validated_data.get('firstname'))
-    #    #  if (validated_data.get('lastname') != ''):
-    #    #   	objects=Register.objects.filter(vz_id=vz_id).update(lastname=validated_data.get('lastname'))
-    #    #  if (validated_data.get('email') != ''):
-    #    #   	objects=Register.objects.filter(vz_id=vz_id).update(email=validated_data.get('email'))
-    #    #  if (validated_data.get('industry') != ''):
-    #    #   	objects=Register.objects.filter(vz_id=vz_id).update(industry=validated_data.get('industry'))
-    #    #  if (validated_data.get('address_line_1') != ''):
-    #    #   	objects=Register.objects.filter(vz_id=vz_id).update(address_line_1=validated_data.get('address_line_1'))
-    #    #  if (validated_data.get('address_line_2') != ''):
-    #    #   	objects=Register.objects.filter(vz_id=vz_id).update(address_line_2=validated_data.get('address_line_2'))
-    #    #  if (validated_data.get('city') != ''):
-    #    #   	objects=Register.objects.filter(vz_id=vz_id).update(city=validated_data.get('city'))
-    #    #  if (validated_data.get('pin_code') != ''):
-    #    #   	objects=Register.objects.filter(vz_id=vz_id).update(pin_code=validated_data.get('pin_code'))
-
-
-    #  Register.objects.filter(vz_id=vz_id).update(firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),industry=validated_data.get('industry'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
-    #return validated_data
+      obj=Register.objects.get(vz_id=validated_data.get('vz_id'))
+      Register.objects.filter(vz_id=validated_data.get('vz_id')).update(phone=obj.phone,firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),industry=validated_data.get('industry'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
+      return validated_data
 
     def update(self, instance, validated_data):
         """

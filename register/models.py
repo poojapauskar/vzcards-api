@@ -24,7 +24,7 @@ class Register(models.Model):
     email = models.EmailField(max_length=100, blank=False)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{12}$', message="Enter country code. Phone number must be entered in the format: '919999999'.")
     phone = models.CharField(max_length=12,validators=[phone_regex], blank=False) # validators should be a list
-    vz_id = models.CharField(blank=True,max_length=15,default='',editable=False)
+    vz_id = models.CharField(blank=True,max_length=15,default='',editable=True)
     otp_generated = models.CharField(blank=True,max_length=15,default='',editable=False)
     industry = models.CharField(max_length=100, blank=True,default='')
     address_line_1 = models.CharField(max_length=100, blank=True,default='')
