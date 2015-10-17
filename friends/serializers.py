@@ -6,7 +6,7 @@ from friends.models import Friends, LANGUAGE_CHOICES, STYLE_CHOICES
 class FriendsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Friends
-        fields = ('vz_id', 'contacts')
+        fields = ('vz_id', 'friends_vz_id')
     
 
 

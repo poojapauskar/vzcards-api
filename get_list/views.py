@@ -31,20 +31,20 @@ class Get_listDetail(generics.ListAPIView):
 
   #detail=[]    
 
-  friends_list = Friends.objects.filter(vz_id=vz_id).values('contacts')
+  friends_vz_id = Friends.objects.filter(vz_id=vz_id).values('friends_vz_id')
   # for friend in friends:
   #  detail = Register.objects.filter(phone=friends).values('vz_id')
  	
 
   
-  vz_id_list= Register.objects.filter(phone__in=friends_list).values('vz_id')       
+  #vz_id_list= Register.objects.filter(phone__in=friends_list).values('vz_id')       
 
-  users=Register.objects.filter(vz_id__in=vz_id_list)
+  #users=Register.objects.filter(vz_id__in=vz_id_list)
 
   import datetime
   today = datetime.datetime.today()
-  tickets = Ticket.objects.filter(vz_id__in=vz_id_list).filter(date_validity__gte=today)
-  #tickets = Ticket.objects.filter(vz_id__in=vz_id_list)
+  tickets = Ticket.objects.filter(vz_id__in=friends_vz_id).filter(date_validity__gte=today)
+  #tickets = Ticket.objects.filter(vz_id__in=friends_vz_id)
   
   
   return tickets

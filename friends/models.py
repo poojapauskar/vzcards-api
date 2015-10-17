@@ -17,7 +17,7 @@ highlighted = models.TextField()
 
 class Friends(models.Model):
  vz_id = models.CharField(max_length=100, blank=True, default='')
- contacts = models.CharField(max_length=100, blank=True, default='')
+ friends_vz_id = models.CharField(max_length=100, blank=True, default='')
  
  
 
