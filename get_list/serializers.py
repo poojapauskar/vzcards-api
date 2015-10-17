@@ -18,7 +18,7 @@ class Get_listSerializer(serializers.ModelSerializer):
         fields = ('vz_id','firstname','lastname','email','phone')
 
         model = Ticket
-        fields = ('user_details','question', 'item', 'description', 'cost','date_created','date_validity','ticket_id','vz_id')
+        fields = ('user_details','question', 'item', 'description','date_created','date_validity','ticket_id','vz_id')
         
         
 

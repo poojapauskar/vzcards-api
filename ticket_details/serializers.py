@@ -7,7 +7,7 @@ from ticket.models import Ticket, LANGUAGE_CHOICES, STYLE_CHOICES
 class Ticket_detailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
-        fields = ('vz_id','user_details', 'question', 'item', 'description', 'cost','date_created','date_validity','ticket_id')
+        fields = ('vz_id','user_details', 'question', 'item', 'description','date_created','date_validity','ticket_id')
     
     
 
@@ -20,7 +20,6 @@ class Ticket_detailsSerializer(serializers.ModelSerializer):
         instance.question = validated_data.get('question', instance.question)
         instance.item = validated_data.get('item', instance.item)
         instance.description = validated_data.get('description', instance.description)
-        instance.cost = validated_data.get('cost', instance.cost)
         instance.date_created = validated_data.get('date_created', instance.date_created)
         instance.date_validity = validated_data.get('date_validity', instance.date_validity)
         instance.ticket_id = validated_data.get('ticket_id', instance.ticket_id)
