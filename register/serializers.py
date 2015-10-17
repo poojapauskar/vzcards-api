@@ -43,9 +43,10 @@ class RegisterSerializer(serializers.ModelSerializer):
          from_="+17028002480",
         )
         
+        
         #Register.objects.all().delete()
-        if Register.objects.filter(phone=validated_data.get('phone')).exists():
-         return validated_data
+        # if Register.objects.filter(phone=validated_data.get('phone')).exists():
+        #  return validated_data
         
 
         objects=Register.objects.create(firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
