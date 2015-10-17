@@ -21,9 +21,9 @@ class My_profile(models.Model):
  phone_regex = RegexValidator(regex=r'^\+?1?\d{12}$', message="Enter country code. Phone number must be entered in the format: '919999999'.")
  phone = models.CharField(max_length=12,validators=[phone_regex], blank=False,default='') # validators should be a list
  vz_id = models.CharField(blank=True,max_length=15,default='',editable=True)
- firstname = models.CharField(max_length=100, blank=False)
- lastname = models.CharField(max_length=100, blank=False)
- email = models.EmailField(max_length=100, blank=False)
+ firstname = models.CharField(max_length=100, blank=True,default='')
+ lastname = models.CharField(max_length=100, blank=True,default='')
+ email = models.EmailField(max_length=100, blank=True,default='')
  industry = models.CharField(max_length=100, blank=True,default='')
  company = models.CharField(max_length=100, blank=True,default='')
  address_line_1 = models.CharField(max_length=100, blank=True,default='')
