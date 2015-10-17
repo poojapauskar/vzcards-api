@@ -27,7 +27,7 @@ class Ticket(models.Model):
  #cost = models.CharField(max_length=100, blank=False)
  date_created = models.DateTimeField(auto_now_add=True)
  date_validity = models.DateField(blank=False)
- ticket_id = models.CharField(max_length=100, blank=True,default =str(random.randint(100000, 999999)),editable=False)
+ ticket_id = models.CharField(max_length=100, blank=True,default ='',editable=False)
 
  class Meta:
   ordering = ('created',)

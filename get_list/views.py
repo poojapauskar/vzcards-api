@@ -40,8 +40,11 @@ class Get_listDetail(generics.ListAPIView):
   vz_id_list= Register.objects.filter(phone__in=friends_list).values('vz_id')       
 
   users=Register.objects.filter(vz_id__in=vz_id_list)
-  tickets = Ticket.objects.filter(vz_id__in=vz_id_list)
 
+  import datetime
+  today = datetime.datetime.today()
+  tickets = Ticket.objects.filter(vz_id__in=vz_id_list).filter(date_validity__gte=today)
+  #tickets = Ticket.objects.filter(vz_id__in=vz_id_list)
   
   
   return tickets

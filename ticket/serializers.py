@@ -2,6 +2,9 @@ from rest_framework import serializers
 from ticket.models import Ticket, LANGUAGE_CHOICES, STYLE_CHOICES
 from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
 
+import random
+from random import randint
+
 
 
 class TicketSerializer(serializers.ModelSerializer):
@@ -14,9 +17,9 @@ class TicketSerializer(serializers.ModelSerializer):
         """
         Create and return a new `Snippet` instance, given the validated data.
         """
-
+        ticket_id=str(random.randint(100000, 999999))
         user_details= Register.objects.filter(vz_id=validated_data.get('vz_id')).values('firstname','lastname','email','phone')
-        return Ticket.objects.create(vz_id=validated_data.get('vz_id'),user_details=user_details,question=validated_data.get('question'),item=validated_data.get('item'),description=validated_data.get('description'),date_validity=validated_data.get('date_validity'))
+        return Ticket.objects.create(vz_id=validated_data.get('vz_id'),user_details=user_details,question=validated_data.get('question'),item=validated_data.get('item'),description=validated_data.get('description'),date_validity=validated_data.get('date_validity'),ticket_id=ticket_id)
 
     def update(self, instance, validated_data):
         """
