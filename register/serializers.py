@@ -36,23 +36,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         # Register.objects.filter(phone=validated_data.get('phone')).update(vz_id=vz_id)
         #phone =  validated_data
         
-
-    
-
-        
-        #print message.sid
-
-        #otp_generated=str(random.randint(100000, 999999));
-        #Register.objects.filter(phone='918792213479').update(otp_generated=otp_generated)
-
-        
-        #phone = validated_data.pop('phone')
-        # message = client.messages.create(
-        #  body=otp_generated,  # Message body, if any
-        #  to="+918792213479",
-        #  from_="+17028002480",
-        # )
-
+        #Register.objects.all().delete()
+        if Register.objects.filter(phone=validated_data.get('phone')).exists():
+         return validated_data
         
 
         objects=Register.objects.create(firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
@@ -62,7 +48,7 @@ class RegisterSerializer(serializers.ModelSerializer):
          to="+"+validated_data.get('phone'), #7798899252
          from_="+17028002480",
         )
-        #Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=validated_data.get('otp_generated'))
+       
         return objects
 
 
