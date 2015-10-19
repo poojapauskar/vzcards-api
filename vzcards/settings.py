@@ -58,6 +58,7 @@ INSTALLED_APPS = (
     'my_profile',
     'response',
     'ticket_details',
+    'sync_contacts',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -73,4 +73,5 @@ urlpatterns = patterns('',
     url(r'^', include('my_profile.urls')),
     url(r'^', include('response.urls')),
     url(r'^', include('ticket_details.urls')),
+    url(r'^', include('sync_contacts.urls')),
 )
