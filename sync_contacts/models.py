@@ -8,6 +8,8 @@ from pygments.lexers import get_lexer_by_name
 from pygments.formatters.html import HtmlFormatter
 from pygments import highlight
 
+from django.contrib.postgres.fields import ArrayField
+
 LEXERS = [item for item in get_all_lexers() if item[1]]
 LANGUAGE_CHOICES = sorted([(item[1][0], item[0]) for item in LEXERS])
 STYLE_CHOICES = sorted((item, item) for item in get_all_styles())
@@ -17,8 +19,8 @@ highlighted = models.TextField()
 
 class Sync_contacts(models.Model):
  vz_id = models.CharField(max_length=100, blank=True, default='')
- contact_list = models.TextField()
- friends_vz_id = models.CharField(max_length=100, blank=True, default='',editable=False)
+ contact_list = ArrayField(models.CharField(max_length=100000, blank=True, default='',editable=True))
+ friends_vz_id = models.CharField(max_length=100000, blank=True, default='',editable=False)
  
  
 

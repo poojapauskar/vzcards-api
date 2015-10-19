@@ -15,8 +15,9 @@ class Sync_contactsSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         
-        
+    
         friends_list=Register.objects.filter(phone__in=validated_data.get('contact_list')).values('vz_id')
+        
         objects=Sync_contacts.objects.create(vz_id=validated_data.get('vz_id'),contact_list=validated_data.get('contact_list'),friends_vz_id=friends_list)
        
         return objects
