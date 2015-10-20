@@ -1,11 +1,12 @@
 from ticket.models import Ticket
-from friends.models import Friends
+from sync_contacts.models import Sync_contacts
 from register.models import Register
 from get_list.serializers import Get_listSerializer
 from rest_framework import generics
 # from ticket.permissions import IsOwnerOrReadOnly
 # from rest_framework import permissions
 from django.shortcuts import get_object_or_404
+from django.db.models import Count 
 
 
 
@@ -30,24 +31,21 @@ class Get_listDetail(generics.ListAPIView):
         #tickets = Ticket.objects.filter(vz_id=vz_id)
 
   #detail=[]    
+  def ValuesQuerySetToDict(vqs):
+    return [item for item in vqs]
 
-  friends_vz_id = Friends.objects.filter(vz_id=vz_id).values('friends_vz_id')
-  # for friend in friends:
-  #  detail = Register.objects.filter(phone=friends).values('vz_id')
- 	
+  friends_vz_id = Sync_contacts.objects.filter(vz_id=vz_id).values('friends_vz_id')
+
+  # import datetime
+  # today = datetime.datetime.today()
+  # tickets = Ticket.objects.filter(vz_id__in=friends_vz_id).filter(date_validity__gte=today)
 
   
-  #vz_id_list= Register.objects.filter(phone__in=friends_list).values('vz_id')       
 
-  #users=Register.objects.filter(vz_id__in=vz_id_list)
-
-  import datetime
-  today = datetime.datetime.today()
-  tickets = Ticket.objects.filter(vz_id__in=friends_vz_id).filter(date_validity__gte=today)
-  #tickets = Ticket.objects.filter(vz_id__in=friends_vz_id)
   
   
-  return tickets
+  
+  return friends_vz_id
        
 
 from django.contrib.auth.models import User

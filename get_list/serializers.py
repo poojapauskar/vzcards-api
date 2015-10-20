@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from ticket.models import Ticket, LANGUAGE_CHOICES, STYLE_CHOICES
-from friends.models import Friends, LANGUAGE_CHOICES, STYLE_CHOICES
+from sync_contacts.models import Sync_contacts, LANGUAGE_CHOICES, STYLE_CHOICES
 from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
 
 
@@ -8,11 +8,11 @@ from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
 class Get_listSerializer(serializers.ModelSerializer):
     class Meta:
 
-    	model = Friends
-    	fields = ('vz_id', 'friends_vz_id')
+    	model = Sync_contacts
+    	fields = ('friends_vz_id',)
         
-        model = Ticket
-        fields = ('user_details','question', 'item', 'description','date_created','date_validity','ticket_id','vz_id')
+        # model = Ticket
+        # fields = ('user_details','question', 'item', 'description','date_created','date_validity','ticket_id','vz_id')
         
         
 
