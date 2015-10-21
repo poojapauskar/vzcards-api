@@ -55,7 +55,7 @@ class Get_listDetail(generics.ListAPIView):
    
   # tickets = Ticket.objects.filter(filter_list)
 
-  [d['vz_id'] for d in data_dict]
+  # [d['vz_id'] for d in data_dict]
 
   # for element in data_dict: 
   #   print element
@@ -70,7 +70,7 @@ class Get_listDetail(generics.ListAPIView):
          
   #endfor 
   
-  return d
+  return data_dict
        
 
 from django.contrib.auth.models import User
