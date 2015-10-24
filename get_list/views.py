@@ -36,7 +36,8 @@ class Get_listDetail(generics.ListAPIView):
     return [item for item in vqs]
 
   import json
-  friends_list=list(Sync_contacts.objects.filter(vz_id=vz_id).values_list('friends_vz_id',flat=True))
+  friends_list=list(sync_contact.encode("utf8") for sync_contact in Sync_contacts.objects.filter(vz_id=vz_id).values_list('friends_vz_id',flat=True))
+
 
   #friends_list = json.dumps(friends_list)
 
@@ -52,9 +53,29 @@ class Get_listDetail(generics.ListAPIView):
   import datetime
   today = datetime.datetime.today()
 
-  objects= Ticket.objects.filter(vz_id__in=friends_list)
+  import sys
+  #print >> sys.stderr, friends_list.query
+  #friends_list = json.dumps(friends_list)
+  friends_list=str(friends_list).replace('["','').replace('"]','').replace(',','').replace('[','').replace(']','').replace("'",'')
 
 
+  print >> sys.stderr, friends_list
+
+  friends_list= friends_list.split()
+
+
+
+
+  #friends_list = json.dumps(friends_list)
+
+  #print >> sys.stderr, friends_list
+
+
+
+  objects= Ticket.objects.filter(vz_id__in=friends_list).filter(date_validity__gte=today)
+
+  print >> sys.stderr, objects.query
+  print >> sys.stderr, objects
   #objects= Ticket.objects.filter(vz_id__in=['VZ1445062511', 'VZ1445062656', 'VZ1445613566', 'VZ1445613959'])
   #print objects.query
 #VZ1445062511, VZ1445062656, VZ1445613566, VZ1445613959
@@ -63,11 +84,7 @@ class Get_listDetail(generics.ListAPIView):
 
   
 
-  import sys
-  #print >> sys.stderr, friends_list.query
-  print >> sys.stderr, objects.query
-  print >> sys.stderr, objects
-  print >> sys.stderr, friends_list
+
 
 
   #.filter(date_validity__gte=today)

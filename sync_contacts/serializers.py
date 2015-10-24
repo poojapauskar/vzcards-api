@@ -20,11 +20,15 @@ class Sync_contactsSerializer(serializers.ModelSerializer):
         friends_list=list(Register.objects.filter(phone__in=validated_data.get('contact_list')).values_list('vz_id', flat=True))
         
         friends_list = json.dumps(friends_list)
+
+        #friends_list=str(friends_list)[1:-1]
         
-        
-        friends_list=friends_list.replace("[","")
-        friends_list=friends_list.replace("]","")
-        friends_list=friends_list.replace('"','')
+        #friends_list=str(friends_list).replace('[','').replace(']','').replace("'","")
+        # friends_list=friends_list.replace("(","")
+        # friends_list=friends_list.replace(")","")
+        # friends_list=friends_list.replace("'","")
+        #friends_list=friends_list.replace('"','')
+
         import sys
         print >> sys.stderr, friends_list
        

@@ -50,7 +50,7 @@ class ListField(models.TextField):
 class Sync_contacts(models.Model):
  vz_id = models.CharField(max_length=100, blank=True, default='')
  contact_list = ArrayField(models.TextField(max_length=100000, blank=True, default='',editable=True))
- friends_vz_id = models.TextField(max_length=100000, blank=True, default='',editable=False)
+ friends_vz_id = ListField(blank=True, default='',editable=False)
  
  
 
