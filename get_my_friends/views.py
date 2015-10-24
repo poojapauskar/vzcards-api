@@ -35,27 +35,49 @@ class Get_my_friendsDetail(generics.ListAPIView):
   def ValuesQuerySetToDict(vqs):
     return [item for item in vqs]
 
-  import json
-  friends_list=Sync_contacts.objects.filter(vz_id=vz_id).values('friends_vz_id')
-  print friends_list.query      
-  #friends_list = json.dumps(friends_list)
-       
-  #friends_list=list(friends_list)
-
   import operator
   from django.db.models import Q
 
   import datetime
   today = datetime.datetime.today()
 
-  #objects= Ticket.objects.filter(vz_id__in=['VZ1445062656','VZ1445062511'])
+  import sys
+  #print >> sys.stderr, friends_list.query
+  #friends_list = json.dumps(friends_list)
+  friends_list=str(friends_list).replace('["','').replace('"]','').replace(',','').replace('[','').replace(']','').replace("'",'')
 
 
-  #objects= Ticket.objects.filter(vz_id__in=friends_list)
+  print >> sys.stderr, friends_list
+
+  friends_list= friends_list.split()
+
+
+
+
+  #friends_list = json.dumps(friends_list)
+
+  #print >> sys.stderr, friends_list
+
+
+
+  objects= Ticket.objects.filter(vz_id__in=friends_list).filter(date_validity__gte=today)
+
+  print >> sys.stderr, objects.query
+  print >> sys.stderr, objects
+  #objects= Ticket.objects.filter(vz_id__in=['VZ1445062511', 'VZ1445062656', 'VZ1445613566', 'VZ1445613959'])
+  #print objects.query
+#VZ1445062511, VZ1445062656, VZ1445613566, VZ1445613959
+  # import pdb; 
+  # pdb.set_trace()
+
+  
+
+
+
 
   #.filter(date_validity__gte=today)
   
-  return friends_list
+  return objects
 
 
   # import os
