@@ -16,8 +16,18 @@ class Sync_contactsSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         
         #convert array to string
-        friends_list=Register.objects.filter(phone__in=validated_data.get('contact_list')).values('vz_id')
+        import json
+        friends_list=list(Register.objects.filter(phone__in=validated_data.get('contact_list')).values_list('vz_id', flat=True))
         
+        friends_list = json.dumps(friends_list)
+        
+        
+        friends_list=friends_list.replace("[","")
+        friends_list=friends_list.replace("]","")
+        friends_list=friends_list.replace('"','')
+        import sys
+        print >> sys.stderr, friends_list
+       
 
         Sync_contacts.objects.filter(vz_id=validated_data.get('vz_id')).delete()
         objects=Sync_contacts.objects.create(vz_id=validated_data.get('vz_id'),contact_list=validated_data.get('contact_list'),friends_vz_id=friends_list)
