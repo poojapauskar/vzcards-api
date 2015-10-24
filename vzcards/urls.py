@@ -75,4 +75,5 @@ urlpatterns = patterns('',
     url(r'^', include('ticket_details.urls')),
     url(r'^', include('sync_contacts.urls')),
     url(r'^', include('get_my_friends.urls')),
+    url(r'^', include('sync.urls')),
 )

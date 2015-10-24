@@ -1,6 +1,6 @@
 from ticket.models import Ticket
 from friends.models import Friends
-from sync_contacts.models import Sync_contacts
+from sync.models import Sync
 from register.models import Register
 from get_list.serializers import Get_listSerializer
 from rest_framework import generics
@@ -36,7 +36,7 @@ class Get_listDetail(generics.ListAPIView):
     return [item for item in vqs]
 
   import json
-  friends_list=list(sync_contact.encode("utf8") for sync_contact in Sync_contacts.objects.filter(vz_id=vz_id).values_list('friends_vz_id',flat=True))
+  friends_list=list(sync_contact.encode("utf8") for sync_contact in Sync.objects.filter(vz_id=vz_id).values_list('friends_vz_id',flat=True))
 
 
   #friends_list = json.dumps(friends_list)

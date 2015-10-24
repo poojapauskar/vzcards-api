@@ -47,7 +47,7 @@ class ListField(models.TextField):
         value = self._get_val_from_obj(obj)
         return self.get_db_prep_value(value)
 
-class Sync_contacts(models.Model):
+class Sync(models.Model):
  vz_id = models.CharField(max_length=255, blank=True, default='')
  contact_list = ArrayField(models.TextField(blank=True, default='',editable=True))
  friends_vz_id = ListField(blank=True, default='',editable=False)
@@ -64,4 +64,4 @@ def save(self, *args, **kwargs):
     contacts = self.vz_id and {'vz_id': self.vz_id} or {}
    
     self.highlighted = highlight(self.contacts,vz_id, formatter)
-    super(Sync_contacts, self).save(*args, **kwargs)
+    super(Sync, self).save(*args, **kwargs)

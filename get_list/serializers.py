@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from ticket.models import Ticket, LANGUAGE_CHOICES, STYLE_CHOICES
 from friends.models import Friends, LANGUAGE_CHOICES, STYLE_CHOICES
-from sync_contacts.models import Sync_contacts, LANGUAGE_CHOICES, STYLE_CHOICES
+from sync.models import Sync, LANGUAGE_CHOICES, STYLE_CHOICES
 from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
 
 
@@ -12,7 +12,7 @@ class Get_listSerializer(serializers.ModelSerializer):
         # model = Friends
         # fields = ('vz_id','friends_vz_id',)
 
-    	model = Sync_contacts
+    	model = Sync
     	fields = ('friends_vz_id',)
         
         model = Ticket

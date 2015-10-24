@@ -51,7 +51,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         objects=Register.objects.create(firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
         
-
+#------------------------------------------------------------------------
 #         from django.http import HttpResponse
 #         from django.contrib.auth import login
  
@@ -115,6 +115,8 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 #          objects1=Register.objects.create(firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=access_token,company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
 #          return objects1
+
+#-----------------------------------------------------------
         return objects
 
 

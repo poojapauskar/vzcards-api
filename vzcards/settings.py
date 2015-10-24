@@ -60,6 +60,7 @@ INSTALLED_APPS = (
     'ticket_details',
     'sync_contacts',
     'get_my_friends',
+    'sync',
 )
 
 MIDDLEWARE_CLASSES = (

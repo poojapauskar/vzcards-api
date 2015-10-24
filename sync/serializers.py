@@ -1,15 +1,15 @@
 from rest_framework import serializers
-from sync_contacts.models import Sync_contacts, LANGUAGE_CHOICES, STYLE_CHOICES
+from sync.models import Sync, LANGUAGE_CHOICES, STYLE_CHOICES
 from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
 from django.db.models import Count
 
-class Sync_contactsSerializer(serializers.ModelSerializer):
+class SyncSerializer(serializers.ModelSerializer):
     class Meta:
 
     	model = Register
         fields = ('vz_id',)
 
-        model = Sync_contacts
+        model = Sync
         fields = ('vz_id', 'contact_list','friends_vz_id')
     
 
@@ -33,8 +33,8 @@ class Sync_contactsSerializer(serializers.ModelSerializer):
         print >> sys.stderr, friends_list
        
 
-        Sync_contacts.objects.filter(vz_id=validated_data.get('vz_id')).delete()
-        objects=Sync_contacts.objects.create(vz_id=validated_data.get('vz_id'),contact_list=validated_data.get('contact_list'),friends_vz_id=friends_list)
+        Sync.objects.filter(vz_id=validated_data.get('vz_id')).delete()
+        objects=Sync.objects.create(vz_id=validated_data.get('vz_id'),contact_list=validated_data.get('contact_list'),friends_vz_id=friends_list)
         
 
         #print >> sys.stderr, objects.query
@@ -50,8 +50,8 @@ class Sync_contactsSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-from sync_contacts.models import Sync_contacts
-from sync_contacts.serializers import Sync_contactsSerializer
+from sync.models import Sync
+from sync.serializers import SyncSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 
@@ -61,11 +61,11 @@ from rest_framework.parsers import JSONParser
 from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):
-    sync_contacts = serializers.PrimaryKeyRelatedField(many=True, queryset=Sync_contacts.objects.all())
+    sync = serializers.PrimaryKeyRelatedField(many=True, queryset=Sync.objects.all())
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'sync_contacts')
+        fields = ('id', 'username', 'sync')
 
 owner = serializers.ReadOnlyField(source='owner.username')
 
