@@ -15,9 +15,9 @@ class Get_my_friendsSerializer(serializers.ModelSerializer):
     	model = Sync_contacts
     	fields = ('friends_vz_id',)
         
-        # model = Ticket
-        # fields = ('user_details','question', 'item', 'description','date_created','date_validity','ticket_id','vz_id')
-        
+        model = Register
+        fields = ('pk', 'firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')
+       
         
 
 

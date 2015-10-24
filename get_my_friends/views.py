@@ -35,6 +35,18 @@ class Get_my_friendsDetail(generics.ListAPIView):
   def ValuesQuerySetToDict(vqs):
     return [item for item in vqs]
 
+  import json
+  friends_list=list(sync_contact.encode("utf8") for sync_contact in Sync_contacts.objects.filter(vz_id=vz_id).values_list('friends_vz_id',flat=True))
+
+
+  #friends_list = json.dumps(friends_list)
+
+  #friends_list = json.dumps(friends_list)
+  #print friends_list.query      
+  #friends_list = json.dumps(friends_list)
+       
+  #friends_list=list(friends_list)
+
   import operator
   from django.db.models import Q
 
@@ -60,7 +72,7 @@ class Get_my_friendsDetail(generics.ListAPIView):
 
 
 
-  objects= Ticket.objects.filter(vz_id__in=friends_list).filter(date_validity__gte=today)
+  objects= Register.objects.filter(vz_id__in=friends_list)
 
   print >> sys.stderr, objects.query
   print >> sys.stderr, objects
