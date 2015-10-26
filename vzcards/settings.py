@@ -53,7 +53,7 @@ INSTALLED_APPS = (
     'ticket',
     'get_list',
     'get_my_tickets',
-    'oauth2_provider',
+    #'oauth2_provider',
     'send_again',
     'my_profile',
     'response',
@@ -61,6 +61,7 @@ INSTALLED_APPS = (
     'sync_contacts',
     'get_my_friends',
     'sync',
+    'reffered',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -140,21 +141,21 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-OAUTH2_PROVIDER = {
-    # this is the list of available scopes
-    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
-}
+# OAUTH2_PROVIDER = {
+#     # this is the list of available scopes
+#     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
+# }
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
-    ),
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+#     ),
 
 
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    )
-}
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     )
+# }
 
 if os.environ.get('DATABASE_URL', None):
     import dj_database_url

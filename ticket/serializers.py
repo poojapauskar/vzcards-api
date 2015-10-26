@@ -18,6 +18,9 @@ class TicketSerializer(serializers.ModelSerializer):
         Create and return a new `Snippet` instance, given the validated data.
         """
         ticket_id=str(random.randint(100000, 999999))
+        
+        #Ticket.objects.all().delete()
+
         user_details= Register.objects.filter(vz_id=validated_data.get('vz_id')).values('firstname','lastname','email','phone')
         return Ticket.objects.create(vz_id=validated_data.get('vz_id'),user_details=user_details,question=validated_data.get('question'),item=validated_data.get('item'),description=validated_data.get('description'),date_validity=validated_data.get('date_validity'),ticket_id=ticket_id)
 
