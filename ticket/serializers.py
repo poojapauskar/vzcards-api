@@ -20,8 +20,13 @@ class TicketSerializer(serializers.ModelSerializer):
         ticket_id=str(random.randint(100000, 999999))
         
         #Ticket.objects.all().delete()
+        import json
+        user_details= list(Register.objects.filter(vz_id=validated_data.get('vz_id')).values_list('firstname','lastname','email','phone'))
+        user_details = json.dumps(user_details)
+        user_details=str(user_details).replace('[','').replace(']','')
+        #print >> sys.stderr, user_details
+        #user_details= user_details.split()
 
-        user_details= Register.objects.filter(vz_id=validated_data.get('vz_id')).values('firstname','lastname','email','phone')
         return Ticket.objects.create(vz_id=validated_data.get('vz_id'),user_details=user_details,question=validated_data.get('question'),item=validated_data.get('item'),description=validated_data.get('description'),date_validity=validated_data.get('date_validity'),ticket_id=ticket_id)
 
     def update(self, instance, validated_data):

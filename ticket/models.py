@@ -17,10 +17,40 @@ STYLE_CHOICES = sorted((item, item) for item in get_all_styles())
 owner = models.ForeignKey('auth.User', related_name='ticket')
 highlighted = models.TextField()
 
+from django.db import models
+import ast
+
+
+class ListField(models.TextField):
+    __metaclass__ = models.SubfieldBase
+    description = "Stores a python list"
+
+    def __init__(self, *args, **kwargs):
+        super(ListField, self).__init__(*args, **kwargs)
+
+    def to_python(self, value):
+        if not value:
+            value = []
+
+        if isinstance(value, list):
+            return value
+
+        return ast.literal_eval(value)
+
+    def get_prep_value(self, value):
+        if value is None:
+            return value
+
+        return unicode(value)
+
+    def value_to_string(self, obj):
+        value = self._get_val_from_obj(obj)
+        return self.get_db_prep_value(value)
+
 class Ticket(models.Model):
  created = models.DateTimeField(auto_now_add=True)
  vz_id = models.CharField(max_length=100, blank=False)
- user_details = models.CharField(max_length=10000, blank=True,editable=False)
+ user_details = ListField(blank=True, default='',editable=False)
  question = models.CharField(max_length=100, blank=False)
  item = models.CharField(max_length=100, blank=False)
  description = models.TextField()
