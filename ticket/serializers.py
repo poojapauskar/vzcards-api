@@ -23,7 +23,7 @@ class TicketSerializer(serializers.ModelSerializer):
         import json
         user_details= list(Register.objects.filter(vz_id=validated_data.get('vz_id')).values_list('firstname','lastname','email','phone'))
         user_details = json.dumps(user_details)
-        user_details=str(user_details).replace('[','').replace(']','')
+        user_details=str(user_details).replace('"','').replace(']','').replace('[','')
         #print >> sys.stderr, user_details
         #user_details= user_details.split()
 
