@@ -20,15 +20,20 @@ class Api(models.Model):
  register = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/register/')
  verify = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/verify/')
  send_again = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/send_again/')
- sync_contacts = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/sync_contacts/')
- response = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/response/')
- ticket = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/ticket/')
- ticket_details = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/ticket_details/')
+ sync = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/sync/')
  my_profile = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/my_profile/')
- friends = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/friends/')
- connect = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/connect/')
+ get_my_friends = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/get_my_friends/')
  get_list = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/get_list/')
  get_my_tickets = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/get_my_tickets/')
+ connect = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/connect/')
+ create_ticket = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/create_ticket/')
+ ticket_details = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/ticket_details/')
+ response = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/response/')
+ reffered = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/reffered/')
+ 
+ 
+ 
+ 
  
 
 
