@@ -26,7 +26,7 @@ class TicketSerializer(serializers.ModelSerializer):
         user_details=str(user_details).replace('"','').replace(']','').replace('[','')
         #print >> sys.stderr, user_details
         #user_details= user_details.split()
-
+        #Ticket.objects.all().delete()
         return Ticket.objects.create(vz_id=validated_data.get('vz_id'),user_details=user_details,question=validated_data.get('question'),item=validated_data.get('item'),description=validated_data.get('description'),date_validity=validated_data.get('date_validity'),ticket_id=ticket_id)
 
     def update(self, instance, validated_data):
