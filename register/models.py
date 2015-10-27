@@ -33,7 +33,7 @@ class Register(models.Model):
     city = models.CharField(max_length=100, blank=True,default='')
     pin_regex = RegexValidator(regex=r'^\+?1?\d{6}$', message="Enter pin code.")
     pin_code = models.CharField(max_length=6,validators=[pin_regex], blank=True,default='')
-    access_token = models.CharField(max_length=100, blank=True,default='')
+    token_generated = models.TextField(blank=True,default='')
     
     
     class Meta:
