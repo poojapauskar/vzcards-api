@@ -45,12 +45,23 @@ class RegisterSerializer(serializers.ModelSerializer):
         
         
         #Register.objects.all().delete()
-        # if Register.objects.filter(phone=validated_data.get('phone')).exists():
-        #  return validated_data
+        if Register.objects.filter(phone=validated_data.get('phone')).exists():
+         return validated_data
         
 
         objects=Register.objects.create(token_generated='',firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
         
+        # from ticket.models import Ticket, LANGUAGE_CHOICES, STYLE_CHOICES
+        # # from verify.models import Verify, LANGUAGE_CHOICES, STYLE_CHOICES
+        # # from sync.models import Sync, LANGUAGE_CHOICES, STYLE_CHOICES
+        # Register.objects.all().delete()
+        # # Verify.objects.all().delete()
+        # # Sync.objects.all().delete()
+        # Ticket.objects.all().delete()
+
+
+
+        return objects
 #------------------------------------------------------------------------
 #         from django.http import HttpResponse
 #         from django.contrib.auth import login
@@ -117,7 +128,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 #          return objects1
 
 #-----------------------------------------------------------
-        return objects
+        
 
 
     def update(self, instance, validated_data):
