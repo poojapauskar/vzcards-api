@@ -24,6 +24,7 @@ class Verify(models.Model):
  otp = models.CharField(max_length=100, blank=False,editable=True)
  valid = models.CharField(blank=True,max_length=2,default='',editable=False)
  token_generated = models.TextField(blank=True,default='')
+ vz_id=models.TextField(blank=True,default='')
 
 
 

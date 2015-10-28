@@ -12,7 +12,7 @@ class VerifySerializer(serializers.ModelSerializer):
         model = User
 
         model = Verify
-        fields = ('phone','otp','valid','token_generated')
+        fields = ('phone','otp','valid','token_generated','vz_id')
     
 
     def create(self, validated_data):
@@ -82,15 +82,20 @@ class VerifySerializer(serializers.ModelSerializer):
         token= json.dumps(token)
         token = token.replace('"','')
 
-        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
-         objects=Verify.objects.create(phone=validated_data.get('phone'),otp=validated_data.get('otp'),valid=1,token_generated=token)
-
+        
 
         if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
          Register.objects.filter(phone=validated_data.get('phone')).update(token_generated=token)
         
+
+        vz_id= Register.objects.filter(phone=validated_data.get('phone')).values_list('vz_id',flat=True)[0]
+
+        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
+         objects=Verify.objects.create(phone=validated_data.get('phone'),otp=validated_data.get('otp'),valid=1,token_generated=token,vz_id=vz_id)
+
+
         else:
-         objects=Verify.objects.create(phone=validated_data.get('phone'),otp=validated_data.get('otp'),valid=0,token_generated='')
+         objects=Verify.objects.create(phone=validated_data.get('phone'),otp=validated_data.get('otp'),valid=0,token_generated='',vz_id=vz_id)
 
         # from django.shortcuts import render_to_response
         # return render_to_response(token, status=200)
