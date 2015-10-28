@@ -10,10 +10,10 @@ from django.shortcuts import get_object_or_404
 
 
 
-class Get_my_ticketsList(generics.ListCreateAPIView):
- queryset = Ticket.objects.all()
- serializer_class = Get_my_ticketsSerializer
- # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+# class Get_my_ticketsList(generics.ListCreateAPIView):
+#  queryset = Ticket.objects.all()
+#  serializer_class = Get_my_ticketsSerializer
+#  # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
 
@@ -30,12 +30,22 @@ class Get_my_ticketsList(generics.ListCreateAPIView):
   
         #do something with this user
 
-class Get_my_ticketsDetail(generics.ListAPIView):
-    serializer_class = Get_my_ticketsSerializer
+def get_queryset(request):
+  access_token = request.GET.get('access_token')
+  import sys
+  print >> sys.stderr, access_token
 
-    def get_queryset(self):
-        vz_id = self.kwargs['vz_id']
-        return Ticket.objects.filter(vz_id=vz_id)
+  #vz_id = self.kwargs['vz_id']
+     
+  vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
+  #tickets = Ticket.objects.filter(vz_id__in=contacts)
+  print >> sys.stderr, vz_id
+
+  objects= Ticket.objects.filter(vz_id=vz_id).values('vz_id', 'question', 'item', 'description','date_created','date_validity','ticket_id')
+
+  from django.http import JsonResponse
+  #return JsonResponse(dict(objects=list(objects)))
+  return JsonResponse((list(objects)),safe=False)
 
 from django.contrib.auth.models import User
 from get_list.serializers import UserSerializer

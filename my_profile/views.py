@@ -6,14 +6,22 @@ from rest_framework import generics
 from django.shortcuts import get_object_or_404
 
 
-class My_profileDetail(generics.ListCreateAPIView):
- serializer_class = My_profileSerializer
+def get_queryset(request):
+  access_token = request.GET.get('access_token')
+  import sys
+  print >> sys.stderr, access_token
 
- def get_queryset(self):
-  vz_id = self.kwargs['vz_id']
+  #vz_id = self.kwargs['vz_id']
+     
+  vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
+  #tickets = Ticket.objects.filter(vz_id__in=contacts)
+  print >> sys.stderr, vz_id
   
-  profile=Register.objects.filter(vz_id=vz_id)
-  return profile
+  profile=Register.objects.filter(vz_id=vz_id).values('phone','vz_id','firstname','lastname','email','industry','company','address_line_1','address_line_2','city','pin_code')
+
+  from django.http import JsonResponse
+  #return JsonResponse(dict(objects=list(objects)))
+  return JsonResponse((list(profile)),safe=False)
 
 
        

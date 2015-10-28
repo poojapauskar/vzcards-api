@@ -14,24 +14,22 @@ from django.db.models import Count
 
 
 
-class Get_my_friendsList(generics.ListCreateAPIView):
- queryset = Ticket.objects.all()
- serializer_class = Get_my_friendsSerializer
+# class Get_my_friendsList(generics.ListCreateAPIView):
+#  queryset = Ticket.objects.all()
+#  serializer_class = Get_my_friendsSerializer
  # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
-class Get_my_friendsDetail(generics.ListAPIView):
- serializer_class = Get_my_friendsSerializer
+def get_queryset(request):
+  access_token = request.GET.get('access_token')
+  import sys
+  print >> sys.stderr, access_token
 
- def get_queryset(self):
-  vz_id = self.kwargs['vz_id']
-        
-  #contacts= Friends.objects.filter(vz_id=vz_id).values('friends_vz_id')
-        
-        #vz_id= Register.objects.filter(phone=contacts).values('vz_id')
+  #vz_id = self.kwargs['vz_id']
+     
+  vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
   #tickets = Ticket.objects.filter(vz_id__in=contacts)
-
-  #detail=[]    
+  print >> sys.stderr, vz_id
   def ValuesQuerySetToDict(vqs):
     return [item for item in vqs]
 
@@ -72,7 +70,7 @@ class Get_my_friendsDetail(generics.ListAPIView):
 
 
 
-  objects= Register.objects.filter(vz_id__in=friends_list)
+  objects= Register.objects.filter(vz_id__in=friends_list).values('firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')
 
   print >> sys.stderr, objects.query
   print >> sys.stderr, objects
@@ -84,12 +82,14 @@ class Get_my_friendsDetail(generics.ListAPIView):
 
   
 
-
+  from django.http import JsonResponse
+  #return JsonResponse(dict(objects=list(objects)))
+  return JsonResponse((list(objects)),safe=False)
 
 
   #.filter(date_validity__gte=today)
   
-  return objects
+  #return objects
 
 
   # import os
