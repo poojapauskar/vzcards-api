@@ -14,26 +14,28 @@ from django.db.models import Count
 
 
 
-class Get_listList(generics.ListCreateAPIView):
- queryset = Ticket.objects.all()
- serializer_class = Get_listSerializer
+# class Get_listList(generics.ListCreateAPIView):
+#  queryset = Ticket.objects.all()
+#  serializer_class = Get_listSerializer
  # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
-class Get_listDetail(generics.ListAPIView):
- serializer_class = Get_listSerializer
+def queryset(request):
+  access_token = request.GET.get('access_token')
+  import sys
+  print >> sys.stderr, access_token
 
- def get_queryset(self):
-  vz_id = self.kwargs['vz_id']
+  #vz_id = self.kwargs['vz_id']
         
   #contacts= Friends.objects.filter(vz_id=vz_id).values('friends_vz_id')
-        
-        #vz_id= Register.objects.filter(phone=contacts).values('vz_id')
+  #access_token="ZCQ2mR5HBPXzS8O3BSUs4Hzc1WQoeB"    
+  vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
   #tickets = Ticket.objects.filter(vz_id__in=contacts)
+  print >> sys.stderr, vz_id
 
   #detail=[]    
-  def ValuesQuerySetToDict(vqs):
-    return [item for item in vqs]
+    # def ValuesQuerySetToDict(vqs):
+    #   return [item for item in vqs]
 
   import json
   friends_list=list(sync_contact.encode("utf8") for sync_contact in Sync.objects.filter(vz_id=vz_id).values_list('friends_vz_id',flat=True))
@@ -47,13 +49,13 @@ class Get_listDetail(generics.ListAPIView):
        
   #friends_list=list(friends_list)
 
-  import operator
-  from django.db.models import Q
+      # import operator
+      # from django.db.models import Q
 
   import datetime
   today = datetime.datetime.today()
 
-  import sys
+  #import sys
   #print >> sys.stderr, friends_list.query
   #friends_list = json.dumps(friends_list)
   friends_list=str(friends_list).replace('["','').replace('"]','').replace(',','').replace('[','').replace(']','').replace("'",'')
@@ -71,8 +73,8 @@ class Get_listDetail(generics.ListAPIView):
   #print >> sys.stderr, friends_list
 
 
-
-  objects= Ticket.objects.filter(vz_id__in=friends_list).filter(date_validity__gte=today)
+  
+  objects= Ticket.objects.filter(vz_id__in=friends_list).filter(date_validity__gte=today).values('user_details','question', 'item', 'description','date_created','date_validity','ticket_id','vz_id')
 
   print >> sys.stderr, objects.query
   print >> sys.stderr, objects
@@ -88,8 +90,10 @@ class Get_listDetail(generics.ListAPIView):
 
 
   #.filter(date_validity__gte=today)
-  
-  return objects
+  from django.http import HttpResponse
+  return HttpResponse(objects)
+
+  #return objects
 
 
   # import os

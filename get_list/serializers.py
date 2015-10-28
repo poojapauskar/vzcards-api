@@ -11,6 +11,9 @@ class Get_listSerializer(serializers.ModelSerializer):
 
         # model = Friends
         # fields = ('vz_id','friends_vz_id',)
+        # model = Register
+        # fields = ('',)
+        
 
     	model = Sync
     	fields = ('friends_vz_id',)
