@@ -143,7 +143,7 @@ STATIC_URL = '/static/'
 
 OAUTH2_PROVIDER = {
     # this is the list of available scopes
-    'ACCESS_TOKEN_EXPIRE_SECONDS': 60 * 60 * 24 * 90,
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 60 * 60 * 24 * 90 * 4,
     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
 }
 
