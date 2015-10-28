@@ -18,8 +18,8 @@ class Get_listSerializer(serializers.ModelSerializer):
     	model = Sync
     	fields = ('friends_vz_id',)
         
-        model = Ticket
-        fields = ('user_details','question', 'item', 'description','date_created','date_validity','ticket_id','vz_id')
+        # model = Ticket
+        # fields = ('user_details','question', 'item', 'description','date_created','date_validity','ticket_id','vz_id')
         
         
 
