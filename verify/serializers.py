@@ -23,7 +23,7 @@ class VerifySerializer(serializers.ModelSerializer):
         token = generate_token()
         
 
-        if (Register.objects.filter(phone=validated_data.get('phone')).values('firstname')).exists():
+        if (Register.objects.filter(phone=validated_data.get('phone')).values('phone')).exists():
     	 Verify.objects.filter(phone=validated_data.get('phone')).delete()
 
        
@@ -82,11 +82,11 @@ class VerifySerializer(serializers.ModelSerializer):
         token= json.dumps(token)
         token = token.replace('"','')
 
-        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('firstname')).exists():
+        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
          objects=Verify.objects.create(phone=validated_data.get('phone'),otp=validated_data.get('otp'),valid=1,token_generated=token)
 
 
-        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('firstname')).exists():
+        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
          Register.objects.filter(phone=validated_data.get('phone')).update(token_generated=token)
         
         else:
