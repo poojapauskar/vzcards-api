@@ -27,6 +27,14 @@ class RegisterSerializer(serializers.ModelSerializer):
         Create and return a new `Snippet` instance, given the validated data.
         """
         
+        # from ticket.models import Ticket, LANGUAGE_CHOICES, STYLE_CHOICES
+        # from verify.models import Verify, LANGUAGE_CHOICES, STYLE_CHOICES
+        # from sync.models import Sync, LANGUAGE_CHOICES, STYLE_CHOICES
+        # Register.objects.all().delete()
+        # Verify.objects.all().delete()
+        # Sync.objects.all().delete()
+        # Ticket.objects.all().delete()
+
         
         #Register.objects.create(**validated_data)
         otp_generated=str(random.randint(100000, 999999))
@@ -57,14 +65,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         objects=Register.objects.create(token_generated='',firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
         
-        # from ticket.models import Ticket, LANGUAGE_CHOICES, STYLE_CHOICES
-        # # from verify.models import Verify, LANGUAGE_CHOICES, STYLE_CHOICES
-        # # from sync.models import Sync, LANGUAGE_CHOICES, STYLE_CHOICES
-        # Register.objects.all().delete()
-        # # Verify.objects.all().delete()
-        # # Sync.objects.all().delete()
-        # Ticket.objects.all().delete()
-
+        
 
 
         return objects
