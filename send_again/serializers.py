@@ -67,7 +67,7 @@ class Send_againSerializer(serializers.ModelSerializer):
         r = send_message(sid, token,
             sms_from='8792213479',  # sms_from='8808891988',
             sms_to=validated_data.get('phone'), # sms_to='9052161119',
-            sms_body='Hi '+validated_data.get('phone')+', your number '++otp_generated+' is now turned asOTP')
+            sms_body='Hi '+validated_data.get('phone')+', your number '+otp_generated+' is now turned asOTP')
         print r.status_code
         pprint(r.json())
 
