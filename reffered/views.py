@@ -7,18 +7,25 @@ from rest_framework import generics
 from django.shortcuts import get_object_or_404
 
 
-class RefferedDetail(generics.ListAPIView):
- serializer_class = RefferedSerializer
+def get_queryset(request):
+  access_token = request.GET.get('access_token')
+  import sys
+  print >> sys.stderr, access_token
 
- def get_queryset(self):
-  vz_id = self.kwargs['vz_id']
+  #vz_id = self.kwargs['vz_id']
+     
+  vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
+  #tickets = Ticket.objects.filter(vz_id__in=contacts)
+  print >> sys.stderr, vz_id
   
   #obj=Register.objects.get(vz_id=vz_id)
 
-  objects=Connect.objects.filter(connecter_vz_id=vz_id) 
+  objects=Connect.objects.filter(connecter_vz_id=vz_id).values('connecter_vz_id', 'phone_1', 'ticket_id_1', 'phone_2', 'ticket_id_2')
   
 
-  return objects
+  from django.http import JsonResponse
+  #return JsonResponse(dict(objects=list(objects)))
+  return JsonResponse((list(objects)),safe=False)
 
 
        
