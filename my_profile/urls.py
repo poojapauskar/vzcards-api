@@ -6,7 +6,7 @@ from my_profile.views import get_queryset
 
 
 urlpatterns = [
-    #url(r'^my_profile/$', views.My_profileList.as_view()),
+    url(r'^my_profile/update/$', views.My_profileList.as_view()),
     url(r'^my_profile/$', get_queryset),
     #url(r'^get_list/(?P<vz_id>\d+)/$', views.Get_listDetail.as_view(), name='urlname'),
 

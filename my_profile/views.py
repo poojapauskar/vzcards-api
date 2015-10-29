@@ -5,6 +5,11 @@ from rest_framework import generics
 # from rest_framework import permissions
 from django.shortcuts import get_object_or_404
 
+class My_profileList(generics.ListCreateAPIView):
+ queryset = Register.objects.all()
+ serializer_class = My_profileSerializer
+ # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
 
 def get_queryset(request):
   access_token = request.GET.get('access_token')
