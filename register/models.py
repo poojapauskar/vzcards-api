@@ -34,6 +34,7 @@ class Register(models.Model):
     pin_regex = RegexValidator(regex=r'^\+?1?\d{6}$', message="Enter pin code.")
     pin_code = models.CharField(max_length=6,validators=[pin_regex], blank=True,default='')
     token_generated = models.TextField(blank=True,default='')
+    #photo = models.ImageField(upload_to="projectimg/", null=True, blank=True)
     
     
     class Meta:
