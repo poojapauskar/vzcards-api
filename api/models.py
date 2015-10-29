@@ -22,7 +22,7 @@ class Api(models.Model):
  send_again = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/send_again/')
  sync = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/sync/')
  my_profile = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/my_profile/')
- my_profile/update = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/my_profile/update/')
+ my_profile_update = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/my_profile/update/')
  get_my_friends = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/get_my_friends/')
  get_list = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/get_list/')
  get_my_tickets = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/get_my_tickets/')

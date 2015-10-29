@@ -6,7 +6,7 @@ from api.models import Api, LANGUAGE_CHOICES, STYLE_CHOICES
 class ApiSerializer(serializers.ModelSerializer):
     class Meta:
         model = Api
-        fields = ('vzcards','register','verify','send_again','sync', 'my_profile','get_my_friends','get_list', 'get_my_tickets','connect','ticket','ticket_details','response','reffered')
+        fields = ('vzcards','register','verify','send_again','sync', 'my_profile','my_profile_update','get_my_friends','get_list', 'get_my_tickets','connect','ticket','ticket_details','response','reffered')
     
 
     def create(self, validated_data):
@@ -27,6 +27,7 @@ class ApiSerializer(serializers.ModelSerializer):
         instance.send_again = validated_data.get('send_again', instance.send_again)
         instance.sync = validated_data.get('sync', instance.sync)
         instance.my_profile = validated_data.get('my_profile', instance.my_profile)
+        instance.my_profile_update = validated_data.get('my_profile', instance.my_profile_update)
         instance.get_my_friends = validated_data.get('get_my_friends', instance.get_my_friends)
         instance.get_list = validated_data.get('get_list', instance.get_list)
         instance.get_my_tickets = validated_data.get('get_my_tickets', instance.get_my_tickets)
