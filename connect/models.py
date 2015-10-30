@@ -28,6 +28,8 @@ class Connect(models.Model):
  ticket_2_details=models.TextField(blank=True, default='')
  phone_1_details=models.TextField(blank=True, default='')
  phone_2_details=models.TextField(blank=True, default='')
+ ticket_1_dates=models.TextField(blank=True, default='')
+ ticket_2_dates=models.TextField(blank=True, default='')
 
 
 def save(self, *args, **kwargs):

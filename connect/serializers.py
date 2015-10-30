@@ -1,26 +1,48 @@
 from rest_framework import serializers
 from connect.models import Connect, LANGUAGE_CHOICES, STYLE_CHOICES
 from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
+from ticket.models import Ticket, LANGUAGE_CHOICES, STYLE_CHOICES
 
 
 
 class ConnectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Connect
-        fields = ('connecter_vz_id','connecter_details', 'phone_1', 'ticket_id_1', 'phone_2', 'ticket_id_2','ticket_1_details','ticket_2_details','phone_1_details','phone_2_details')
+        fields = ('connecter_vz_id','connecter_details', 'phone_1', 'ticket_id_1', 'phone_2', 'ticket_id_2','ticket_1_details','ticket_2_details','phone_1_details','phone_2_details','ticket_1_dates','ticket_2_dates')
     
 
     def create(self, validated_data):
         """
         Create and return a new `Snippet` instance, given the validated data.
         """
-        connecter_details=Register.objects.filter(vz_id=validated_data.get('connecter_vz_id')).values('token_generated','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')
-        ticket_1_details=Ticket.objects.filter(ticket_id=ticket_id_1).values('vz_id','user_details', 'question', 'item', 'description','date_created','date_validity','ticket_id')
-        ticket_2_details=Ticket.objects.filter(ticket_id=ticket_id_2).values('vz_id','user_details', 'question', 'item', 'description','date_created','date_validity','ticket_id')
-        phone_1_details=Register.objects.filter(phone=validated_data.get('phone_1')).values('token_generated','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')
-        phone_2_details=Register.objects.filter(phone=validated_data.get('phone_2')).values('token_generated','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')
+        #import json
+        connecter_details=list(Register.objects.filter(vz_id=validated_data.get('connecter_vz_id')).values_list('token_generated','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated'))
+        ticket_1_details=list(Ticket.objects.filter(ticket_id=validated_data.get('ticket_id_1')).values_list('vz_id','question', 'item', 'description','ticket_id'))
+        ticket_2_details=list(Ticket.objects.filter(ticket_id=validated_data.get('ticket_id_2')).values_list('vz_id','question', 'item', 'description','ticket_id'))
+        phone_1_details=list(Register.objects.filter(phone=validated_data.get('phone_1')).values_list('token_generated','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated'))
+        phone_2_details=list(Register.objects.filter(phone=validated_data.get('phone_2')).values_list('token_generated','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated'))
+        ticket_1_dates=list(Ticket.objects.filter(ticket_id=validated_data.get('ticket_id_1')).values_list('date_validity'))
+        ticket_2_dates=list(Ticket.objects.filter(ticket_id=validated_data.get('ticket_id_1')).values_list('date_validity'))
+        
+        #import bson
+        #from bson import json_util
+        import json
 
-        return Connect.objects.create(**validated_data)
+#json.dumps(anObject, default=json_util.default)
+
+        connecter_details = json.dumps(connecter_details)
+        ticket_1_details = json.dumps(ticket_1_details)
+        ticket_2_details = json.dumps(ticket_2_details)
+        phone_1_details = json.dumps(phone_1_details)
+        phone_2_details = json.dumps(phone_2_details)
+
+        ticket_1_details=ticket_1_details.replace('"','').replace(']','').replace('[','')
+        ticket_2_details=ticket_2_details.replace('"','').replace(']','').replace('[','')
+        connecter_details=connecter_details.replace('"','').replace(']','').replace('[','')
+        phone_1_details=phone_1_details.replace('"','').replace(']','').replace('[','')
+        phone_2_details=phone_2_details.replace('"','').replace(']','').replace('[','')
+
+        return Connect.objects.create(connecter_vz_id=validated_data.get('connecter_vz_id'),connecter_details=connecter_details,phone_1=validated_data.get('phone_1'),ticket_id_1=validated_data.get('ticket_id_1'),phone_2=validated_data.get('phone_2'),ticket_id_2=validated_data.get('ticket_id_2'),ticket_1_details=ticket_1_details,ticket_2_details=ticket_2_details,phone_1_details=phone_1_details,phone_2_details=phone_2_details,ticket_1_dates=ticket_1_dates,ticket_2_dates=ticket_2_dates)
 
     def update(self, instance, validated_data):
         """
