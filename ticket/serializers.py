@@ -21,7 +21,7 @@ class TicketSerializer(serializers.ModelSerializer):
         
         #Ticket.objects.all().delete()
         import json
-        user_details= list(Register.objects.filter(vz_id=validated_data.get('vz_id')).values_list('firstname','lastname','email','phone'))
+        user_details= list(Register.objects.filter(vz_id=validated_data.get('vz_id')).values_list('firstname','lastname','email','phone','token_generated','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated'))
         user_details = json.dumps(user_details)
         user_details=str(user_details).replace('"','').replace(']','').replace('[','')
         #print >> sys.stderr, user_details

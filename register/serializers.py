@@ -54,14 +54,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         from django.http import HttpResponse
         from django.http import JsonResponse
         
-        #Register.objects.all().delete()
-        if Register.objects.filter(phone=validated_data.get('phone')).exists():
-          Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
-        if Register.objects.filter(phone=validated_data.get('phone')).exists():
-          return validated_data
-          #objects1=Register.objects.filter(phone=validated_data.get('phone')).values('token_generated','phone', 'firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')
-          #return JsonResponse((list(objects1)),safe=False)
-        
+       
+        # if Register.objects.filter(phone=validated_data.get('phone')).exists():
+        #   Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
+        # if Register.objects.filter(phone=validated_data.get('phone')).exists():
+        #   return validated_data
+         
 
 
         objects=Register.objects.create(token_generated='',firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
