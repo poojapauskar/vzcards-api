@@ -42,7 +42,7 @@ class My_profileSerializer(serializers.ModelSerializer):
 
       objects=Register.objects.filter(vz_id=validated_data.get('vz_id')).update(phone=obj.phone,photo=link,firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
       
-      objects1=Register.objects.filter(vz_id=validated_data.get('vz_id')).values('phone','photo','vz_id','firstname','lastname','email','industry','company','address_line_1','address_line_2','city','pin_code')
+      objects1=Register.objects.filter(vz_id=validated_data.get('vz_id')).values('token_generated','phone','photo','vz_id','firstname','lastname','email','industry','company','address_line_1','address_line_2','city','pin_code')
       from django.http import JsonResponse
       #return JsonResponse(dict(objects=list(objects)))
       return JsonResponse((list(objects1)),safe=False)
