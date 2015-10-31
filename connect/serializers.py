@@ -17,10 +17,10 @@ class ConnectSerializer(serializers.ModelSerializer):
         """
         #import json
         connecter_details=list(Register.objects.filter(vz_id=validated_data.get('connecter_vz_id')).values_list('firstname', 'lastname','photo'))
-        ticket_1_details=list(Ticket_create.objects.filter(ticket_id=validated_data.get('ticket_id_1')).values_list('vz_id','question', 'item', 'description','ticket_id','item_photo'))
-        ticket_2_details=list(Ticket_create.objects.filter(ticket_id=validated_data.get('ticket_id_2')).values_list('vz_id','question', 'item', 'description','ticket_id','item_photo'))
-        phone_1_details=list(Register.objects.filter(phone=validated_data.get('phone_1')).values_list('firstname', 'lastname','photo'))
-        phone_2_details=list(Register.objects.filter(phone=validated_data.get('phone_2')).values_list('firstname', 'lastname','photo'))
+        ticket_1_details=list(Ticket_create.objects.filter(ticket_id=validated_data.get('ticket_id_1')).values_list('question', 'item', 'description','item_photo'))
+        ticket_2_details=list(Ticket_create.objects.filter(ticket_id=validated_data.get('ticket_id_2')).values_list('question', 'item', 'description','item_photo'))
+        phone_1_details=list(Register.objects.filter(phone=validated_data.get('phone_1')).values_list('firstname', 'lastname','vz_id','photo'))
+        phone_2_details=list(Register.objects.filter(phone=validated_data.get('phone_2')).values_list('firstname', 'lastname','vz_id','photo'))
         ticket_1_dates=list(Ticket_create.objects.filter(ticket_id=validated_data.get('ticket_id_1')).values_list('date_validity'))
         ticket_2_dates=list(Ticket_create.objects.filter(ticket_id=validated_data.get('ticket_id_1')).values_list('date_validity'))
         
