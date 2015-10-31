@@ -2,6 +2,9 @@ from rest_framework import serializers
 from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
 from my_profile.models import My_profile, LANGUAGE_CHOICES, STYLE_CHOICES
 
+import random
+from random import randint
+
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
@@ -35,9 +38,16 @@ class My_profileSerializer(serializers.ModelSerializer):
       if(bool(validated_data.get('photo')) == True):
        link="link/res.cloudinary.com/hffrh1pci/image/upload/"+public_id+".pdf"
 
+      
 
-      Register.objects.filter(vz_id=validated_data.get('vz_id')).update(phone=obj.phone,photo=link,firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
-      return validated_data
+      objects=Register.objects.filter(vz_id=validated_data.get('vz_id')).update(phone=obj.phone,photo=link,firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
+      
+      objects1=Register.objects.filter(vz_id=validated_data.get('vz_id')).values('phone','photo','vz_id','firstname','lastname','email','industry','company','address_line_1','address_line_2','city','pin_code')
+      from django.http import JsonResponse
+      #return JsonResponse(dict(objects=list(objects)))
+      return JsonResponse((list(objects1)),safe=False)
+
+      #return objects
 
     def update(self, instance, validated_data):
         """
