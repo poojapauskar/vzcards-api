@@ -31,6 +31,7 @@ class Api(models.Model):
  ticket_details = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/ticket_details/')
  response = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/response/')
  reffered = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/reffered/')
+ upload_image = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/upload_image/')
  
  
  

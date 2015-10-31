@@ -38,20 +38,10 @@ class Ticket_createSerializer(serializers.ModelSerializer):
         #Ticket_create.objects.all().delete()
 
 
-        link=''
-       # image="image"+str(random.randint(100, 999))
-        public_id='id'+str(random.randint(100, 999))
-
-       
-
-        if(bool(validated_data.get('item_photo')) == True):
-         cloudinary.uploader.upload(validated_data.get('item_photo'),public_id =public_id )
-
-        if(bool(validated_data.get('item_photo')) == True):
-         link="link/res.cloudinary.com/hffrh1pci/image/upload/"+public_id+".pdf"
+        
 
 
-        return Ticket_create.objects.create(vz_id=validated_data.get('vz_id'),item_photo=link,user_details=user_details,question=validated_data.get('question'),item=validated_data.get('item'),description=validated_data.get('description'),date_validity=validated_data.get('date_validity'),ticket_id=ticket_id)
+        return Ticket_create.objects.create(vz_id=validated_data.get('vz_id'),item_photo=validated_data.get('item_photo'),user_details=user_details,question=validated_data.get('question'),item=validated_data.get('item'),description=validated_data.get('description'),date_validity=validated_data.get('date_validity'),ticket_id=ticket_id)
 
     def update(self, instance, validated_data):
         """

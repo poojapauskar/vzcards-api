@@ -63,6 +63,7 @@ INSTALLED_APPS = (
     'get_my_friends',
     'sync',
     'reffered',
+    'upload_image',
 )
 
 MIDDLEWARE_CLASSES = (

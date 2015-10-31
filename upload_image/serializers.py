@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
+from upload_image.models import Upload_image, LANGUAGE_CHOICES, STYLE_CHOICES
+#from connect.models import Connect, LANGUAGE_CHOICES, STYLE_CHOICES
 from twilio import twiml
 from django_twilio.decorators import twilio_view
 from twilio.rest import TwilioRestClient
@@ -24,61 +25,41 @@ AUTH_TOKEN = "b41ecb043ce77678cac28c828e6d056e"
 
 client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
 
-class RegisterSerializer(serializers.ModelSerializer):
+class Upload_imageSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Register
-        fields = ('pk','token_generated','photo','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')
+        model = Upload_image
+        fields = ('photo','link')
         #write_only_fields = ('firstame', 'lastname')
 
     def create(self, validated_data):
-        """
-        Create and return a new `Snippet` instance, given the validated data.
-        """
         
-        # from ticket.models import Ticket, LANGUAGE_CHOICES, STYLE_CHOICES
-        # from verify.models import Verify, LANGUAGE_CHOICES, STYLE_CHOICES
-        # from sync.models import Sync, LANGUAGE_CHOICES, STYLE_CHOICES
-        #Register.objects.all().delete()
-        # Verify.objects.all().delete()
-        # Sync.objects.all().delete()
-        # Ticket.objects.all().delete()
-
-        
-        #Register.objects.create(**validated_data)
-        otp_generated=str(random.randint(100000, 999999))
-        vz_id='VZ'+str(int(time.time()))
-       
-        # Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
-        # Register.objects.filter(phone=validated_data.get('phone')).update(vz_id=vz_id)
-        #phone =  validated_data
-        
-
-        message = client.messages.create(
-         body="Your OTP "+otp_generated,  # Message body, if any
-         to="+"+validated_data.get('phone'), #7798899252
-         from_="+17028002480",
-        )
-        
-        from django.http import HttpResponse
-        from django.http import JsonResponse
-        
-       
-        # if Register.objects.filter(phone=validated_data.get('phone')).exists():
-        #   Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
-        # if Register.objects.filter(phone=validated_data.get('phone')).exists():
-        #   return validated_data
         import sys
+        link=''
+       # image="image"+str(random.randint(100, 999))
+        public_id='id'+str(random.randint(100, 999))
+
        
+
+        if(bool(validated_data.get('photo')) == True):
+         cloudinary.uploader.upload(validated_data.get('photo'),public_id ="vzcards/"+public_id)
+
+        # if(bool(validated_data.get('photo')) == True):
+        #  link="res.cloudinary.com/hffrh1pci/image/upload/vzcards/"+public_id+".pdf"
+
+        if(bool(validated_data.get('photo')) == True):
+         link=public_id+".pdf"
+
        # cloudinary.uploader.upload(validated_data.get('photo'),public_id =public_id )
         #if(validated_data.get('photo') != ''):
        # link="link/res.cloudinary.com/hffrh1pci/image/upload/"+public_id+".pdf"
       
        # cloudinary.uploader.upload(validated_data.get('photo'))
-
+        #Connect.objects.all().delete()
        # link="http://res.cloudinary.com/hjwxtjtff/image/upload/"+public_id+".pdf"
         #print >> sys.stderr, validated_data.get('photo')
-        objects=Register.objects.create(token_generated='',photo=validated_data.get('photo'),firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
+
+        objects=Upload_image.objects.create(photo=validated_data.get('photo'),link=link)
         # print >> sys.stderr, objects
         
 
@@ -108,18 +89,18 @@ class RegisterSerializer(serializers.ModelSerializer):
         return instance
 
 
-    from register.models import Register
-from register.serializers import RegisterSerializer
+    from upload_image.models import Upload_image
+from upload_image.serializers import Upload_imageSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 
-#register = Register(firstname='a')
-#register.save()
+#upload_image = Upload_image(firstname='a')
+#upload_image.save()
 
-#register = Register(firstname='b')
-#register.save()
+#upload_image = Upload_image(firstname='b')
+#upload_image.save()
 
-#serializer = RegisterSerializer(register)
+#serializer = Upload_imageSerializer(upload_image)
 #serializer.data
 
 #content = JSONRenderer().render(serializer.data)
@@ -128,11 +109,11 @@ from rest_framework.parsers import JSONParser
 from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):
-    register = serializers.PrimaryKeyRelatedField(many=True, queryset=Register.objects.all())
+    upload_image = serializers.PrimaryKeyRelatedField(many=True, queryset=Upload_image.objects.all())
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'register')
+        fields = ('id', 'username', 'upload_image')
 
 owner = serializers.ReadOnlyField(source='owner.username')
 

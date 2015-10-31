@@ -31,7 +31,7 @@ class Ticket_create(models.Model):
  date_created = models.DateTimeField(auto_now_add=True)
  date_validity = models.DateField(blank=False)
  ticket_id = models.CharField(max_length=100, blank=True,default ='',editable=False)
- item_photo= models.ImageField(null=True, blank=True)
+ item_photo= models.TextField(blank=True,default ='')
 
  class Meta:
   ordering = ('created',)

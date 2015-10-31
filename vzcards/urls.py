@@ -78,4 +78,5 @@ urlpatterns = patterns('',
     url(r'^', include('get_my_friends.urls')),
     url(r'^', include('sync.urls')),
     url(r'^', include('reffered.urls')),
+    url(r'^', include('upload_image.urls')),
 )
