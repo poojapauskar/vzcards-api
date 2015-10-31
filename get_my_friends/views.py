@@ -70,12 +70,12 @@ def get_queryset(request):
 
 
 
-  objects= Register.objects.filter(vz_id__in=friends_list).values('firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','photo')
+  #objects= Register.objects.filter(vz_id__in=friends_list).values('firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','photo')
 
   if(friends_list==''):
    objects=''
   else:
-   objects=Ticket_create.objects.filter(vz_id__in=friends_list).filter(date_validity__gte=today).values('user_details','question', 'item', 'description','date_created','date_validity','ticket_id','vz_id','item_photo')
+   objects=Register.objects.filter(vz_id__in=friends_list).values('firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','photo')
 
   #print >> sys.stderr, objects.query
   print >> sys.stderr, objects
