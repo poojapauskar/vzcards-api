@@ -31,6 +31,7 @@ class My_profile(models.Model):
  city = models.CharField(max_length=100, blank=True,default='')
  pin_regex = RegexValidator(regex=r'^\+?1?\d{6}$', message="Enter 6 digit pin code.")
  pin_code = models.CharField(max_length=6,validators=[pin_regex], blank=True,default='')
+ photo = models.ImageField(null=True, blank=True)
 
  class Meta:
   ordering = ('created',)

@@ -1,4 +1,4 @@
-from ticket.models import Ticket
+from ticket_create.models import Ticket_create
 from ticket_details.serializers import Ticket_detailsSerializer
 from rest_framework import generics
 # from ticket.permissions import IsOwnerOrReadOnly
@@ -12,7 +12,7 @@ class Ticket_detailsDetail(generics.ListAPIView):
  def get_queryset(self):
   ticket_id = self.kwargs['ticket_id']
 
-  objects=Ticket.objects.filter(ticket_id=ticket_id) 
+  objects=Ticket_create.objects.filter(ticket_id=ticket_id) 
   
 
   return objects

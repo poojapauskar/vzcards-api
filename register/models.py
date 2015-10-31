@@ -17,6 +17,10 @@ STYLE_CHOICES = sorted((item, item) for item in get_all_styles())
 owner = models.ForeignKey('auth.User', related_name='register')
 highlighted = models.TextField()
 
+# from django.conf import settings
+# from django.core.files.storage import FileSystemStorage
+# fs = FileSystemStorage(location=settings.STATIC_ROOT)
+
 class Register(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     firstname = models.CharField(max_length=100, blank=True,default='')
@@ -34,7 +38,9 @@ class Register(models.Model):
     pin_regex = RegexValidator(regex=r'^\+?1?\d{6}$', message="Enter pin code.")
     pin_code = models.CharField(max_length=6,validators=[pin_regex], blank=True,default='')
     token_generated = models.TextField(blank=True,default='')
-    #photo = models.ImageField(upload_to="projectimg/", null=True, blank=True)
+    photo = models.ImageField(null=True, blank=True)
+
+   # photo = models.ImageField(upload_to="projectimg/",storage=fs, null=True, blank=True)
     
     
     class Meta:

@@ -27,7 +27,7 @@ class RefferedSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-from ticket.models import Ticket
+from ticket_create.models import Ticket_create
 from reffered.serializers import RefferedSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser

@@ -8,7 +8,16 @@ from random import randint
 import json
 import time
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
+
+cloudinary.config( 
+  cloud_name = "hffrh1pci", 
+  api_key = "286145976162589", 
+  api_secret = "pJedg7LSodzm7SBv9HaiLjLvHT8" 
+)
 
 ACCOUNT_SID = "ACa6846885206cb0041afeef5d0405ba25"
 AUTH_TOKEN = "b41ecb043ce77678cac28c828e6d056e"
@@ -19,7 +28,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Register
-        fields = ('pk','token_generated','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')
+        fields = ('pk','token_generated','photo','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')
         #write_only_fields = ('firstame', 'lastname')
 
     def create(self, validated_data):
@@ -59,11 +68,29 @@ class RegisterSerializer(serializers.ModelSerializer):
         #   Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
         # if Register.objects.filter(phone=validated_data.get('phone')).exists():
         #   return validated_data
-         
+        import sys
+        link=''
+       # image="image"+str(random.randint(100, 999))
+        public_id='id'+str(random.randint(100, 999))
 
+       
 
-        objects=Register.objects.create(token_generated='',firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
-        
+        if(bool(validated_data.get('photo')) == True):
+         cloudinary.uploader.upload(validated_data.get('photo'),public_id =public_id )
+
+        if(bool(validated_data.get('photo')) == True):
+         link="link/res.cloudinary.com/hffrh1pci/image/upload/"+public_id+".pdf"
+
+       # cloudinary.uploader.upload(validated_data.get('photo'),public_id =public_id )
+        #if(validated_data.get('photo') != ''):
+       # link="link/res.cloudinary.com/hffrh1pci/image/upload/"+public_id+".pdf"
+      
+       # cloudinary.uploader.upload(validated_data.get('photo'))
+
+       # link="http://res.cloudinary.com/hjwxtjtff/image/upload/"+public_id+".pdf"
+        #print >> sys.stderr, validated_data.get('photo')
+        objects=Register.objects.create(token_generated='',photo=link,firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
+        # print >> sys.stderr, objects
         
 
 
@@ -75,7 +102,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         Update and return an existing `Snippet` instance, given the validated data.
         """
         instance.firstname = validated_data.get('firstname', instance.firstname)
-        #instance.photo = validated_data.get('photo', instance.photo)
+        instance.photo = validated_data.get('photo', instance.photo)
         instance.lastname = validated_data.get('lastname', instance.lastname)
         instance.email = validated_data.get('email', instance.email)
         instance.phone = validated_data.get('phone', instance.phone)

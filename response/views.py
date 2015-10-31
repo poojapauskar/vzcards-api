@@ -1,6 +1,6 @@
 from connect.models import Connect
 from register.models import Register
-from ticket.models import Ticket
+from ticket_create.models import Ticket_create
 from response.serializers import ResponseSerializer
 from rest_framework import generics
 # from ticket.permissions import IsOwnerOrReadOnly

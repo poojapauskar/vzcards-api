@@ -33,7 +33,7 @@ class VerifySerializer(serializers.ModelSerializer):
         if (User.objects.filter(username=validated_data.get('phone'))).exists():
           User.objects.filter(username=validated_data.get('phone')).delete()
         
-        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('firstname')).exists():
+        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
           user=User.objects.create(username=validated_data.get('phone'),password="vzcards")
 
         

@@ -22,7 +22,7 @@ def get_queryset(request):
   #tickets = Ticket.objects.filter(vz_id__in=contacts)
   print >> sys.stderr, vz_id
   
-  profile=Register.objects.filter(vz_id=vz_id).values('phone','vz_id','firstname','lastname','email','industry','company','address_line_1','address_line_2','city','pin_code')
+  profile=Register.objects.filter(vz_id=vz_id).values('phone','photo','vz_id','firstname','lastname','email','industry','company','address_line_1','address_line_2','city','pin_code')
 
   from django.http import JsonResponse
   #return JsonResponse(dict(objects=list(objects)))

@@ -1,4 +1,4 @@
-from ticket.models import Ticket
+from ticket_create.models import Ticket_create
 from friends.models import Friends
 from sync.models import Sync
 from register.models import Register
@@ -40,7 +40,7 @@ def get_queryset(request):
   friends_list= friends_list.split()
 
 
-  objects= Ticket.objects.filter(vz_id__in=friends_list).filter(date_validity__gte=today).values('user_details','question', 'item', 'description','date_created','date_validity','ticket_id','vz_id')
+  objects= Ticket_create.objects.filter(vz_id__in=friends_list).filter(date_validity__gte=today).values('user_details','question', 'item', 'description','date_created','date_validity','ticket_id','vz_id','item_photo')
   
   print >> sys.stderr, objects.query
   print >> sys.stderr, objects

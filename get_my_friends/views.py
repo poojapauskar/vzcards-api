@@ -1,4 +1,4 @@
-from ticket.models import Ticket
+from ticket_create.models import Ticket_create
 from friends.models import Friends
 from sync.models import Sync
 from register.models import Register
@@ -70,7 +70,7 @@ def get_queryset(request):
 
 
 
-  objects= Register.objects.filter(vz_id__in=friends_list).values('firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')
+  objects= Register.objects.filter(vz_id__in=friends_list).values('firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','photo')
 
   print >> sys.stderr, objects.query
   print >> sys.stderr, objects

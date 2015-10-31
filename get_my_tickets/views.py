@@ -1,4 +1,4 @@
-from ticket.models import Ticket
+from ticket_create.models import Ticket_create
 from get_my_tickets.serializers import Get_my_ticketsSerializer
 from rest_framework import generics
 # from ticket.permissions import IsOwnerOrReadOnly
@@ -41,7 +41,7 @@ def get_queryset(request):
   #tickets = Ticket.objects.filter(vz_id__in=contacts)
   print >> sys.stderr, vz_id
 
-  objects= Ticket.objects.filter(vz_id=vz_id).values('vz_id', 'question', 'item', 'description','date_created','date_validity','ticket_id')
+  objects= Ticket_create.objects.filter(vz_id=vz_id).values('vz_id', 'question', 'item', 'description','date_created','date_validity','ticket_id')
 
   from django.http import JsonResponse
   #return JsonResponse(dict(objects=list(objects)))
