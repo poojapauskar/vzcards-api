@@ -55,7 +55,24 @@ class Upload_imageSerializer(serializers.ModelSerializer):
        # link="link/res.cloudinary.com/hffrh1pci/image/upload/"+public_id+".pdf"
       
        # cloudinary.uploader.upload(validated_data.get('photo'))
-        #Connect.objects.all().delete()
+
+
+        # from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
+        # from verify.models import Verify, LANGUAGE_CHOICES, STYLE_CHOICES
+        # from connect.models import Connect, LANGUAGE_CHOICES, STYLE_CHOICES
+        # from create_ticket.models import Create_ticket, LANGUAGE_CHOICES, STYLE_CHOICES
+        # from send_again.models import Send_again, LANGUAGE_CHOICES, STYLE_CHOICES
+        # from sync.models import Sync, LANGUAGE_CHOICES, STYLE_CHOICES
+
+        # Connect.objects.all().delete()
+        # Register.objects.all().delete()
+        # Verify.objects.all().delete()
+        # Create_ticket.objects.all().delete()
+        # Send_again.objects.all().delete()
+        # Sync.objects.all().delete()
+        # Upload_image.objects.all().delete()
+
+        
        # link="http://res.cloudinary.com/hjwxtjtff/image/upload/"+public_id+".pdf"
         #print >> sys.stderr, validated_data.get('photo')
 

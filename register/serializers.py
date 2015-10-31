@@ -64,10 +64,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         from django.http import JsonResponse
         
        
-        # if Register.objects.filter(phone=validated_data.get('phone')).exists():
-        #   Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
-        # if Register.objects.filter(phone=validated_data.get('phone')).exists():
-        #   return validated_data
+        if Register.objects.filter(phone=validated_data.get('phone')).exists():
+          Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
+        if Register.objects.filter(phone=validated_data.get('phone')).exists():
+          return validated_data
         import sys
        
        # cloudinary.uploader.upload(validated_data.get('photo'),public_id =public_id )

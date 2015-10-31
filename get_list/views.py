@@ -40,9 +40,9 @@ def get_queryset(request):
   friends_list= friends_list.split()
 
   if(friends_list==''):
-   objects= Ticket_create.objects.filter(vz_id__in=friends_list).filter(date_validity__gte=today).values('user_details','question', 'item', 'description','date_created','date_validity','ticket_id','vz_id','item_photo')
-  else:
    objects=''
+  else:
+   objects=Ticket_create.objects.filter(vz_id__in=friends_list).filter(date_validity__gte=today).values('user_details','question', 'item', 'description','date_created','date_validity','ticket_id','vz_id','item_photo')
 
   #print >> sys.stderr, objects.query
   print >> sys.stderr, objects
