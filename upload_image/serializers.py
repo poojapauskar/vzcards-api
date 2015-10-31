@@ -62,7 +62,7 @@ class Upload_imageSerializer(serializers.ModelSerializer):
         objects=Upload_image.objects.create(photo=validated_data.get('photo'),link=link)
         # print >> sys.stderr, objects
         
-
+        
 
         return objects
 
