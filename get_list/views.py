@@ -79,7 +79,7 @@ def get_queryset(request):
   for obj1 in objects:
       fields.append(
               {
-               'feeds':(json.dumps(list(Ticket_create.objects.filter(vz_id=obj1.vz_id).filter(date_validity__gte=today).values_list('user_details','question', 'item', 'description','ticket_id','vz_id','item_photo')))).replace('"','').replace('[','').replace(']',''),
+               'feeds':(json.dumps(list(Ticket_create.objects.filter(vz_id=obj1.vz_id).filter(date_validity__gte=today).values_list('question', 'item', 'description','ticket_id','vz_id','item_photo')))).replace('"','').replace('[','').replace(']',''),
                'user_details':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''),  
                }
             )

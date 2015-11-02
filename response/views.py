@@ -58,9 +58,9 @@ def get_queryset(request):
               {
                'connecter_details':(json.dumps(list(Register.objects.filter(vz_id=obj1.connecter_vz_id).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
                'my_details':(json.dumps(list(Register.objects.filter(phone=obj1.phone_1).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''),  
-               'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_1).values_list('vz_id','item_photo','user_details', 'question', 'item', 'description','ticket_id')))).replace('"','').replace('[','').replace(']',''), 
+               'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_1).values_list('vz_id','item_photo', 'question', 'item', 'description','ticket_id')))).replace('"','').replace('[','').replace(']',''), 
                'reffered_to':(json.dumps(list(Register.objects.filter(phone=obj1.phone_2).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
-               'reffered_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_2).values_list('vz_id','item_photo','user_details', 'question', 'item', 'description','ticket_id')))).replace('"','').replace('[','').replace(']',''), 
+               'reffered_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_2).values_list('vz_id','item_photo','question', 'item', 'description','ticket_id')))).replace('"','').replace('[','').replace(']',''), 
               }
             )
      else:
@@ -68,9 +68,9 @@ def get_queryset(request):
               {
                'connecter_details':(json.dumps(list(Register.objects.filter(vz_id=obj1.connecter_vz_id).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
                'my_details':(json.dumps(list(Register.objects.filter(phone=obj1.phone_2).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
-               'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_2).values_list('vz_id','item_photo','user_details', 'question', 'item', 'description','ticket_id')))).replace('"','').replace('[','').replace(']',''), 
+               'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_2).values_list('vz_id','item_photo','question', 'item', 'description','ticket_id')))).replace('"','').replace('[','').replace(']',''), 
                'reffered_to':(json.dumps(list(Register.objects.filter(phone=obj1.phone_1).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
-               'reffered_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_1).values_list('vz_id','item_photo','user_details', 'question', 'item', 'description','ticket_id')))).replace('"','').replace('[','').replace(']',''), 
+               'reffered_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_1).values_list('vz_id','item_photo', 'question', 'item', 'description','ticket_id')))).replace('"','').replace('[','').replace(']',''), 
               }
             )
     
