@@ -44,52 +44,44 @@ def get_queryset(request):
   print >> sys.stderr, vz_id
   
   obj=Register.objects.get(vz_id=vz_id)
-
-  #objects=(Connect.objects.filter(phone_1=obj.phone) | Connect.objects.filter(phone_2=obj.phone)).values('connecter_vz_id', 'phone_1', 'ticket_id_1', 'phone_2', 'ticket_id_2')
-  
-  # connecter_vz_id=(Connect.objects.filter(phone_1=obj.phone) | Connect.objects.filter(phone_2=obj.phone)).values('connecter_vz_id')
-  # phone_1=(Connect.objects.filter(phone_1=obj.phone) | Connect.objects.filter(phone_2=obj.phone)).values('phone_1')
-  # ticket_id_1=(Connect.objects.filter(phone_1=obj.phone) | Connect.objects.filter(phone_2=obj.phone)).values('ticket_id_1')
-  # phone_2=(Connect.objects.filter(phone_1=obj.phone) | Connect.objects.filter(phone_2=obj.phone)).values('phone_2')
-  # ticket_id_2=(Connect.objects.filter(phone_1=obj.phone) | Connect.objects.filter(phone_2=obj.phone)).values('ticket_id_2')
-
-  # user_details=(Register.objects.filter(phone__in=phone_1) | Register.objects.filter(phone__in=phone_2) | Register.objects.filter(vz_id__in=connecter_vz_id)).values('phone','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')
-  # ticket_details=(Ticket.objects.filter(ticket_id=ticket_id_1) | Ticket.objects.filter(ticket_id=ticket_id_2)).values('vz_id','user_details', 'question', 'item', 'description','date_created','date_validity','ticket_id')
-
-
-
-
   from django.http import JsonResponse
-  # from rest_framework.response import Response
-  # #return JsonResponse(dict(objects=list(objects)))
-  # #return JsonResponse((list(objects)),safe=False)
-  
-  
-  # print >> sys.stderr, user_details
-  # print >> sys.stderr, ticket_details
-  
-  # return Response({
-  #  'user_details': user_details,
-  #  'ticket_details': ticket_details,status=None, template_name=None, headers=None, content_type=None
-  # })
-
-
-
-
-  # from django.http import JsonResponse
-  objects=(Connect.objects.filter(phone_1=obj.phone) | Connect.objects.filter(phone_2=obj.phone)).values('connecter_vz_id','connecter_details', 'phone_1', 'ticket_id_1', 'phone_2', 'ticket_id_2','ticket_1_details','ticket_2_details','phone_1_details','phone_2_details')
+ 
+  objects=(Connect.objects.filter(phone_1=obj.phone) | Connect.objects.filter(phone_2=obj.phone))
   print >> sys.stderr, objects
 
-  return JsonResponse((list(objects)),safe=False)
-  #return objects
-  
-  # import json
-  # #from json import simplejson
-  # from django.http import HttpResponse
+  import json
 
-  # json = json.dumps({'user_details': user_details, 'ticket_details': list(ticket_details), 'objects': list(objects)})
-  # return JsonResponse((json),safe=False)
-  # #return HttpResponse(json, mimetype='text/json')
+  fields = []
+  for obj1 in objects:
+     if(obj1.phone_1==obj.phone):
+      fields.append(
+              {
+               'connecter_details':(json.dumps(list(Register.objects.filter(vz_id=obj1.connecter_vz_id).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
+               'my_details':(json.dumps(list(Register.objects.filter(phone=obj1.phone_1).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''),  
+               'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_1).values_list('vz_id','item_photo','user_details', 'question', 'item', 'description','ticket_id')))).replace('"','').replace('[','').replace(']',''), 
+               'reffered_to':(json.dumps(list(Register.objects.filter(phone=obj1.phone_2).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
+               'reffered_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_2).values_list('vz_id','item_photo','user_details', 'question', 'item', 'description','ticket_id')))).replace('"','').replace('[','').replace(']',''), 
+              }
+            )
+     else:
+      fields.append(
+              {
+               'connecter_details':(json.dumps(list(Register.objects.filter(vz_id=obj1.connecter_vz_id).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
+               'my_details':(json.dumps(list(Register.objects.filter(phone=obj1.phone_2).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
+               'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_2).values_list('vz_id','item_photo','user_details', 'question', 'item', 'description','ticket_id')))).replace('"','').replace('[','').replace(']',''), 
+               'reffered_to':(json.dumps(list(Register.objects.filter(phone=obj1.phone_1).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
+               'reffered_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_1).values_list('vz_id','item_photo','user_details', 'question', 'item', 'description','ticket_id')))).replace('"','').replace('[','').replace(']',''), 
+              }
+            )
+    
+     print >> sys.stderr,"-----------"
+     print >> sys.stderr,fields
+     print >> sys.stderr,"-----------"
+
+     
+
+  return JsonResponse(list(fields),safe=False)
+
 
 
        

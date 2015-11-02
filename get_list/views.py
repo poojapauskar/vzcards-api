@@ -67,7 +67,7 @@ def get_queryset(request):
   if(friends_list==''):
    objects=''
   else:
-   objects=Ticket_create.objects.filter(vz_id__in=friends_list).filter(date_validity__gte=today).values('user_details','question', 'item', 'description','date_created','date_validity','ticket_id','vz_id','item_photo')
+   objects=Ticket_create.objects.filter(vz_id__in=friends_list).filter(date_validity__gte=today)
 
   #print >> sys.stderr, objects.query
   print >> sys.stderr, objects
@@ -75,9 +75,20 @@ def get_queryset(request):
   from django.http import HttpResponse
   #return HttpResponse(objects,content_type='application/json')
 
-  
-  #return JsonResponse(dict(objects=list(objects)))
-  return JsonResponse((list(objects)),safe=False)
+  fields = []
+  for obj1 in objects:
+      fields.append(
+              {
+               'feeds':(json.dumps(list(Ticket_create.objects.filter(vz_id=obj1.vz_id).filter(date_validity__gte=today).values_list('user_details','question', 'item', 'description','ticket_id','vz_id','item_photo')))).replace('"','').replace('[','').replace(']',''),
+               'user_details':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''),  
+               }
+            )
+    
+      print >> sys.stderr,"-----------"
+      print >> sys.stderr,fields
+      print >> sys.stderr,"-----------"
+      #return JsonResponse(dict(objects=list(objects)))
+  return JsonResponse((list(fields)),safe=False)
   #return objects
 
 
