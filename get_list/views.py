@@ -17,6 +17,20 @@ from django.db.models import Count
 
 def get_queryset(request):
   access_token = request.GET.get('access_token')
+
+
+  from django.http import JsonResponse
+  from django.http import Http404
+  from django.shortcuts import render_to_response
+  
+
+  if(Register.objects.filter(token_generated=access_token).exists()):
+    pass
+  else:
+    raise Http404("Access token not valid")
+
+
+
   import sys
   print >> sys.stderr, access_token
 
@@ -50,7 +64,7 @@ def get_queryset(request):
   from django.http import HttpResponse
   #return HttpResponse(objects,content_type='application/json')
 
-  from django.http import JsonResponse
+  
   #return JsonResponse(dict(objects=list(objects)))
   return JsonResponse((list(objects)),safe=False)
   #return objects

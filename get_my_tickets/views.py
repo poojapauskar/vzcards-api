@@ -35,6 +35,16 @@ def get_queryset(request):
   import sys
   print >> sys.stderr, access_token
 
+  from django.http import JsonResponse
+  from django.http import Http404
+  from django.shortcuts import render_to_response
+  
+
+  if(Register.objects.filter(token_generated=access_token).exists()):
+    pass
+  else:
+    raise Http404("Access token not valid")
+
   #vz_id = self.kwargs['vz_id']
      
   vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
