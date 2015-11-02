@@ -7,43 +7,42 @@ from django.shortcuts import get_object_or_404
 
 
 
+from django.http import JsonResponse
 
-
-
-# class Get_my_ticketsList(generics.ListCreateAPIView):
-#  queryset = Ticket.objects.all()
-#  serializer_class = Get_my_ticketsSerializer
-#  # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-
-
-
-#class Get_listDetail(generics.ListCreateAPIView):
-  #def get_queryset(self):
-        #self.vz_id = get_object_or_404(Create, vz_id=self.args)
-        # serializer_class = Get_listSerializer
-        # return Create.objects.filter(vz_id=self.vz_id)
-        #lookup_field = self.vz_id
-        # queryset = Create.objects.filter(vz_id=lookup_field)
-        # serializer_class = Get_listSerializer
-        # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-        #               IsOwnerOrReadOnly,)
-  
-        #do something with this user
+class StatusCode(object):
+    OK = 200
+    NOT_FOUND = 404
+    # add more status code according to your need
+import json
+from django.http import HttpResponse
+ 
+def JSONResponse(data = None, status = StatusCode.OK):
+    if data is None:
+        return HttpResponse(status)
+    if data and type(data) is dict:
+        return HttpResponse(json.dumps(data, indent = 4, encoding = 'utf-8', sort_keys = True), \
+            mimetype = 'application/json', status = status)
+    else:
+        return HttpResponse(status = StatusCode.NOT_FOUND)
 
 def get_queryset(request):
   access_token = request.GET.get('access_token')
-  import sys
-  print >> sys.stderr, access_token
-
-  from django.http import JsonResponse
-  from django.http import Http404
-  from django.shortcuts import render_to_response
-  
-
   if(Register.objects.filter(token_generated=access_token).exists()):
     pass
   else:
-    raise Http404("Access token not valid")
+    return JSONResponse(status = StatusCode.NOT_FOUND)
+
+    
+  import sys
+  print >> sys.stderr, access_token
+
+  # valid="Access token not valid"
+  # from django.http import JsonResponse
+
+  # if(Register.objects.filter(token_generated=access_token).exists()):
+  #   pass
+  # else:
+  #   return JsonResponse(valid,safe=False)
 
   #vz_id = self.kwargs['vz_id']
      
