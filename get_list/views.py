@@ -67,7 +67,7 @@ def get_queryset(request):
   if(friends_list==''):
    objects=''
   else:
-   objects=Ticket_create.objects.filter(vz_id__in=friends_list).filter(date_validity__gte=today)
+   objects=Register.objects.filter(vz_id__in=friends_list)
 
   #print >> sys.stderr, objects.query
   print >> sys.stderr, objects
@@ -91,6 +91,7 @@ def get_queryset(request):
       print >> sys.stderr,fields
       print >> sys.stderr,"-----------"
       #return JsonResponse(dict(objects=list(objects)))
+      
   return JsonResponse((list(fields)),safe=False)
   #return objects
 
