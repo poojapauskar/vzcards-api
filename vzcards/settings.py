@@ -20,6 +20,10 @@ TWILIO_AUTH_TOKEN = 'b41ecb043ce77678cac28c828e6d056e'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
+#MEDIA_ROOT = '/projectimg/'
+MEDIA_URL = 'http://res.cloudinary.com/hffrh1pci/image/upload/vzcards/'
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'b4d(3@)wr&*1(smokkl!@hwir(ij+wnt4r5ia#(fms+t4xnltg'
 

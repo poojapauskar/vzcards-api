@@ -73,10 +73,10 @@ class Upload_imageSerializer(serializers.ModelSerializer):
         # Upload_image.objects.all().delete()
 
         
-       # link="http://res.cloudinary.com/hjwxtjtff/image/upload/"+public_id+".pdf"
+       
         #print >> sys.stderr, validated_data.get('photo')
 
-        objects=Upload_image.objects.create(photo=validated_data.get('photo'),link=link)
+        objects=Upload_image.objects.create(photo=link,link=link)
         # print >> sys.stderr, objects
         
         
