@@ -67,7 +67,7 @@ def get_queryset(request):
   if(friends_list==''):
    objects=''
   else:
-   objects=Register.objects.filter(vz_id__in=friends_list)
+   objects=Ticket_create.objects.filter(vz_id__in=friends_list)
 
   #print >> sys.stderr, objects.query
   print >> sys.stderr, objects
@@ -82,7 +82,7 @@ def get_queryset(request):
   for obj1 in objects:
       fields.append(
               {
-               'feeds':(json.dumps(list(Ticket_create.objects.filter(vz_id=obj1.vz_id).filter(date_validity__gte=today).values_list('question', 'item','date_created', 'date_validity','description','ticket_id','vz_id','item_photo')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
+               'feeds':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id).filter(date_validity__gte=today).values_list('question', 'item','date_created', 'date_validity','description','ticket_id','vz_id','item_photo')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
                'user_details':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''),  
                }
             )
