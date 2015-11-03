@@ -75,11 +75,14 @@ def get_queryset(request):
   from django.http import HttpResponse
   #return HttpResponse(objects,content_type='application/json')
 
+  def date_handler(obj):
+    return obj.isoformat() if hasattr(obj, 'isoformat') else obj
+
   fields = []
   for obj1 in objects:
       fields.append(
               {
-               'feeds':(json.dumps(list(Ticket_create.objects.filter(vz_id=obj1.vz_id).filter(date_validity__gte=today).values_list('question', 'item', 'description','ticket_id','vz_id','item_photo')))).replace('"','').replace('[','').replace(']',''),
+               'feeds':(json.dumps(list(Ticket_create.objects.filter(vz_id=obj1.vz_id).filter(date_validity__gte=today).values_list('question', 'item','date_created', 'date_validity','description','ticket_id','vz_id','item_photo')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
                'user_details':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''),  
                }
             )
