@@ -20,6 +20,10 @@ TWILIO_AUTH_TOKEN = 'b41ecb043ce77678cac28c828e6d056e'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
+#MEDIA_ROOT = '/projectimg/'
+MEDIA_URL = 'http://res.cloudinary.com/hffrh1pci/image/upload/vzcards/'
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'b4d(3@)wr&*1(smokkl!@hwir(ij+wnt4r5ia#(fms+t4xnltg'
 
@@ -50,7 +54,8 @@ INSTALLED_APPS = (
     'friends',
     'api',
     'connect',
-    'ticket',
+   # 'ticket',
+    'ticket_create',
     'get_list',
     'get_my_tickets',
     'oauth2_provider',
@@ -59,6 +64,10 @@ INSTALLED_APPS = (
     'response',
     'ticket_details',
     'sync_contacts',
+    'get_my_friends',
+    'sync',
+    'reffered',
+    'upload_image',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -140,6 +149,7 @@ STATIC_URL = '/static/'
 
 OAUTH2_PROVIDER = {
     # this is the list of available scopes
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 60 * 60 * 24 * 90 * 4,
     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
 }
 
@@ -147,12 +157,17 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'oauth2_provider.ext.rest_framework.OAuth2Authentication',
     ),
-
+ 
 
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
-    )
+    ),
+
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
 }
+
+
 
 if os.environ.get('DATABASE_URL', None):
     import dj_database_url

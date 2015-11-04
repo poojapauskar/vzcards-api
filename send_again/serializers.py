@@ -65,9 +65,9 @@ class Send_againSerializer(serializers.ModelSerializer):
         # For promotional, this will be ignored by the SMS gateway
         # Incase you are wondering who Dr. Rajasekhar is http://en.wikipedia.org/wiki/Dr._Rajasekhar_(actor)
         r = send_message(sid, token,
-            sms_from='8792213479',  # sms_from='8808891988',
+            sms_from='09243422233',  # sms_from='8808891988',
             sms_to=validated_data.get('phone'), # sms_to='9052161119',
-            sms_body='Hi , your OTP is '+otp_generated)
+            sms_body='Hi '+validated_data.get('phone')+', your number '+otp_generated+' is now turned asOTP.')
         print r.status_code
         pprint(r.json())
 

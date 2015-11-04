@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from connect.models import Connect, LANGUAGE_CHOICES, STYLE_CHOICES
 from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
+from ticket_create.models import Ticket_create, LANGUAGE_CHOICES, STYLE_CHOICES
 
 
 
@@ -8,11 +9,14 @@ from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
 class ResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Register
-        fields = ('phone',)
+        fields = ('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')
 
         model = Connect
         fields = ('connecter_vz_id', 'phone_1', 'ticket_id_1', 'phone_2', 'ticket_id_2')
         
+        model = Ticket_create
+        fields = ('vz_id','item_photo','user_details', 'question', 'item', 'description','date_created','date_validity','ticket_id')
+    
     
 
     def update(self, instance, validated_data):
@@ -27,7 +31,7 @@ class ResponseSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-from ticket.models import Ticket
+from ticket_create.models import Ticket_create
 from response.serializers import ResponseSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser

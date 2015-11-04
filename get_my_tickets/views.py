@@ -1,4 +1,4 @@
-from ticket.models import Ticket
+from ticket_create.models import Ticket_create
 from get_my_tickets.serializers import Get_my_ticketsSerializer
 from rest_framework import generics
 # from ticket.permissions import IsOwnerOrReadOnly
@@ -7,35 +7,54 @@ from django.shortcuts import get_object_or_404
 
 
 
+from django.http import JsonResponse
 
+class StatusCode(object):
+    OK = 200
+    NOT_FOUND = 404
+    # add more status code according to your need
+import json
+from django.http import HttpResponse
+ 
+def JSONResponse(data = None, status = StatusCode.OK):
+    if data is None:
+        return HttpResponse(status)
+    if data and type(data) is dict:
+        return HttpResponse(json.dumps(data, indent = 4, encoding = 'utf-8', sort_keys = True), \
+            mimetype = 'application/json', status = status)
+    else:
+        return HttpResponse(status = StatusCode.NOT_FOUND)
 
+def get_queryset(request):
+  access_token = request.GET.get('access_token')
+  if(Register.objects.filter(token_generated=access_token).exists()):
+    pass
+  else:
+    return JSONResponse(status = StatusCode.NOT_FOUND)
 
-class Get_my_ticketsList(generics.ListCreateAPIView):
- queryset = Ticket.objects.all()
- serializer_class = Get_my_ticketsSerializer
- # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    
+  import sys
+  print >> sys.stderr, access_token
 
+  # valid="Access token not valid"
+  # from django.http import JsonResponse
 
+  # if(Register.objects.filter(token_generated=access_token).exists()):
+  #   pass
+  # else:
+  #   return JsonResponse(valid,safe=False)
 
-#class Get_listDetail(generics.ListCreateAPIView):
-  #def get_queryset(self):
-        #self.vz_id = get_object_or_404(Create, vz_id=self.args)
-        # serializer_class = Get_listSerializer
-        # return Create.objects.filter(vz_id=self.vz_id)
-        #lookup_field = self.vz_id
-        # queryset = Create.objects.filter(vz_id=lookup_field)
-        # serializer_class = Get_listSerializer
-        # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-        #               IsOwnerOrReadOnly,)
-  
-        #do something with this user
+  #vz_id = self.kwargs['vz_id']
+     
+  vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
+  #tickets = Ticket.objects.filter(vz_id__in=contacts)
+  print >> sys.stderr, vz_id
 
-class Get_my_ticketsDetail(generics.ListAPIView):
-    serializer_class = Get_my_ticketsSerializer
+  objects= Ticket_create.objects.filter(vz_id=vz_id).values('vz_id', 'question', 'item', 'description','date_created','date_validity','ticket_id')
 
-    def get_queryset(self):
-        vz_id = self.kwargs['vz_id']
-        return Ticket.objects.filter(vz_id=vz_id)
+  from django.http import JsonResponse
+  #return JsonResponse(dict(objects=list(objects)))
+  return JsonResponse((list(objects)),safe=False)
 
 from django.contrib.auth.models import User
 from get_list.serializers import UserSerializer

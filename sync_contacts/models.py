@@ -17,10 +17,40 @@ STYLE_CHOICES = sorted((item, item) for item in get_all_styles())
 owner = models.ForeignKey('auth.User', related_name='register')
 highlighted = models.TextField()
 
+from django.db import models
+import ast
+
+
+class ListField(models.TextField):
+    __metaclass__ = models.SubfieldBase
+    description = "Stores a python list"
+
+    def __init__(self, *args, **kwargs):
+        super(ListField, self).__init__(*args, **kwargs)
+
+    def to_python(self, value):
+        if not value:
+            value = []
+
+        if isinstance(value, list):
+            return value
+
+        return ast.literal_eval(value)
+
+    def get_prep_value(self, value):
+        if value is None:
+            return value
+
+        return unicode(value)
+
+    def value_to_string(self, obj):
+        value = self._get_val_from_obj(obj)
+        return self.get_db_prep_value(value)
+
 class Sync_contacts(models.Model):
- vz_id = models.CharField(max_length=100, blank=True, default='')
- contact_list = ArrayField(models.TextField(max_length=100000, blank=True, default='',editable=True))
- friends_vz_id = models.CharField(max_length=100000, blank=True, default='',editable=False)
+ vz_id = models.CharField(max_length=255, blank=True, default='')
+ contact_list = ArrayField(models.TextField(blank=True, default='',editable=True))
+ friends_vz_id = ListField(blank=True, default='',editable=False)
  
  
 

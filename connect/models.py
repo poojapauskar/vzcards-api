@@ -18,11 +18,18 @@ highlighted = models.TextField()
 
 class Connect(models.Model):
  connecter_vz_id = models.CharField(max_length=100, blank=True, default='')
+ #connecter_details=models.TextField(blank=True, default='')
  phone_regex = RegexValidator(regex=r'^\+?1?\d{12}$', message="Enter country code. Phone number must be entered in the format: '919999999'.")
  phone_1 = models.CharField(max_length=12,validators=[phone_regex], blank=False)
  ticket_id_1 = models.CharField(max_length=100, blank=True, default='')
  phone_2 = models.CharField(max_length=12,validators=[phone_regex], blank=False)
  ticket_id_2 = models.CharField(max_length=100, blank=True, default='')
+ #ticket_1_details=models.TextField(blank=True, default='')
+ #ticket_2_details=models.TextField(blank=True, default='')
+ #phone_1_details=models.TextField(blank=True, default='')
+ #phone_2_details=models.TextField(blank=True, default='')
+ #ticket_1_dates=models.TextField(blank=True, default='')
+ #ticket_2_dates=models.TextField(blank=True, default='')
 
 
 def save(self, *args, **kwargs):

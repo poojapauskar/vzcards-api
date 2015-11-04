@@ -1,13 +1,13 @@
 from rest_framework import serializers
-from ticket.models import Ticket, LANGUAGE_CHOICES, STYLE_CHOICES
+from ticket_create.models import Ticket_create, LANGUAGE_CHOICES, STYLE_CHOICES
 
 
 
 
 class Ticket_detailsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Ticket
-        fields = ('vz_id','user_details', 'question', 'item', 'description','date_created','date_validity','ticket_id')
+        model = Ticket_create
+        fields = ('vz_id','item_photo','user_details', 'question', 'item', 'description','date_created','date_validity','ticket_id')
     
     
 
@@ -18,6 +18,7 @@ class Ticket_detailsSerializer(serializers.ModelSerializer):
         instance.vz_id = validated_data.get('vz_id', instance.vz_id)
         instance.user_details = validated_data.get('user_details', instance.user_details)
         instance.question = validated_data.get('question', instance.question)
+        instance.item_photo = validated_data.get('item_photo', instance.item_photo)
         instance.item = validated_data.get('item', instance.item)
         instance.description = validated_data.get('description', instance.description)
         instance.date_created = validated_data.get('date_created', instance.date_created)
@@ -26,7 +27,7 @@ class Ticket_detailsSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-from ticket.models import Ticket
+from ticket_create.models import Ticket_create
 from ticket_details.serializers import Ticket_detailsSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
@@ -37,7 +38,7 @@ from rest_framework.parsers import JSONParser
 from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):
-    create = serializers.PrimaryKeyRelatedField(many=True, queryset=Ticket.objects.all())
+    create = serializers.PrimaryKeyRelatedField(many=True, queryset=Ticket_create.objects.all())
 
     class Meta:
         model = User

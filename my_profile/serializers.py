@@ -1,19 +1,33 @@
 from rest_framework import serializers
 from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
 from my_profile.models import My_profile, LANGUAGE_CHOICES, STYLE_CHOICES
+import random
+from random import randint
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 
+cloudinary.config( 
+  cloud_name = "hffrh1pci", 
+  api_key = "286145976162589", 
+  api_secret = "pJedg7LSodzm7SBv9HaiLjLvHT8" 
+)
 
 class My_profileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Register
-        fields = ('phone','vz_id','firstname','lastname','email','industry','company','address_line_1','address_line_2','city','pin_code')
+        fields = ('phone','photo','vz_id','firstname','lastname','email','industry','company','address_line_1','address_line_2','city','pin_code')
         
     def create(self, validated_data): 
  	   
 
       obj=Register.objects.get(vz_id=validated_data.get('vz_id'))
-      Register.objects.filter(vz_id=validated_data.get('vz_id')).update(phone=obj.phone,firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
+
+
+
+      Register.objects.filter(vz_id=validated_data.get('vz_id')).update(phone=obj.phone,photo=validated_data.get('photo'),firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
       return validated_data
 
     def update(self, instance, validated_data):
@@ -30,10 +44,11 @@ class My_profileSerializer(serializers.ModelSerializer):
         instance.address_line_2 = validated_data.get('address_line_2', instance.address_line_2)
         instance.city = validated_data.get('city', instance.city)
         instance.pin_code = validated_data.get('pin_code', instance.pin_codes)
+        instance.photo = validated_data.get('photo', instance.photo)
         instance.save()
         return instance
 
-from ticket.models import Ticket
+from ticket_create.models import Ticket_create
 from my_profile.serializers import My_profileSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
