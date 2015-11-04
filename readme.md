@@ -12,10 +12,10 @@
 ### Sync your contacts
 * Make a list of our vzcard friends.
 
-### View Your details 
+### View Profile 
 * User can view his firstname, lastname, email, industry, company, address, city, pin code, photo.
 
-### Update Your details 
+### Update Profile 
 * User can edit and update his firstname, lastname, email, industry, company, address, city, pin code, photo.
 
 ### Add feeds or tickets
