@@ -22,7 +22,7 @@ highlighted = models.TextField()
 # fs = FileSystemStorage(location=settings.STATIC_ROOT)
 
 class Upload_image(models.Model):
-    photo = models.ImageField(null=True, blank=True)
+    photo = models.ImageField(upload_to="/projectimg",null=True, blank=True)
     link=models.TextField(blank=True,default='')
 
 
