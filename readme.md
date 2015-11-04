@@ -12,7 +12,7 @@
 ### Sync your contacts
 * Make a list of our vzcard friends.
 
-### View Your details onclick profile
+### View Your details 
 * User can view his firstname, lastname, email, industry, company, address, city, pin code, photo.
 
 ### Update Your details 
@@ -32,7 +32,7 @@
 * The details of our ticket for which we have got the response, the details of another ticket which we are connected to. 
 * And the details of the person whom we are reffered to.
 
-### Upload image for our profile and ticket
+### Upload profile and ticket image
 * Used to upload image for profile and to upload ticket image.
 
 
