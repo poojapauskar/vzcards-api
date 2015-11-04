@@ -1,40 +1,18 @@
 ## vzcards 
+An application to connect two users, using their mobile numbers. Used for passing messages between two users.
 
-### Register for vzcards
-* Submit your mobile no. 
-* Click on Verify to receive OTP.
-* If OTP is not received, click Send Again .
+### Installation
+instructions:
+    git clone https://github.com/poojapauskar/vzcards-api
+    cd vzcards-api
 
-### Verify your account 
-* Submit received OTP for verification.
-* After verifying make further calls. 
+### Deployment to Heroku
+steps:
+    Add a postgres and pgbackups (free tier) to your dyno.
+    Add heroku remote to your git. git remote add heroku git://heroku.com/app.git
+    Add this buildpack (heroku config:set BUILDPACK_URL='git://github.com/heroku/heroku-buildpack-python.git'). This is very important as heroku will read package.json file and consider it a node.js app.
+    Just do your changes and push code to heroku remote like: git push heroku HEAD:master
 
-### Sync your contacts
-* Make a list of our vzcard friends.
-
-### View Profile 
-* User can view his firstname, lastname, email, industry, company, address, city, pin code, photo.
-
-### Update Profile 
-* User can edit and update his firstname, lastname, email, industry, company, address, city, pin code, photo.
-
-### Add feeds or tickets
-* The feed includes question(want or has), item, its description, created date, date validity, ticket id and ticket photo. 
-
-### Get feeds of our vzcard friends
-* To view the feeds of our vzcard friends and the profile details of the vzcard friend who has added the feed.
-
-### Connect two vzcard friends
-* For example: If a vzcard friend A has Item 1 and another vzcard friend B need Item 1, then the user can connect both A and B. 
-
-### View response for our feeds
-* Gives the connecter details, who has connected our ticket to some other ticket. 
-* The details of our ticket for which we have got the response, the details of another ticket which we are connected to. 
-* And the details of the person whom we are reffered to.
-
-### Upload profile and ticket image
-* Used to upload image for profile and to upload ticket image.
-
-
-
+### Issues and Pull Requests:
+    Feel free to log any issues here https://github.com/poojapauskar/vzcards-api/issues. If you wish to contribute, fork and send a pull request.
 
