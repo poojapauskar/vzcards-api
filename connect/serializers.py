@@ -28,8 +28,8 @@ class ConnectSerializer(serializers.ModelSerializer):
 
 
         import json
-        #return Connect.objects.create(connecter_vz_id=validated_data.get('connecter_vz_id'),phone_1=validated_data.get('phone_1'),ticket_id_1=validated_data.get('ticket_id_1'),phone_2=validated_data.get('phone_2'),ticket_id_2=validated_data.get('ticket_id_2'))
-        return validated_data
+        return Connect.objects.create(connecter_vz_id=validated_data.get('connecter_vz_id'),phone_1=validated_data.get('phone_1'),ticket_id_1=validated_data.get('ticket_id_1'),phone_2=validated_data.get('phone_2'),ticket_id_2=validated_data.get('ticket_id_2'))
+        #return validated_data
 
     def update(self, instance, validated_data):
         """
