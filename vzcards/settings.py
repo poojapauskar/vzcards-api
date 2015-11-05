@@ -68,6 +68,7 @@ INSTALLED_APPS = (
     'sync',
     'reffered',
     'upload_image',
+    'history',
 )
 
 MIDDLEWARE_CLASSES = (

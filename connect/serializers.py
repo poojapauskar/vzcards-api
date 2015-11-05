@@ -15,32 +15,8 @@ class ConnectSerializer(serializers.ModelSerializer):
         """
         Create and return a new `Snippet` instance, given the validated data.
         """
-        #import json
-        # connecter_details=list(Register.objects.filter(vz_id=validated_data.get('connecter_vz_id')).values_list('firstname', 'lastname','photo'))
-        # ticket_1_details=list(Ticket_create.objects.filter(ticket_id=validated_data.get('ticket_id_1')).values_list('question', 'item', 'description','item_photo'))
-        # ticket_2_details=list(Ticket_create.objects.filter(ticket_id=validated_data.get('ticket_id_2')).values_list('question', 'item', 'description','item_photo'))
-        # phone_1_details=list(Register.objects.filter(phone=validated_data.get('phone_1')).values_list('firstname', 'lastname','vz_id','photo'))
-        # phone_2_details=list(Register.objects.filter(phone=validated_data.get('phone_2')).values_list('firstname', 'lastname','vz_id','photo'))
-        # ticket_1_dates=list(Ticket_create.objects.filter(ticket_id=validated_data.get('ticket_id_1')).values_list('date_validity'))
-        # ticket_2_dates=list(Ticket_create.objects.filter(ticket_id=validated_data.get('ticket_id_1')).values_list('date_validity'))
         
-        #import bson
-        #from bson import json_util
         import json
-
-#json.dumps(anObject, default=json_util.default)
-
-        # connecter_details = json.dumps(connecter_details)
-        # ticket_1_details = json.dumps(ticket_1_details)
-        # ticket_2_details = json.dumps(ticket_2_details)
-        # phone_1_details = json.dumps(phone_1_details)
-        # phone_2_details = json.dumps(phone_2_details)
-
-        # ticket_1_details=ticket_1_details.replace('"','').replace(']','').replace('[','')
-        # ticket_2_details=ticket_2_details.replace('"','').replace(']','').replace('[','')
-        # connecter_details=connecter_details.replace('"','').replace(']','').replace('[','')
-        # phone_1_details=phone_1_details.replace('"','').replace(']','').replace('[','')
-        # phone_2_details=phone_2_details.replace('"','').replace(']','').replace('[','')
 
         return Connect.objects.create(connecter_vz_id=validated_data.get('connecter_vz_id'),phone_1=validated_data.get('phone_1'),ticket_id_1=validated_data.get('ticket_id_1'),phone_2=validated_data.get('phone_2'),ticket_id_2=validated_data.get('ticket_id_2'))
 

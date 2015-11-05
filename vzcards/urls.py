@@ -79,4 +79,5 @@ urlpatterns = patterns('',
     url(r'^', include('sync.urls')),
     url(r'^', include('reffered.urls')),
     url(r'^', include('upload_image.urls')),
+    url(r'^', include('history.urls')),
 )
