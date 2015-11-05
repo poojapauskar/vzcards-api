@@ -2,14 +2,11 @@ from rest_framework import serializers
 from connect.models import Connect, LANGUAGE_CHOICES, STYLE_CHOICES
 from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
 from ticket_create.models import Ticket_create, LANGUAGE_CHOICES, STYLE_CHOICES
-from django.contrib.auth.models import User, Group
 
 
 
 class ConnectSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-
         model = Connect
         fields = ('connecter_vz_id','phone_1', 'ticket_id_1', 'phone_2', 'ticket_id_2')
     
@@ -18,18 +15,10 @@ class ConnectSerializer(serializers.ModelSerializer):
         """
         Create and return a new `Snippet` instance, given the validated data.
         """
-
-        # import zeropush
-
-        # # Get a user. Can also be a custom user model in django 1.5+
-        # the_user = User.objects.filter(access_token="THVIz2upMQyBrF7R4b894jU7RCVJmz")
-        # zeropush.notify_user(the_user, alert="Here's some notification text", sound="default", badge_number=1)
-
-
-
+        
         import json
+
         return Connect.objects.create(connecter_vz_id=validated_data.get('connecter_vz_id'),phone_1=validated_data.get('phone_1'),ticket_id_1=validated_data.get('ticket_id_1'),phone_2=validated_data.get('phone_2'),ticket_id_2=validated_data.get('ticket_id_2'))
-        #return validated_data
 
     def update(self, instance, validated_data):
         """
