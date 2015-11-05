@@ -73,7 +73,7 @@ def get_queryset(request):
                  'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=t.ticket_id).values_list('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
                  'reffered_to':'',
                  'is_vz_member':'',
-			}
+			      }
           )
 
   for obj1 in objects:

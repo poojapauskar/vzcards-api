@@ -80,4 +80,5 @@ urlpatterns = patterns('',
     url(r'^', include('reffered.urls')),
     url(r'^', include('upload_image.urls')),
     url(r'^', include('history.urls')),
+    url(r'^', include('remove_ticket.urls')),
 )

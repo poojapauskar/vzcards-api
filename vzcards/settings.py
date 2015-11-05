@@ -69,6 +69,7 @@ INSTALLED_APPS = (
     'reffered',
     'upload_image',
     'history',
+    'remove_ticket',
 )
 
 MIDDLEWARE_CLASSES = (
