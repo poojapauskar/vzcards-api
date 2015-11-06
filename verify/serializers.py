@@ -91,26 +91,6 @@ class VerifySerializer(serializers.ModelSerializer):
             token= json.dumps(token)
             token = token.replace('"','')
 
-        
-        # # parse push notification
-        # import json,httplib
-        # connection = httplib.HTTPSConnection('api.parse.com', 443)
-        # connection.connect()
-        # connection.request('POST', '/1/installations', json.dumps({
-        #        "deviceType": "iOS",
-        #        "pushType": "gcm",
-        #        "deviceToken": token,
-        #        "GCMSenderId": "56712320625545",
-        #        "channels": [
-        #          token,
-        #        ]
-        #      }), {
-        #        "X-Parse-Application-Id": "ml4PVV8qbYzTys48zY8o9lSXXmHS4wuytKjgah8a",
-        #        "X-Parse-REST-API-Key": "CAG8K4mUbZq3yDSpYiajKbWHcHZBhlh8QhS8te87",
-        #        "Content-Type": "application/json"
-        #      })
-        # result = json.loads(connection.getresponse().read())
-        # print result
 
         
 
