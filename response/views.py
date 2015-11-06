@@ -43,11 +43,14 @@ def get_queryset(request):
   #tickets = Ticket.objects.filter(vz_id__in=contacts)
   print >> sys.stderr, vz_id
   
-  obj=Register.objects.get(vz_id=vz_id)
+  obj=Ticket_create.objects.filter(vz_id=vz_id)
   from django.http import JsonResponse
  
-  objects=(Connect.objects.filter(phone_1=obj.phone) | Connect.objects.filter(phone_2=obj.phone))
-  print >> sys.stderr, objects
+  # objects=Connect.objects.filter(my_ticket__in=obj) 
+  # print >> sys.stderr, objects
+
+  print >> sys.stderr,"obj"
+  print >> sys.stderr,obj
 
   import json
 
@@ -55,61 +58,42 @@ def get_queryset(request):
     return obj.isoformat() if hasattr(obj, 'isoformat') else obj
 
   fields = []
-  for obj1 in objects:
-     if(obj1.phone_1==obj.phone):
-      if(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_2).exists()):
-        fields.append(
+  connections=[]
+
+  for t in obj:
+    print >> sys.stderr,t.ticket_id
+    connect=Connect.objects.filter(my_ticket=t.ticket_id)
+    print >> sys.stderr,"connect"
+    print >> sys.stderr,connect
+
+    for c in connect:
+      connections.append(
                 {
-                 'connecter_details':(json.dumps(list(Register.objects.filter(vz_id=obj1.connecter_vz_id).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
-                 'my_details':(json.dumps(list(Register.objects.filter(phone=obj1.phone_1).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''),  
-                 'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_1).values_list('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                 'reffered_to':(json.dumps(list(Register.objects.filter(phone=obj1.phone_2).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
-                 'reffered_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_2).values_list('vz_id','item_photo','question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                 'is_vz_member':"1",
+                 'connecter_details':(json.dumps(list(Register.objects.filter(vz_id=c.connecter_vz_id).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                 'reffered_details':(json.dumps(list(Register.objects.filter(phone=c.reffered_phone).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                 'reffered_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                               
                 }
               )
-      else:
-        fields.append(
+    print >> sys.stderr,"connections"
+    print >> sys.stderr,connections
+
+    fields.append(
                 {
-                 'connecter_details':(json.dumps(list(Register.objects.filter(vz_id=obj1.connecter_vz_id).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
-                 'my_details':(json.dumps(list(Register.objects.filter(phone=obj1.phone_1).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''),  
-                 'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_1).values_list('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                 'reffered_to':obj1.phone_2,
-                 'reffered_ticket':obj1.ticket_id_2,
-                 'is_vz_member':"0",
+                 'ticket_details':(json.dumps(list(Ticket_create.objects.filter(ticket_id=t.ticket_id).values('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                 'connections':connections
                 }
               )
-     else:
-      if(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_1).exists()):
-        fields.append(
-                {
-                 'connecter_details':(json.dumps(list(Register.objects.filter(vz_id=obj1.connecter_vz_id).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
-                 'my_details':(json.dumps(list(Register.objects.filter(phone=obj1.phone_2).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
-                 'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_2).values_list('vz_id','item_photo','question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                 'reffered_to':(json.dumps(list(Register.objects.filter(phone=obj1.phone_1).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
-                 'reffered_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_1).values_list('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                 'is_vz_member':"1",
-                }
-              )
-      else:
-        fields.append(
-                {
-                 'connecter_details':(json.dumps(list(Register.objects.filter(vz_id=obj1.connecter_vz_id).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
-                 'my_details':(json.dumps(list(Register.objects.filter(phone=obj1.phone_2).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
-                 'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_2).values_list('vz_id','item_photo','question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                 'reffered_to':obj1.phone_1,
-                 'reffered_ticket':obj1.ticket_id_1,
-                 'is_vz_member':"1",
-                }
-              )
-    
-     print >> sys.stderr,"-----------"
-     print >> sys.stderr,fields
-     print >> sys.stderr,"-----------"
+
+
+  print >> sys.stderr,"-----------"
+  print >> sys.stderr,fields
+  print >> sys.stderr,"-----------"
 
      
 
   return JsonResponse(list(fields),safe=False)
+
 
 
 

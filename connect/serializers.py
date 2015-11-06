@@ -8,64 +8,18 @@ from ticket_create.models import Ticket_create, LANGUAGE_CHOICES, STYLE_CHOICES
 class ConnectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Connect
-        fields = ('connecter_vz_id','phone_1', 'ticket_id_1', 'phone_2', 'ticket_id_2')
+        fields = ('connecter_vz_id','phone_1', 'ticket_id_1', 'phone_2', 'ticket_id_2','my_ticket','reffered_ticket','reffered_phone')
     
 
     def create(self, validated_data):
         """
         Create and return a new `Snippet` instance, given the validated data.
         """
-
-        # phone1=validated_data.get('phone_1')
-        # access_token1=Register.objects.filter(phone=phone1).values('token_generated')
-
-        # if(Register.objects.filter(phone=validated_data.get('phone_2')).exists()):
-        #     phone2=validated_data.get('phone_2')
-        #     access_token2=Register.objects.filter(phone=phone2).values('token_generated')
-
-
-        #parse push notification
-        # import json,httplib
-        # connection = httplib.HTTPSConnection('api.parse.com', 443)
-        # connection.connect()
-        # connection.request('POST', '/1/installations', json.dumps({
-        #        "deviceType": "ios",
-        #        "pushType": "gcm",
-        #        "deviceToken": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
-        #        "GCMSenderId": "56712320625545",
-        #        "channels": [
-        #          "y3GamGlDf6K3CNW8cErPCl1VwysIWu"
-        #        ]
-        #      }), {
-        #        "X-Parse-Application-Id": "ml4PVV8qbYzTys48zY8o9lSXXmHS4wuytKjgah8a",
-        #        "X-Parse-REST-API-Key": "CAG8K4mUbZq3yDSpYiajKbWHcHZBhlh8QhS8te87",
-        #        "Content-Type": "application/json"
-        #      })
-        # result = json.loads(connection.getresponse().read())
-        # import sys
-        # print >> sys.stderr, result
-
-        # import json,httplib
-        # connection = httplib.HTTPSConnection('api.parse.com', 443)
-        # connection.connect()
-        # connection.request('POST', '/1/push', json.dumps({
-        #        "channels": [
-        #          "y3GamGlDf6K3CNW8cErPCl1VwysIWu"
-        #        ],
-        #        "data": {
-        #          "alert": "Your ticket has been reffered."
-        #        }
-        #      }), {
-        #        "X-Parse-Application-Id": "ml4PVV8qbYzTys48zY8o9lSXXmHS4wuytKjgah8a",
-        #        "X-Parse-REST-API-Key": "CAG8K4mUbZq3yDSpYiajKbWHcHZBhlh8QhS8te87",
-        #        "Content-Type": "application/json"
-        #      })
-        # result = json.loads(connection.getresponse().read())
-        # print >> sys.stderr, result
         
         import json
-        return Connect.objects.create(connecter_vz_id=validated_data.get('connecter_vz_id'),phone_1=validated_data.get('phone_1'),ticket_id_1=validated_data.get('ticket_id_1'),phone_2=validated_data.get('phone_2'),ticket_id_2=validated_data.get('ticket_id_2'))
-        #return validated_data
+        Connect.objects.create(connecter_vz_id=validated_data.get('connecter_vz_id'),my_ticket=validated_data.get('ticket_id_1'),reffered_ticket=validated_data.get('ticket_id_2'),reffered_phone=validated_data.get('phone_2'))
+        Connect.objects.create(connecter_vz_id=validated_data.get('connecter_vz_id'),my_ticket=validated_data.get('ticket_id_2'),reffered_ticket=validated_data.get('ticket_id_1'),reffered_phone=validated_data.get('phone_1'))
+        return validated_data
 
 
     def update(self, instance, validated_data):
