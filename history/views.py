@@ -72,7 +72,8 @@ def get_queryset(request):
                  'connecter_details':(json.dumps(list(Register.objects.filter(vz_id=c.connecter_vz_id).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
                  'reffered_details':(json.dumps(list(Register.objects.filter(phone=c.reffered_phone).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
                  'reffered_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                               
+                 'reffered_ticket_id':c.reffered_ticket,
+                 'reffered_phone':c.reffered_phone,            
                 }
               )
     print >> sys.stderr,"connections"
