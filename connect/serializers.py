@@ -15,10 +15,29 @@ class ConnectSerializer(serializers.ModelSerializer):
         """
         Create and return a new `Snippet` instance, given the validated data.
         """
+
+        # import json,httplib
+        # connection = httplib.HTTPSConnection('api.parse.com', 443)
+        # connection.connect()
+        # connection.request('POST', '/1/push', json.dumps({
+        #        "channels": [
+        #          "918792213479",
+        #        ],
+        #        "data": {
+        #          "alert": "The Giants won against the Mets 2-3."
+        #        }
+        #      }), {
+        #        "X-Parse-Application-Id": "ml4PVV8qbYzTys48zY8o9lSXXmHS4wuytKjgah8a",
+        #        "X-Parse-REST-API-Key": "CAG8K4mUbZq3yDSpYiajKbWHcHZBhlh8QhS8te87",
+        #        "Content-Type": "application/json"
+        #      })
+        # result = json.loads(connection.getresponse().read())
+        # print result
         
         import json
-
         return Connect.objects.create(connecter_vz_id=validated_data.get('connecter_vz_id'),phone_1=validated_data.get('phone_1'),ticket_id_1=validated_data.get('ticket_id_1'),phone_2=validated_data.get('phone_2'),ticket_id_2=validated_data.get('ticket_id_2'))
+        #return validated_data
+
 
     def update(self, instance, validated_data):
         """

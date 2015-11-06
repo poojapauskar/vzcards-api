@@ -73,6 +73,7 @@ def get_queryset(request):
                  'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=t.ticket_id).values_list('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
                  'reffered_to':'',
                  'is_vz_member':'',
+                 'ticket_id':(json.dumps(list(Ticket_create.objects.filter(ticket_id=t.ticket_id).values_list('ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
 			      }
           )
 
@@ -85,6 +86,7 @@ def get_queryset(request):
                  'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_1).values_list('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
                  'reffered_to':(json.dumps(list(Register.objects.filter(phone=obj1.phone_2).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
                  'is_vz_member':"1",
+                 'ticket_id':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_1).values_list('ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
                 }
               )
       else:
@@ -94,6 +96,7 @@ def get_queryset(request):
                  'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_1).values_list('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
                  'reffered_to':obj1.ticket_id_2,
                  'is_vz_member':"0",
+                 'ticket_id':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_1).values_list('ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
                 }
               )
      else:
@@ -104,6 +107,7 @@ def get_queryset(request):
                  'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_2).values_list('vz_id','item_photo','question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
                  'reffered_to':(json.dumps(list(Register.objects.filter(phone=obj1.phone_1).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
                  'is_vz_member':"1",
+                 'ticket_id':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_2).values_list('ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
                 }
               )
       else:
@@ -113,6 +117,7 @@ def get_queryset(request):
                  'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_2).values_list('vz_id','item_photo','question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
                  'reffered_to':obj1.ticket_id_1,
                  'is_vz_member':"0",
+                 'ticket_id':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_2).values_list('ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
                 }
               )
   
