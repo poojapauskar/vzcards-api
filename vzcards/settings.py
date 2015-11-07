@@ -193,6 +193,3 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-
-# ENV["DATABASE_URL"] = "postgres://yqjzvrxqstqvuo:VvI_OSk4NlEy4-GC02qSOtjU0u@ec2-54-225-201-25.compute-1.amazonaws.com:5432/dbs3oq88qmdblr"
-# ENV["CLOUDINARY_URL"] = "cloudinary://286145976162589:pJedg7LSodzm7SBv9HaiLjLvHT8@hffrh1pci"
