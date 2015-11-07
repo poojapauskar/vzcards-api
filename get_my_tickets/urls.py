@@ -2,7 +2,7 @@ from django.conf.urls import include
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 from get_my_tickets import views
-from get_list.views import get_queryset
+from get_my_tickets.views import get_queryset
 
 urlpatterns = [
     #url(r'^get_my_tickets/$', views.Get_my_ticketsList.as_view()),

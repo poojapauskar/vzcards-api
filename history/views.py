@@ -68,11 +68,60 @@ def get_queryset(request):
     print >> sys.stderr,connect
 
     for c in connect:
+      connecter_details=[]
+      connecter_details.append(
+                         {
+                            'phone':(json.dumps(list(Register.objects.filter(vz_id=c.connecter_vz_id).values('phone')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'photo':(json.dumps(list(Register.objects.filter(vz_id=c.connecter_vz_id).values('photo')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'firstname':(json.dumps(list(Register.objects.filter(vz_id=c.connecter_vz_id).values('firstname')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'lastname':(json.dumps(list(Register.objects.filter(vz_id=c.connecter_vz_id).values('lastname')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'email':(json.dumps(list(Register.objects.filter(vz_id=c.connecter_vz_id).values('email')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'vz_id':(json.dumps(list(Register.objects.filter(vz_id=c.connecter_vz_id).values('vz_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'industry':(json.dumps(list(Register.objects.filter(vz_id=c.connecter_vz_id).values('industry')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'company':(json.dumps(list(Register.objects.filter(vz_id=c.connecter_vz_id).values('company')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'address_line_1':(json.dumps(list(Register.objects.filter(vz_id=c.connecter_vz_id).values('address_line_1')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'address_line_2':(json.dumps(list(Register.objects.filter(vz_id=c.connecter_vz_id).values('address_line_2')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'city':(json.dumps(list(Register.objects.filter(vz_id=c.connecter_vz_id).values('city')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'pin_code':(json.dumps(list(Register.objects.filter(vz_id=c.connecter_vz_id).values('pin_code')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                         }
+                      )
+      reffered_details=[]
+      reffered_details.append(
+                         {
+                            'phone':(json.dumps(list(Register.objects.filter(phone=c.reffered_phone).values('phone')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'photo':(json.dumps(list(Register.objects.filter(phone=c.reffered_phone).values('photo')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'firstname':(json.dumps(list(Register.objects.filter(phone=c.reffered_phone).values('firstname')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'lastname':(json.dumps(list(Register.objects.filter(phone=c.reffered_phone).values('lastname')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'email':(json.dumps(list(Register.objects.filter(phone=c.reffered_phone).values('email')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'vz_id':(json.dumps(list(Register.objects.filter(phone=c.reffered_phone).values('vz_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'industry':(json.dumps(list(Register.objects.filter(phone=c.reffered_phone).values('industry')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'company':(json.dumps(list(Register.objects.filter(phone=c.reffered_phone).values('company')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'address_line_1':(json.dumps(list(Register.objects.filter(phone=c.reffered_phone).values('address_line_1')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'address_line_2':(json.dumps(list(Register.objects.filter(phone=c.reffered_phone).values('address_line_2')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'city':(json.dumps(list(Register.objects.filter(phone=c.reffered_phone).values('city')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'pin_code':(json.dumps(list(Register.objects.filter(phone=c.reffered_phone).values('pin_code')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                         }
+                      )
+    
+      reffered_ticket=[]
+      reffered_ticket.append(
+                         {
+                            'vz_id':(json.dumps(list(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('vz_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'item_photo':(json.dumps(list(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('item_photo')), default=date_handler)).replace('"','').replace('[','').replace(']',''),  
+                            'question':(json.dumps(list(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('question')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'item':(json.dumps(list(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('item')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'description':(json.dumps(list(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('description')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'date_created':(json.dumps(list(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('date_created')), default=date_handler)).replace('"','').replace('[','').replace(']',''),  
+                            'date_validity':(json.dumps(list(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('date_validity')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                            'ticket_id':(json.dumps(list(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                         }
+                      )
+
       connections.append(
                 {
-                 'connecter_details':(json.dumps(list(Register.objects.filter(vz_id=c.connecter_vz_id).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                 'reffered_details':(json.dumps(list(Register.objects.filter(phone=c.reffered_phone).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                 'reffered_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                 'connecter_details':connecter_details,
+                 'reffered_details':reffered_details,
+                 'reffered_ticket':reffered_ticket,
                  'reffered_ticket_id':c.reffered_ticket,
                  'reffered_phone':c.reffered_phone,            
                 }

@@ -89,18 +89,37 @@ def get_queryset(request):
   #friends_list = json.dumps(friends_list)
 
   #print >> sys.stderr, friends_list
-
-
+  # from connect.models import Connect
+  # Connect.objects.filter(connecter_vz_id="vz123").delete()
 
   #objects= Register.objects.filter(vz_id__in=friends_list).values('firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','photo')
+  def date_handler(obj):
+    return obj.isoformat() if hasattr(obj, 'isoformat') else obj
+    
+  my_friends=[]
 
   if(friends_list==''):
-   objects=''
+   my_friends=[]
   else:
-   objects=Register.objects.filter(vz_id__in=friends_list).values('firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','photo')
-
+   objects=Register.objects.filter(vz_id__in=friends_list)
+   for obj1 in objects:
+    my_friends.append(
+                {
+                  'firstname':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('firstname')), default=date_handler)).replace('"','').replace('[','').replace(']',''),  
+                  'lastname':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('lastname')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                  'email':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('email')), default=date_handler)).replace('"','').replace('[','').replace(']',''),  
+                  'phone':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('phone')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                  'industry':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('industry')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
+                  'company':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('company')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
+                  'address_line_1':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('address_line_1')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
+                  'address_line_2':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('address_line_2')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
+                  'city':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('city')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
+                  'pin_code':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('pin_code')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
+                  'photo':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('photo')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
+                }
+              )
   #print >> sys.stderr, objects.query
-  print >> sys.stderr, objects
+   print >> sys.stderr, my_friends
   #objects= Ticket.objects.filter(vz_id__in=['VZ1445062511', 'VZ1445062656', 'VZ1445613566', 'VZ1445613959'])
   #print objects.query
 #VZ1445062511, VZ1445062656, VZ1445613566, VZ1445613959
@@ -109,9 +128,9 @@ def get_queryset(request):
 
   
 
-  from django.http import JsonResponse
+   from django.http import JsonResponse
   #return JsonResponse(dict(objects=list(objects)))
-  return JsonResponse((list(objects)),safe=False)
+   return JsonResponse((list(my_friends)),safe=False)
 
 
   #.filter(date_validity__gte=today)
