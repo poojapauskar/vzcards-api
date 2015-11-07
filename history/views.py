@@ -58,10 +58,11 @@ def get_queryset(request):
     return obj.isoformat() if hasattr(obj, 'isoformat') else obj
 
   fields = []
-  connections=[]
+  
 
   for t in obj:
     ticket_details=[]
+    connections=[]
     print >> sys.stderr,t.ticket_id
     connect=Connect.objects.filter(my_ticket=t.ticket_id)
     print >> sys.stderr,"connect"
@@ -82,22 +83,11 @@ def get_queryset(request):
     print >> sys.stderr,"connections"
     print >> sys.stderr,connections
 
-    ticket_details.append(
-                    {
-                      'vz_id':(json.dumps(list(Ticket_create.objects.filter(ticket_id=t.ticket_id).values_list('vz_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                      'item_photo':(json.dumps(list(Ticket_create.objects.filter(ticket_id=t.ticket_id).values_list('item_photo')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                      'question':(json.dumps(list(Ticket_create.objects.filter(ticket_id=t.ticket_id).values_list('question')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                      'item':(json.dumps(list(Ticket_create.objects.filter(ticket_id=t.ticket_id).values_list('item')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                      'description':(json.dumps(list(Ticket_create.objects.filter(ticket_id=t.ticket_id).values_list('description')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                      'date_created':(json.dumps(list(Ticket_create.objects.filter(ticket_id=t.ticket_id).values_list('date_created')), default=date_handler)).replace('"','').replace('[','').replace(']',''),  
-                      'date_validity':(json.dumps(list(Ticket_create.objects.filter(ticket_id=t.ticket_id).values_list('date_validity')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                      'ticket_id':(json.dumps(list(Ticket_create.objects.filter(ticket_id=t.ticket_id).values_list('ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                    }
-                  )
+    
 
     fields.append(
                 {
-                 'ticket_details':ticket_details,
+                 'ticket_details':list(Ticket_create.objects.filter(ticket_id=t.ticket_id).values('vz_id','item_photo','question','item','description','date_created','date_validity','ticket_id')), 
                  'connections':connections
                 }
               )

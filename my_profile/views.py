@@ -49,18 +49,7 @@ def get_queryset(request):
   profile=[]
   profile.append(
            {
-            'phone':(json.dumps(list(Register.objects.filter(vz_id=vz_id).values_list('phone')))).replace('"','').replace('[','').replace(']',''),  
-            'photo':(json.dumps(list(Register.objects.filter(vz_id=vz_id).values_list('photo')))).replace('"','').replace('[','').replace(']',''),  
-            'firstname':(json.dumps(list(Register.objects.filter(vz_id=vz_id).values_list('firstname')))).replace('"','').replace('[','').replace(']',''),   
-            'lastname':(json.dumps(list(Register.objects.filter(vz_id=vz_id).values_list('lastname')))).replace('"','').replace('[','').replace(']',''),  
-            'email':(json.dumps(list(Register.objects.filter(vz_id=vz_id).values_list('email')))).replace('"','').replace('[','').replace(']',''),  
-            'vz_id':(json.dumps(list(Register.objects.filter(vz_id=vz_id).values_list('vz_id')))).replace('"','').replace('[','').replace(']',''),  
-            'industry':(json.dumps(list(Register.objects.filter(vz_id=vz_id).values_list('industry')))).replace('"','').replace('[','').replace(']',''),  
-            'company':(json.dumps(list(Register.objects.filter(vz_id=vz_id).values_list('company')))).replace('"','').replace('[','').replace(']',''),  
-            'address_line_1':(json.dumps(list(Register.objects.filter(vz_id=vz_id).values_list('address_line_1')))).replace('"','').replace('[','').replace(']',''),  
-            'address_line_2':(json.dumps(list(Register.objects.filter(vz_id=vz_id).values_list('address_line_2')))).replace('"','').replace('[','').replace(']',''),  
-            'city':(json.dumps(list(Register.objects.filter(vz_id=vz_id).values_list('city')))).replace('"','').replace('[','').replace(']',''),  
-            'pin_code':(json.dumps(list(Register.objects.filter(vz_id=vz_id).values_list('pin_code')))).replace('"','').replace('[','').replace(']',''),  
+            'my_profile':list(Register.objects.filter(vz_id=vz_id).values('pk','token_generated','photo','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')),  
            }
           )
   

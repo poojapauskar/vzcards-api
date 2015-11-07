@@ -105,17 +105,7 @@ def get_queryset(request):
    for obj1 in objects:
     my_friends.append(
                 {
-                  'firstname':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('firstname')), default=date_handler)).replace('"','').replace('[','').replace(']',''),  
-                  'lastname':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('lastname')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                  'email':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('email')), default=date_handler)).replace('"','').replace('[','').replace(']',''),  
-                  'phone':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('phone')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                  'industry':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('industry')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                  'company':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('company')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
-                  'address_line_1':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('address_line_1')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
-                  'address_line_2':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('address_line_2')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
-                  'city':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('city')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
-                  'pin_code':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('pin_code')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
-                  'photo':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('photo')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
+                  'details':list(Register.objects.filter(vz_id=obj1.vz_id).values('firstname','lastname','email','phone','industry','company','address_line_1','address_line_2','city','pin_code','photo')), 
                 }
               )
   #print >> sys.stderr, objects.query

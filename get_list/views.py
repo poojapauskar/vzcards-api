@@ -83,45 +83,11 @@ def get_queryset(request):
       question=[]
       feeds=[]
       user_details=[]
-      question.append(
-                    {
-                      'question':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id).filter(date_validity__gte=today).values_list('question')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
-                     }
-                  )
-      feeds.append(
-                    {
-                      'question':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id).filter(date_validity__gte=today).values_list('question')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-                      'item':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id).filter(date_validity__gte=today).values_list('item')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
-                      'date_created':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id).filter(date_validity__gte=today).values_list('date_created')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
-                      'date_validity':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id).filter(date_validity__gte=today).values_list('date_validity')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
-                      'description':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id).filter(date_validity__gte=today).values_list('description')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
-                      'ticket_id':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id).filter(date_validity__gte=today).values_list('ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
-                      'vz_id':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id).filter(date_validity__gte=today).values_list('vz_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
-                      'item_photo':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id).filter(date_validity__gte=today).values_list('item_photo')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
-                    }
-                  )
-      user_details.append(
-                    {
-                      'phone':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('phone')))).replace('"','').replace('[','').replace(']',''),  
-                      'photo':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('photo')))).replace('"','').replace('[','').replace(']',''),  
-                      'firstname':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('firstname')))).replace('"','').replace('[','').replace(']',''),   
-                      'lastname':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('lastname')))).replace('"','').replace('[','').replace(']',''),  
-                      'email':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('email')))).replace('"','').replace('[','').replace(']',''),  
-                      'vz_id':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('vz_id')))).replace('"','').replace('[','').replace(']',''),  
-                      'industry':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('industry')))).replace('"','').replace('[','').replace(']',''),  
-                      'company':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('company')))).replace('"','').replace('[','').replace(']',''),  
-                      'address_line_1':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('address_line_1')))).replace('"','').replace('[','').replace(']',''),  
-                      'address_line_2':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('address_line_2')))).replace('"','').replace('[','').replace(']',''),  
-                      'city':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('city')))).replace('"','').replace('[','').replace(']',''),  
-                      'pin_code':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('pin_code')))).replace('"','').replace('[','').replace(']',''),  
-                    }
-                  )
-
       fields.append(
               {
-               'question':question,
-               'feeds':feeds,
-               'user_details':user_details
+               'question':list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id).filter(date_validity__gte=today).values_list('question')), 
+               'feeds':list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id).filter(date_validity__gte=today).values_list('vz_id','item_photo','question', 'item', 'description','date_created','date_validity','ticket_id')),
+               'user_details':list(Register.objects.filter(vz_id=obj1.vz_id).values_list('pk','token_generated','photo','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')),  
                }
             )
     
