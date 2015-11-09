@@ -68,29 +68,20 @@ def get_queryset(request):
     print >> sys.stderr,"connect"
     print >> sys.stderr,connect
 
-
-    for c in connect:
-      connections.append(
-                {
-                 'connecter_details':list(Register.objects.filter(vz_id=c.connecter_vz_id).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')), 
-                 'reffered_phone_details':list(Register.objects.filter(phone=c.reffered_phone).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')), 
-                 'reffered_ticket_details':list(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')), 
-                 'reffered_ticket_id':c.reffered_ticket,
-                 'reffered_phone':c.reffered_phone,            
-                }
-              )
-     
-    print >> sys.stderr,"connections"
-    print >> sys.stderr,connections
-
-    
-
-    fields.append(
-                {
-                 'ticket_details':list(Ticket_create.objects.filter(ticket_id=t.ticket_id).values('vz_id','item_photo','question','item','description','date_created','date_validity','ticket_id')), 
-                 'connections':connections
-                }
-              )
+    if(Connect.objects.filter(my_ticket=t.ticket_id).exists()):
+      for c in connect:
+        fields.append(
+                  {
+                   'connecter_details':list(Register.objects.filter(vz_id=c.connecter_vz_id).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')), 
+                   'reffered_phone_details':list(Register.objects.filter(phone=c.reffered_phone).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')), 
+                   'reffered_ticket_details':list(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')), 
+                   'reffered_ticket_id':c.reffered_ticket,
+                   'reffered_phone':c.reffered_phone, 
+                   'ticket_details':list(Ticket_create.objects.filter(ticket_id=t.ticket_id).values('vz_id','item_photo','question','item','description','date_created','date_validity','ticket_id')),            
+                  }
+                )
+    else:
+      pass
 
 
   print >> sys.stderr,"-----------"
