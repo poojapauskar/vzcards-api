@@ -83,7 +83,7 @@ def get_queryset(request):
                   {
                    'connecter_details':list(Register.objects.filter(vz_id=c.connecter_vz_id).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code'))[0], 
                    'reffered_phone_details':c.reffered_phone, 
-                   'reffered_ticket_id':c.reffered_ticket,           
+                   'reffered_ticket_details':c.reffered_ticket,           
                   }
                 )
      
