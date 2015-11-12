@@ -95,19 +95,31 @@ def get_queryset(request):
   #objects= Register.objects.filter(vz_id__in=friends_list).values('firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','photo')
   def date_handler(obj):
     return obj.isoformat() if hasattr(obj, 'isoformat') else obj
-    
+  
+  from django.http import JsonResponse  
   my_friends=[]
 
   if(friends_list==''):
-   my_friends=[]
+   return JsonResponse((list(my_friends)),safe=False)
   else:
-   objects=Register.objects.filter(vz_id__in=friends_list)
-   for obj1 in objects:
-    my_friends.append(
+   # objects=Register.objects.filter(vz_id__in=friends_list)
+   # for obj1 in objects:
+   #  my_friends.append(
+   #              {
+   #                list(Register.objects.filter(vz_id=obj1.vz_id).values('firstname','lastname','email','phone','industry','company','address_line_1','address_line_2','city','pin_code','photo')), 
+   #              }
+   #            )
+
+   objects=Register.objects.filter(vz_id__in=friends_list).values('vz_id')
+  
+   
+   my_friends.append(
                 {
-                  'details':list(Register.objects.filter(vz_id=obj1.vz_id).values('firstname','lastname','email','phone','industry','company','address_line_1','address_line_2','city','pin_code','photo')), 
+                     'response':list(Register.objects.filter(vz_id__in=objects).values('firstname','lastname','email','phone','industry','company','address_line_1','address_line_2','city','pin_code','photo')), 
                 }
-              )
+               )
+
+
   #print >> sys.stderr, objects.query
    print >> sys.stderr, my_friends
   #objects= Ticket.objects.filter(vz_id__in=['VZ1445062511', 'VZ1445062656', 'VZ1445613566', 'VZ1445613959'])
@@ -118,9 +130,10 @@ def get_queryset(request):
 
   
 
-   from django.http import JsonResponse
+   
   #return JsonResponse(dict(objects=list(objects)))
-   return JsonResponse((list(my_friends)),safe=False)
+   return JsonResponse(my_friends[0],safe=False)
+
 
 
   #.filter(date_validity__gte=today)

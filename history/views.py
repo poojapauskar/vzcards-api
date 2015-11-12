@@ -70,15 +70,22 @@ def get_queryset(request):
 
 
     for c in connect:
-      connections.append(
-                {
-                 'connecter_details':list(Register.objects.filter(vz_id=c.connecter_vz_id).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')), 
-                 'reffered_phone_details':list(Register.objects.filter(phone=c.reffered_phone).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')), 
-                 'reffered_ticket_details':list(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')), 
-                 'reffered_ticket_id':c.reffered_ticket,
-                 'reffered_phone':c.reffered_phone,            
-                }
-              )
+      if(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).exists()):
+        connections.append(
+                  {
+                   'connecter_details':list(Register.objects.filter(vz_id=c.connecter_vz_id).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code'))[0], 
+                   'reffered_phone_details':list(Register.objects.filter(phone=c.reffered_phone).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code'))[0], 
+                   'reffered_ticket_details':list(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id'))[0], 
+                  }
+                )
+      else:
+        connections.append(
+                  {
+                   'connecter_details':list(Register.objects.filter(vz_id=c.connecter_vz_id).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code'))[0], 
+                   'reffered_phone_details':c.reffered_phone, 
+                   'reffered_ticket_id':c.reffered_ticket,           
+                  }
+                )
      
     print >> sys.stderr,"connections"
     print >> sys.stderr,connections
@@ -87,10 +94,18 @@ def get_queryset(request):
 
     fields.append(
                 {
-                 'ticket_details':list(Ticket_create.objects.filter(ticket_id=t.ticket_id).values('vz_id','item_photo','question','item','description','date_created','date_validity','ticket_id')), 
+                 'ticket_details':list(Ticket_create.objects.filter(ticket_id=t.ticket_id).values('vz_id','item_photo','question','item','description','date_created','date_validity','ticket_id'))[0], 
                  'connections':connections
                 }
               )
+
+    response=[]
+
+    response.append(
+              {
+                'response':fields              
+              }
+      )
 
 
   print >> sys.stderr,"-----------"
@@ -99,7 +114,7 @@ def get_queryset(request):
 
      
 
-  return JsonResponse(list(fields),safe=False)
+  return JsonResponse(response[0],safe=False)
 
 
        
