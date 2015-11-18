@@ -25,66 +25,112 @@ def JSONResponse(data = None, status = StatusCode.OK):
     else:
         return HttpResponse(status = StatusCode.NOT_FOUND)
 
-def get_queryset(request):
-  access_token = request.GET.get('access_token')
-  if(Register.objects.filter(token_generated=access_token).exists()):
-    pass
-  else:
-    return JSONResponse(status = StatusCode.NOT_FOUND)
+from django.views import generic
+from django.views.generic import ListView
+
+
+class CustomListView(ListView):
+    #paginate_by = 2
+    def get(self, request, *args, **kwargs):
+      access_token = request.GET.get('access_token')
+      if(Register.objects.filter(token_generated=access_token).exists()):
+        pass
+      else:
+        return JSONResponse(status = StatusCode.NOT_FOUND)
 
 
 
-  import sys
-  print >> sys.stderr, access_token
+      import sys
+      print >> sys.stderr, access_token
 
-  #vz_id = self.kwargs['vz_id']
+      #vz_id = self.kwargs['vz_id']
+         
+      vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
+      #tickets = Ticket.objects.filter(vz_id__in=contacts)
+      print >> sys.stderr, vz_id
+      
+      obj=Ticket_create.objects.filter(vz_id=vz_id)
+      from django.http import JsonResponse
      
-  vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
-  #tickets = Ticket.objects.filter(vz_id__in=contacts)
-  print >> sys.stderr, vz_id
-  
-  obj=Register.objects.get(vz_id=vz_id)
-  from django.http import JsonResponse
- 
-  objects=(Connect.objects.filter(phone_1=obj.phone) | Connect.objects.filter(phone_2=obj.phone))
-  print >> sys.stderr, objects
+      # objects=Connect.objects.filter(my_ticket__in=obj) 
+      # print >> sys.stderr, objects
 
-  import json
+      print >> sys.stderr,"obj"
+      print >> sys.stderr,obj
 
-  def date_handler(obj):
-    return obj.isoformat() if hasattr(obj, 'isoformat') else obj
+      import json
 
-  fields = []
-  for obj1 in objects:
-     if(obj1.phone_1==obj.phone):
-      fields.append(
-              {
-               'connecter_details':(json.dumps(list(Register.objects.filter(vz_id=obj1.connecter_vz_id).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
-               'my_details':(json.dumps(list(Register.objects.filter(phone=obj1.phone_1).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''),  
-               'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_1).values_list('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-               'reffered_to':(json.dumps(list(Register.objects.filter(phone=obj1.phone_2).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
-               'reffered_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_2).values_list('vz_id','item_photo','question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-              }
+      def date_handler(obj):
+        return obj.isoformat() if hasattr(obj, 'isoformat') else obj
+
+      fields = []
+      
+
+      for t in obj:
+        ticket_details=[]
+        connections=[]
+        #print >> sys.stderr,t.ticket_id
+        connect=Connect.objects.filter(my_ticket=t.ticket_id)
+        # print >> sys.stderr,"connect"
+        # print >> sys.stderr,connect
+
+        if(Connect.objects.filter(my_ticket=t.ticket_id).exists()):
+          for c in connect:
+            if(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).exists()):
+              fields.append(
+                        {
+                         'connecter_details':Register.objects.filter(vz_id=c.connecter_vz_id).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')[0], 
+                         'reffered_phone_details':Register.objects.filter(phone=c.reffered_phone).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')[0], 
+                         'reffered_ticket_details':Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')[0], 
+                         'ticket_details':Ticket_create.objects.filter(ticket_id=t.ticket_id).values('vz_id','item_photo','question','item','description','date_created','date_validity','ticket_id')[0],            
+                        }
+                      )
+            else:
+              fields.append(
+                        {
+                         'connecter_details':Register.objects.filter(vz_id=c.connecter_vz_id).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')[0], 
+                         'reffered_phone_details':c.reffered_phone,
+                         'reffered_ticket_details':c.reffered_ticket,
+                         'ticket_details':Ticket_create.objects.filter(ticket_id=t.ticket_id).values('vz_id','item_photo','question','item','description','date_created','date_validity','ticket_id')[0],            
+                        }
+                      )
+        else:
+          pass
+
+
+      print >> sys.stderr,"-----------"
+      print >> sys.stderr,fields
+      print >> sys.stderr,"-----------"
+
+      from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+      # paginator = Paginator(response, self.paginate_by)
+      paginator = Paginator(fields, 10)
+
+      page = self.request.GET.get('page')
+
+      print >> sys.stderr,"-----page------"
+      print >> sys.stderr,page
+      
+
+      try:
+          fields = paginator.page(page)
+      except PageNotAnInteger:
+          fields = paginator.page(1)
+      except EmptyPage:
+          fields = paginator.page(paginator.num_pages)
+
+
+      print >> sys.stderr,"-----fields------"
+      print >> sys.stderr,fields 
+
+      response=[]
+      response.append(
+                  {
+                    'response':list(fields)
+                  }
             )
-     else:
-      fields.append(
-              {
-               'connecter_details':(json.dumps(list(Register.objects.filter(vz_id=obj1.connecter_vz_id).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
-               'my_details':(json.dumps(list(Register.objects.filter(phone=obj1.phone_2).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
-               'my_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_2).values_list('vz_id','item_photo','question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-               'reffered_to':(json.dumps(list(Register.objects.filter(phone=obj1.phone_1).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''), 
-               'reffered_ticket':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id_1).values_list('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')), default=date_handler)).replace('"','').replace('[','').replace(']',''), 
-              }
-            )
-    
-     print >> sys.stderr,"-----------"
-     print >> sys.stderr,fields
-     print >> sys.stderr,"-----------"
 
-     
-
-  return JsonResponse(list(fields),safe=False)
-
+      return JsonResponse(response[0],safe=False)
 
 
        

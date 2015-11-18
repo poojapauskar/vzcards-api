@@ -31,70 +31,113 @@ def JSONResponse(data = None, status = StatusCode.OK):
     else:
         return HttpResponse(status = StatusCode.NOT_FOUND)
 
+from django.views import generic
+from django.views.generic import ListView
+
+class CustomListView(ListView):
+    #paginate_by = 2
+    def get(self, request, *args, **kwargs):
+      access_token = request.GET.get('access_token')
+
+      import sys
+      print >> sys.stderr, access_token
+
+      if(Register.objects.filter(token_generated=access_token).exists()):
+        pass
+      else:
+        return JSONResponse(status = StatusCode.NOT_FOUND)
 
 
-def get_queryset(request):
-  access_token = request.GET.get('access_token')
-  if(Register.objects.filter(token_generated=access_token).exists()):
-    pass
-  else:
-    return JSONResponse(status = StatusCode.NOT_FOUND)
+
+   
+
+      #vz_id = self.kwargs['vz_id']
+         
+      vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
+      #tickets = Ticket.objects.filter(vz_id__in=contacts)
+      print >> sys.stderr, vz_id
+
+      import json
+      friends_list=list(sync_contact.encode("utf8") for sync_contact in Sync.objects.filter(vz_id=vz_id).values_list('friends_vz_id',flat=True))
 
 
+      import datetime
+      today = datetime.datetime.today()
+      friends_list=str(friends_list).replace('["','').replace('"]','').replace(',','').replace('[','').replace(']','').replace("'",'')
 
-  import sys
-  print >> sys.stderr, access_token
 
-  #vz_id = self.kwargs['vz_id']
+      print >> sys.stderr, friends_list
+
+      friends_list= friends_list.split()
+
+      if(friends_list==''):
+       objects=''
+      else:
+       objects=Ticket_create.objects.filter(vz_id__in=friends_list)
+
+      #print >> sys.stderr, objects.query
+      print >> sys.stderr, objects
      
-  vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
-  #tickets = Ticket.objects.filter(vz_id__in=contacts)
-  print >> sys.stderr, vz_id
+      from django.http import HttpResponse
+      #return HttpResponse(objects,content_type='application/json')
 
-  import json
-  friends_list=list(sync_contact.encode("utf8") for sync_contact in Sync.objects.filter(vz_id=vz_id).values_list('friends_vz_id',flat=True))
+      def date_handler(obj):
+        return obj.isoformat() if hasattr(obj, 'isoformat') else obj
 
+      fields = []
+      for obj1 in objects:
+          #question=[]
+          #feeds=[]
+          #user_details=[]
+          fields.append(
+                  { 
+                   'feed':Ticket_create.objects.filter(ticket_id=obj1.ticket_id).filter(date_validity__gte=today).values('vz_id','item_photo','question', 'item', 'description','date_created','date_validity','ticket_id')[0],
+                   'user_details':Register.objects.filter(vz_id=obj1.vz_id).values('pk','token_generated','photo','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')[0],  
+                   }
+                )
 
-  import datetime
-  today = datetime.datetime.today()
-  friends_list=str(friends_list).replace('["','').replace('"]','').replace(',','').replace('[','').replace(']','').replace("'",'')
+          
+          
+          print >> sys.stderr,"-----------"
+          print >> sys.stderr,fields
+          print >> sys.stderr,"-----------"
+          #return JsonResponse(dict(objects=list(objects)))
 
-
-  print >> sys.stderr, friends_list
-
-  friends_list= friends_list.split()
-
-  if(friends_list==''):
-   objects=''
-  else:
-   objects=Ticket_create.objects.filter(vz_id__in=friends_list)
-
-  #print >> sys.stderr, objects.query
-  print >> sys.stderr, objects
- 
-  from django.http import HttpResponse
-  #return HttpResponse(objects,content_type='application/json')
-
-  def date_handler(obj):
-    return obj.isoformat() if hasattr(obj, 'isoformat') else obj
-
-  fields = []
-  for obj1 in objects:
-      fields.append(
-              {
-               'question':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id).filter(date_validity__gte=today).values_list('question')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
-               'feeds':(json.dumps(list(Ticket_create.objects.filter(ticket_id=obj1.ticket_id).filter(date_validity__gte=today).values_list('question', 'item','date_created', 'date_validity','description','ticket_id','vz_id','item_photo')), default=date_handler)).replace('"','').replace('[','').replace(']',''),
-               'user_details':(json.dumps(list(Register.objects.filter(vz_id=obj1.vz_id).values_list('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')))).replace('"','').replace('[','').replace(']',''),  
-               }
-            )
-    
-      print >> sys.stderr,"-----------"
-      print >> sys.stderr,fields
-      print >> sys.stderr,"-----------"
-      #return JsonResponse(dict(objects=list(objects)))
+      response=[]
       
-  return JsonResponse((list(fields)),safe=False)
-  #return objects
+      from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+      # paginator = Paginator(response, self.paginate_by)
+      paginator = Paginator(fields, 10)
+
+      page = self.request.GET.get('page')
+
+      print >> sys.stderr,"-----page------"
+      print >> sys.stderr,page
+      
+
+      try:
+          fields = paginator.page(page)
+      except PageNotAnInteger:
+          fields = paginator.page(1)
+      except EmptyPage:
+          fields = paginator.page(paginator.num_pages)
+
+
+      print >> sys.stderr,"-----fields------"
+      print >> sys.stderr,fields
+
+      response.append(
+                  {
+                    'response':list(fields)
+                  }
+            )
+      
+       
+      # context['list_exams'] = file_exams
+      #return files   
+      #return JsonResponse(response[0],safe=False)
+      return JsonResponse(response[0],safe=False)
+      #return objects
 
 
   # import os

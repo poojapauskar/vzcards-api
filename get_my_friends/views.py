@@ -28,90 +28,140 @@ def JSONResponse(data = None, status = StatusCode.OK):
     else:
         return HttpResponse(status = StatusCode.NOT_FOUND)
 
+from django.views import generic
+from django.views.generic import ListView
 
-def get_queryset(request):
-  access_token = request.GET.get('access_token')
-  if(Register.objects.filter(token_generated=access_token).exists()):
-    pass
-  else:
-    return JSONResponse(status = StatusCode.NOT_FOUND)
+class CustomListView(ListView):
+    def get(self, request, *args, **kwargs):
+      access_token = request.GET.get('access_token')
+      if(Register.objects.filter(token_generated=access_token).exists()):
+        pass
+      else:
+        return JSONResponse(status = StatusCode.NOT_FOUND)
 
-  import sys
-  print >> sys.stderr, access_token
+      import sys
+      print >> sys.stderr, access_token
 
-  valid="Access token not valid"
-  from django.http import JsonResponse
+      valid="Access token not valid"
+      from django.http import JsonResponse
 
-  if(Register.objects.filter(token_generated=access_token).exists()):
-    pass
-  else:
-    return JsonResponse(valid,safe=False)
+      if(Register.objects.filter(token_generated=access_token).exists()):
+        pass
+      else:
+        return JsonResponse(valid,safe=False)
 
-  #vz_id = self.kwargs['vz_id']
-     
-  vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
-  #tickets = Ticket.objects.filter(vz_id__in=contacts)
-  print >> sys.stderr, vz_id
-  def ValuesQuerySetToDict(vqs):
-    return [item for item in vqs]
+      #vz_id = self.kwargs['vz_id']
+         
+      vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
+      #tickets = Ticket.objects.filter(vz_id__in=contacts)
+      print >> sys.stderr, vz_id
+      def ValuesQuerySetToDict(vqs):
+        return [item for item in vqs]
 
-  import json
-  friends_list=list(sync_contact.encode("utf8") for sync_contact in Sync.objects.filter(vz_id=vz_id).values_list('friends_vz_id',flat=True))
+      import json
+      friends_list=list(sync_contact.encode("utf8") for sync_contact in Sync.objects.filter(vz_id=vz_id).values_list('friends_vz_id',flat=True))
 
 
-  #friends_list = json.dumps(friends_list)
+      #friends_list = json.dumps(friends_list)
 
-  #friends_list = json.dumps(friends_list)
-  #print friends_list.query      
-  #friends_list = json.dumps(friends_list)
+      #friends_list = json.dumps(friends_list)
+      #print friends_list.query      
+      #friends_list = json.dumps(friends_list)
+           
+      #friends_list=list(friends_list)
+
+      import operator
+      from django.db.models import Q
+
+      import datetime
+      today = datetime.datetime.today()
+
+      import sys
+      #print >> sys.stderr, friends_list.query
+      #friends_list = json.dumps(friends_list)
+      friends_list=str(friends_list).replace('["','').replace('"]','').replace(',','').replace('[','').replace(']','').replace("'",'')
+
+
+      print >> sys.stderr, friends_list
+
+      friends_list= friends_list.split()
+
+
+
+
+      #friends_list = json.dumps(friends_list)
+
+      #print >> sys.stderr, friends_list
+      # from connect.models import Connect
+      # Connect.objects.filter(connecter_vz_id="vz123").delete()
+
+      #objects= Register.objects.filter(vz_id__in=friends_list).values('firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','photo')
+      def date_handler(obj):
+        return obj.isoformat() if hasattr(obj, 'isoformat') else obj
+      
+      from django.http import JsonResponse  
+      my_friends=[]
+
+      if(friends_list==''):
+       return JsonResponse((list(my_friends)),safe=False)
+      else:
+       # objects=Register.objects.filter(vz_id__in=friends_list)
+       # for obj1 in objects:
+       #  my_friends.append(
+       #              {
+       #                list(Register.objects.filter(vz_id=obj1.vz_id).values('firstname','lastname','email','phone','industry','company','address_line_1','address_line_2','city','pin_code','photo')), 
+       #              }
+       #            )
+
+       objects=Register.objects.filter(vz_id__in=friends_list).values('vz_id')
+      
        
-  #friends_list=list(friends_list)
-
-  import operator
-  from django.db.models import Q
-
-  import datetime
-  today = datetime.datetime.today()
-
-  import sys
-  #print >> sys.stderr, friends_list.query
-  #friends_list = json.dumps(friends_list)
-  friends_list=str(friends_list).replace('["','').replace('"]','').replace(',','').replace('[','').replace(']','').replace("'",'')
+       
 
 
-  print >> sys.stderr, friends_list
+      #print >> sys.stderr, objects.query
+       #print >> sys.stderr, my_friends
+      #objects= Ticket.objects.filter(vz_id__in=['VZ1445062511', 'VZ1445062656', 'VZ1445613566', 'VZ1445613959'])
+      #print objects.query
+    #VZ1445062511, VZ1445062656, VZ1445613566, VZ1445613959
+      # import pdb; 
+      # pdb.set_trace()
+      fields=Register.objects.filter(vz_id__in=objects).values('firstname','lastname','email','phone','industry','company','address_line_1','address_line_2','city','pin_code','photo')
 
-  friends_list= friends_list.split()
+      from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+      # paginator = Paginator(response, self.paginate_by)
+      paginator = Paginator(fields, 20)
+
+      page = self.request.GET.get('page')
+
+      print >> sys.stderr,"-----page------"
+      print >> sys.stderr,page
+      
+
+      try:
+          fields = paginator.page(page)
+      except PageNotAnInteger:
+          fields = paginator.page(1)
+      except EmptyPage:
+          fields = paginator.page(paginator.num_pages)
 
 
+      print >> sys.stderr,"-----fields------"
+      print >> sys.stderr,fields
 
 
-  #friends_list = json.dumps(friends_list)
+      my_friends.append(
+                    {
+                         'response':list(fields), 
+                    }
+                   )
 
-  #print >> sys.stderr, friends_list
+      
 
+       
+      #return JsonResponse(dict(objects=list(objects)))
+      return JsonResponse(my_friends[0],safe=False)
 
-
-  #objects= Register.objects.filter(vz_id__in=friends_list).values('firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','photo')
-
-  if(friends_list==''):
-   objects=''
-  else:
-   objects=Register.objects.filter(vz_id__in=friends_list).values('firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','photo')
-
-  #print >> sys.stderr, objects.query
-  print >> sys.stderr, objects
-  #objects= Ticket.objects.filter(vz_id__in=['VZ1445062511', 'VZ1445062656', 'VZ1445613566', 'VZ1445613959'])
-  #print objects.query
-#VZ1445062511, VZ1445062656, VZ1445613566, VZ1445613959
-  # import pdb; 
-  # pdb.set_trace()
-
-  
-
-  from django.http import JsonResponse
-  #return JsonResponse(dict(objects=list(objects)))
-  return JsonResponse((list(objects)),safe=False)
 
 
   #.filter(date_validity__gte=today)

@@ -68,6 +68,8 @@ INSTALLED_APPS = (
     'sync',
     'reffered',
     'upload_image',
+    'history',
+    'remove_ticket',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -105,6 +107,7 @@ WSGI_APPLICATION = 'vzcards.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+#development
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -115,6 +118,18 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+#staging
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'd78prshl430sjd',                      
+#         'USER': 'zuguhtrgtosfow',
+#         'PASSWORD': 'ZMYD_XDQaBpRO_GATZc0xKNBSm',
+#         'HOST': 'ec2-54-197-241-24.compute-1.amazonaws.com',
+#         'PORT': '5432',
+#     }
+# }
 
 # DATABASES = {
 #     'default': {

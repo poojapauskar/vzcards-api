@@ -41,15 +41,30 @@ def get_queryset(request):
 
   #vz_id = self.kwargs['vz_id']
      
-  vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
+  #vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
+
+  vz_id= Register.objects.filter(token_generated=access_token).values('vz_id')
   #tickets = Ticket.objects.filter(vz_id__in=contacts)
   print >> sys.stderr, vz_id
   
-  profile=Register.objects.filter(vz_id=vz_id).values('phone','photo','vz_id','firstname','lastname','email','industry','company','address_line_1','address_line_2','city','pin_code')
+  
+  # profile=[]
+  # profile.append(
+  #          {
+  #           'my_profile':list(Register.objects.filter(vz_id=vz_id).values('pk','token_generated','photo','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')),  
+  #          }
+  #         )
+
+  profile=Register.objects.filter(vz_id=vz_id).values('pk','token_generated','photo','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')[0],  
+  
+
+
+
+
 
   from django.http import JsonResponse
   #return JsonResponse(dict(objects=list(objects)))
-  return JsonResponse((list(profile)),safe=False)
+  return JsonResponse(profile[0],safe=False)
 
 
        

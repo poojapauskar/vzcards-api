@@ -32,6 +32,8 @@ class Api(models.Model):
  response = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/response/')
  reffered = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/reffered/')
  upload_image = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/upload_image/')
+ history = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/history/')
+ remove_ticket = models.CharField(max_length=100, blank=True, default='https://vzcards-api.herokuapp.com/remove_ticket/')
  
  
  

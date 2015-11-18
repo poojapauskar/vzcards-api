@@ -19,6 +19,11 @@ class VerifySerializer(serializers.ModelSerializer):
         """
         Create and return a new `Snippet` instance, given the validated data.
         """
+
+
+        
+
+
         from oauthlib.common import generate_token
         token = generate_token()
         
@@ -55,20 +60,23 @@ class VerifySerializer(serializers.ModelSerializer):
         expire_seconds = oauth2_settings.user_settings['ACCESS_TOKEN_EXPIRE_SECONDS']
         scopes = oauth2_settings.user_settings['SCOPES']
 
+
         application = Application.objects.get(name="vzcards-api")
         expires = datetime.now() + timedelta(seconds=expire_seconds)
-        access_token = AccessToken.objects.create(
-                user=user,
-                application=application,
-                token=generate_token(),
-                expires=expires,
-                scope=scopes)
 
-        refresh_token = RefreshToken.objects.create(
-                user=user,
-                token=generate_token(),
-                access_token=access_token,
-                application=application)
+        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
+            access_token = AccessToken.objects.create(
+                    user=user,
+                    application=application,
+                    token=generate_token(),
+                    expires=expires,
+                    scope=scopes)
+        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
+            refresh_token = RefreshToken.objects.create(
+                    user=user,
+                    token=generate_token(),
+                    access_token=access_token,
+                    application=application)
 
         # token = {
         #         'access_token': access_token.token,
@@ -78,17 +86,19 @@ class VerifySerializer(serializers.ModelSerializer):
         #         'scope': scopes}
 
         import json
-        token = access_token.token
-        token= json.dumps(token)
-        token = token.replace('"','')
+        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
+            token = access_token.token
+            token= json.dumps(token)
+            token = token.replace('"','')
+
 
         
 
         if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
          Register.objects.filter(phone=validated_data.get('phone')).update(token_generated=token)
         
-
-        vz_id= Register.objects.filter(phone=validated_data.get('phone')).values_list('vz_id',flat=True)[0]
+        if (Register.objects.filter(phone=validated_data.get('phone')).values('phone')).exists():
+         vz_id= Register.objects.filter(phone=validated_data.get('phone')).values_list('vz_id',flat=True)[0]
 
         if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
          objects=Verify.objects.create(phone=validated_data.get('phone'),otp=validated_data.get('otp'),valid=1,token_generated=token,vz_id=vz_id)
