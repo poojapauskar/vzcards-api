@@ -127,6 +127,7 @@ class CustomListView(ListView):
       # import pdb; 
       # pdb.set_trace()
       fields=Register.objects.filter(vz_id__in=objects).values('firstname','lastname','email','phone','industry','company','address_line_1','address_line_2','city','pin_code','photo')
+      count=len(fields)
 
       from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
       # paginator = Paginator(response, self.paginate_by)
@@ -152,6 +153,7 @@ class CustomListView(ListView):
 
       my_friends.append(
                     {
+                         'count':count,
                          'response':list(fields), 
                     }
                    )

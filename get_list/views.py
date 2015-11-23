@@ -104,6 +104,7 @@ class CustomListView(ListView):
           #return JsonResponse(dict(objects=list(objects)))
 
       response=[]
+      count=len(fields)
       
       from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
       # paginator = Paginator(response, self.paginate_by)
@@ -128,6 +129,7 @@ class CustomListView(ListView):
 
       response.append(
                   {
+                    'count':count,
                     'response':list(fields)
                   }
             )
