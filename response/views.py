@@ -102,6 +102,8 @@ class CustomListView(ListView):
       print >> sys.stderr,fields
       print >> sys.stderr,"-----------"
 
+      count=len(fields)
+
       from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
       # paginator = Paginator(response, self.paginate_by)
       paginator = Paginator(fields, 10)
@@ -126,6 +128,7 @@ class CustomListView(ListView):
       response=[]
       response.append(
                   {
+                    'count':count,
                     'response':list(fields)
                   }
             )

@@ -70,8 +70,8 @@ class CustomListView(ListView):
         connections=[]
         print >> sys.stderr,t.ticket_id
         connect=Connect.objects.filter(my_ticket=t.ticket_id)
-        print >> sys.stderr,"connect"
-        print >> sys.stderr,connect
+        # print >> sys.stderr,"connect"
+        # print >> sys.stderr,connect
 
 
         for c in connect:
@@ -92,8 +92,8 @@ class CustomListView(ListView):
                       }
                     )
          
-        # print >> sys.stderr,"connections"
-        # print >> sys.stderr,connections
+        print >> sys.stderr,"connections"
+        print >> sys.stderr,connections
 
         
 
@@ -105,6 +105,7 @@ class CustomListView(ListView):
                   )
 
       response=[]
+      count1=len(fields)
 
       
       from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -130,6 +131,7 @@ class CustomListView(ListView):
 
       response.append(
                 {
+                  'count':count1,
                   'response':list(fields)        
                 }
         )
