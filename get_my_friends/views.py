@@ -129,6 +129,8 @@ class CustomListView(ListView):
       fields=Register.objects.filter(vz_id__in=objects).values('firstname','lastname','email','phone','industry','company','address_line_1','address_line_2','city','pin_code','photo')
       count=len(fields)
 
+      fields = fields[::-1]
+
       from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
       # paginator = Paginator(response, self.paginate_by)
       paginator = Paginator(fields, 20)

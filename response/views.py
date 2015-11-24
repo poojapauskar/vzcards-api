@@ -104,6 +104,8 @@ class CustomListView(ListView):
 
       count=len(fields)
 
+      fields = fields[::-1]
+
       from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
       # paginator = Paginator(response, self.paginate_by)
       paginator = Paginator(fields, 10)

@@ -103,6 +103,9 @@ class CustomListView(ListView):
           print >> sys.stderr,"-----------"
           #return JsonResponse(dict(objects=list(objects)))
 
+
+      fields = fields[::-1]
+      
       response=[]
       count=len(fields)
       
