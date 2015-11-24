@@ -126,7 +126,7 @@ class CustomListView(ListView):
     #VZ1445062511, VZ1445062656, VZ1445613566, VZ1445613959
       # import pdb; 
       # pdb.set_trace()
-      fields=Register.objects.filter(vz_id__in=objects).values('firstname','lastname','email','phone','industry','company','address_line_1','address_line_2','city','pin_code','photo').order_by('firstname')
+      fields=Register.objects.filter(vz_id__in=objects).values('firstname','lastname','email','phone','industry','company','address_line_1','address_line_2','city','pin_code','photo').order_by('firstname','lastname')
       count=len(fields)
 
       # fields = fields[::-1]
