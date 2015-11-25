@@ -36,6 +36,8 @@ class CustomListView(ListView):
       
       error=[]
 
+      from django.http import JsonResponse
+      
       if(Register.objects.filter(token_generated=access_token).exists()):
         pass
       else:
@@ -59,7 +61,7 @@ class CustomListView(ListView):
       print >> sys.stderr, vz_id
       
       obj=Ticket_create.objects.filter(vz_id=vz_id)
-      from django.http import JsonResponse
+      
      
       # objects=Connect.objects.filter(my_ticket__in=obj) 
       # print >> sys.stderr, objects
