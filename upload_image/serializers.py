@@ -37,7 +37,7 @@ class Upload_imageSerializer(serializers.ModelSerializer):
         import sys
         link=''
        # image="image"+str(random.randint(100, 999))
-        public_id='id'+str(random.randint(100, 999))
+        public_id='id'+str(random.randint(100000, 999999))
 
        
 
