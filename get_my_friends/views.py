@@ -35,6 +35,8 @@ class CustomListView(ListView):
     def get(self, request, *args, **kwargs):
       access_token = request.GET.get('access_token')
 
+      from django.http import JsonResponse
+      
       error=[]
       if(Register.objects.filter(token_generated=access_token).exists()):
         pass
