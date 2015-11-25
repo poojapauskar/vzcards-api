@@ -48,7 +48,7 @@ class Upload_imageSerializer(serializers.ModelSerializer):
         #  link="res.cloudinary.com/hffrh1pci/image/upload/vzcards/"+public_id+".pdf"
 
         if(bool(validated_data.get('photo')) == True):
-         link=public_id+".pdf"
+         link=public_id+".jpg"
 
        # cloudinary.uploader.upload(validated_data.get('photo'),public_id =public_id )
         #if(validated_data.get('photo') != ''):
