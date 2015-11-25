@@ -45,10 +45,18 @@ class CustomListView(ListView):
       valid="Access token not valid"
       from django.http import JsonResponse
 
+      error=[]
+
       if(Register.objects.filter(token_generated=access_token).exists()):
         pass
       else:
-        return JsonResponse(valid,safe=False)
+        error.append(
+                  {
+                    'status':401,
+                    'message':"Access Token not valid"
+                  }
+            )
+        return JsonResponse(error[0],safe=False)
 
       #vz_id = self.kwargs['vz_id']
          

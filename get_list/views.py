@@ -42,10 +42,18 @@ class CustomListView(ListView):
       import sys
       print >> sys.stderr, access_token
 
+      error=[]
+
       if(Register.objects.filter(token_generated=access_token).exists()):
         pass
       else:
-        return JSONResponse(status = StatusCode.NOT_FOUND)
+        error.append(
+                  {
+                    'status':401,
+                    'message':"Access Token not valid"
+                  }
+            )
+        return JsonResponse(error[0],safe=False)
 
 
 
