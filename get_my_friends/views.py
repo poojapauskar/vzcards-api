@@ -34,19 +34,7 @@ from django.views.generic import ListView
 class CustomListView(ListView):
     def get(self, request, *args, **kwargs):
       access_token = request.GET.get('access_token')
-      if(Register.objects.filter(token_generated=access_token).exists()):
-        pass
-      else:
-        return JSONResponse(status = StatusCode.NOT_FOUND)
-
-      import sys
-      print >> sys.stderr, access_token
-
-      valid="Access token not valid"
-      from django.http import JsonResponse
-
-      error=[]
-
+      
       if(Register.objects.filter(token_generated=access_token).exists()):
         pass
       else:
@@ -57,6 +45,16 @@ class CustomListView(ListView):
                   }
             )
         return JsonResponse(error[0],safe=False)
+
+      import sys
+      print >> sys.stderr, access_token
+
+      valid="Access token not valid"
+      from django.http import JsonResponse
+
+      error=[]
+
+      
 
       #vz_id = self.kwargs['vz_id']
          
