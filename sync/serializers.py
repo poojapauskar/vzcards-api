@@ -1,12 +1,12 @@
 from rest_framework import serializers
 from sync.models import Sync, LANGUAGE_CHOICES, STYLE_CHOICES
-from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
+from user_register.models import User_register, LANGUAGE_CHOICES, STYLE_CHOICES
 from django.db.models import Count
 
 class SyncSerializer(serializers.ModelSerializer):
     class Meta:
 
-    	model = Register
+    	model = User_register
         fields = ('vz_id',)
 
         model = Sync
@@ -17,7 +17,7 @@ class SyncSerializer(serializers.ModelSerializer):
         
         #convert array to string
         import json
-        friends_list=list(Register.objects.filter(phone__in=validated_data.get('contact_list')).values_list('vz_id', flat=True))
+        friends_list=list(User_register.objects.filter(phone__in=validated_data.get('contact_list')).values_list('vz_id', flat=True))
         
         friends_list = json.dumps(friends_list)
 
