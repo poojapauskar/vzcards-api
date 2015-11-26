@@ -71,6 +71,7 @@ INSTALLED_APPS = (
     'upload_image',
     'history',
     'remove_ticket',
+    'vzcard_details',
 )
 
 MIDDLEWARE_CLASSES = (
