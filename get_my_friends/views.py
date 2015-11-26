@@ -38,7 +38,7 @@ class CustomListView(ListView):
       from django.http import JsonResponse
       
       error=[]
-      if(user_register.objects.filter(token_generated=access_token).exists()):
+      if(User_register.objects.filter(token_generated=access_token).exists()):
         pass
       else:
         error.append(
