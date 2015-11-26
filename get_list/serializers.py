@@ -2,7 +2,7 @@ from rest_framework import serializers
 from ticket_create.models import Ticket_create, LANGUAGE_CHOICES, STYLE_CHOICES
 from friends.models import Friends, LANGUAGE_CHOICES, STYLE_CHOICES
 from sync.models import Sync, LANGUAGE_CHOICES, STYLE_CHOICES
-from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
+from user_register.models import User_register, LANGUAGE_CHOICES, STYLE_CHOICES
 
 
 

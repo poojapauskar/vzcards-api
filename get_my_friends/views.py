@@ -1,7 +1,7 @@
 from ticket_create.models import Ticket_create
 from friends.models import Friends
 from sync.models import Sync
-from register.models import Register
+from user_register.models import User_register
 from get_my_friends.serializers import Get_my_friendsSerializer
 from rest_framework import generics
 # from ticket.permissions import IsOwnerOrReadOnly
@@ -38,7 +38,7 @@ class CustomListView(ListView):
       from django.http import JsonResponse
       
       error=[]
-      if(Register.objects.filter(token_generated=access_token).exists()):
+      if(user_register.objects.filter(token_generated=access_token).exists()):
         pass
       else:
         error.append(
@@ -61,7 +61,7 @@ class CustomListView(ListView):
 
       #vz_id = self.kwargs['vz_id']
          
-      vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
+      vz_id= User_register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
       #tickets = Ticket.objects.filter(vz_id__in=contacts)
       print >> sys.stderr, vz_id
       def ValuesQuerySetToDict(vqs):
@@ -122,7 +122,7 @@ class CustomListView(ListView):
        #              }
        #            )
 
-       objects=Register.objects.filter(vz_id__in=friends_list).values('vz_id')
+       objects=User_register.objects.filter(vz_id__in=friends_list).values('vz_id')
       
        
        
@@ -135,7 +135,7 @@ class CustomListView(ListView):
     #VZ1445062511, VZ1445062656, VZ1445613566, VZ1445613959
       # import pdb; 
       # pdb.set_trace()
-      fields=Register.objects.filter(vz_id__in=objects).values('firstname','lastname','email','phone','industry','company','address_line_1','address_line_2','city','pin_code','photo').order_by('firstname','lastname')
+      fields=User_register.objects.filter(vz_id__in=objects).values('firstname','lastname','email','company_photo','phone','industry','company','address_line_1','address_line_2','city','pin_code','photo').order_by('firstname','lastname')
       count=len(fields)
 
       # fields = fields[::-1]

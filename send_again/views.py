@@ -1,4 +1,4 @@
-from register.models import Register
+from user_register.models import User_register
 from send_again.serializers import Send_againSerializer
 from rest_framework import generics
 # from send_again.permissions import IsOwnerOrReadOnly
@@ -6,14 +6,14 @@ from rest_framework import generics
 
 
 class Send_againList(generics.ListCreateAPIView):
- queryset = Register.objects.all()
+ queryset = User_register.objects.all()
  serializer_class = Send_againSerializer
  # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
 
 class Send_againDetail(generics.RetrieveUpdateDestroyAPIView):
- queryset = Register.objects.all()
+ queryset = User_register.objects.all()
  serializer_class = Send_againSerializer
  # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
  #                      IsOwnerOrReadOnly,)

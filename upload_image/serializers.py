@@ -39,7 +39,7 @@ class Upload_imageSerializer(serializers.ModelSerializer):
        # image="image"+str(random.randint(100, 999))
         public_id='id'+str(random.randint(100000, 999999))
 
-       
+        
 
         if(bool(validated_data.get('photo')) == True):
          cloudinary.uploader.upload(validated_data.get('photo'),public_id ="vzcards/"+public_id)
@@ -57,17 +57,17 @@ class Upload_imageSerializer(serializers.ModelSerializer):
        # cloudinary.uploader.upload(validated_data.get('photo'))
 
 
-        # from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
+        # from user_register.models import User_register, LANGUAGE_CHOICES, STYLE_CHOICES
         # from verify.models import Verify, LANGUAGE_CHOICES, STYLE_CHOICES
         # from connect.models import Connect, LANGUAGE_CHOICES, STYLE_CHOICES
-        # from create_ticket.models import Create_ticket, LANGUAGE_CHOICES, STYLE_CHOICES
+        # from ticket_create.models import Ticket_create, LANGUAGE_CHOICES, STYLE_CHOICES
         # from send_again.models import Send_again, LANGUAGE_CHOICES, STYLE_CHOICES
         # from sync.models import Sync, LANGUAGE_CHOICES, STYLE_CHOICES
 
         # Connect.objects.all().delete()
-        # Register.objects.all().delete()
+        # User_register.objects.all().delete()
         # Verify.objects.all().delete()
-        # Create_ticket.objects.all().delete()
+        # Ticket_create.objects.all().delete()
         # Send_again.objects.all().delete()
         # Sync.objects.all().delete()
         # Upload_image.objects.all().delete()

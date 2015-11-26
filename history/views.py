@@ -1,5 +1,5 @@
 from connect.models import Connect
-from register.models import Register
+from user_register.models import User_register
 from ticket_create.models import Ticket_create
 from history.serializers import HistorySerializer
 from rest_framework import generics
@@ -38,7 +38,7 @@ class CustomListView(ListView):
 
       from django.http import JsonResponse
       
-      if(Register.objects.filter(token_generated=access_token).exists()):
+      if(User_register.objects.filter(token_generated=access_token).exists()):
         pass
       else:
         error.append(
@@ -56,7 +56,7 @@ class CustomListView(ListView):
 
       #vz_id = self.kwargs['vz_id']
          
-      vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
+      vz_id= User_register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
       #tickets = Ticket.objects.filter(vz_id__in=contacts)
       print >> sys.stderr, vz_id
       
@@ -90,15 +90,15 @@ class CustomListView(ListView):
           if(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).exists()):
             connections.append(
                       {
-                       'connecter_details':Register.objects.filter(vz_id=c.connecter_vz_id).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')[0], 
-                       'reffered_phone_details':Register.objects.filter(phone=c.reffered_phone).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')[0], 
+                       'connecter_details':User_register.objects.filter(vz_id=c.connecter_vz_id).values('phone','company_photo','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')[0], 
+                       'reffered_phone_details':User_register.objects.filter(phone=c.reffered_phone).values('phone','company_photo','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')[0], 
                        'reffered_ticket_details':Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')[0], 
                       }
                     )
           else:
             connections.append(
                       {
-                       'connecter_details':Register.objects.filter(vz_id=c.connecter_vz_id).values('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')[0], 
+                       'connecter_details':User_register.objects.filter(vz_id=c.connecter_vz_id).values('phone','company_photo','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')[0], 
                        'reffered_phone_details':c.reffered_phone, 
                        'reffered_ticket_details':c.reffered_ticket,           
                       }

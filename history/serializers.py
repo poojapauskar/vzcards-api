@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from connect.models import Connect, LANGUAGE_CHOICES, STYLE_CHOICES
-from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
+from user_register.models import User_register, LANGUAGE_CHOICES, STYLE_CHOICES
 from ticket_create.models import Ticket_create, LANGUAGE_CHOICES, STYLE_CHOICES
 
 
@@ -8,8 +8,8 @@ from ticket_create.models import Ticket_create, LANGUAGE_CHOICES, STYLE_CHOICES
 
 class HistorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Register
-        fields = ('phone','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')
+        model = User_register
+        fields = ('phone','company_photo','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')
 
         model = Connect
         fields = ('connecter_vz_id', 'phone_1', 'ticket_id_1', 'phone_2', 'ticket_id_2')
@@ -42,7 +42,7 @@ from rest_framework.parsers import JSONParser
 from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):
-    create = serializers.PrimaryKeyRelatedField(many=True, queryset=Register.objects.all())
+    create = serializers.PrimaryKeyRelatedField(many=True, queryset=User_register.objects.all())
 
     class Meta:
         model = User

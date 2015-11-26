@@ -92,6 +92,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         """
         instance.firstname = validated_data.get('firstname', instance.firstname)
         instance.photo = validated_data.get('photo', instance.photo)
+        instance.company_photo = validated_data.get('company_photo', instance.company_photo)
         instance.lastname = validated_data.get('lastname', instance.lastname)
         instance.email = validated_data.get('email', instance.email)
         instance.phone = validated_data.get('phone', instance.phone)
@@ -135,4 +136,3 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'register')
 
 owner = serializers.ReadOnlyField(source='owner.username')
-

@@ -1,7 +1,7 @@
 from ticket_create.models import Ticket_create
 from friends.models import Friends
 from sync.models import Sync
-from register.models import Register
+from user_register.models import User_register
 from get_list.serializers import Get_listSerializer
 from rest_framework import generics
 # from ticket.permissions import IsOwnerOrReadOnly
@@ -44,7 +44,7 @@ class CustomListView(ListView):
 
       error=[]
 
-      if(Register.objects.filter(token_generated=access_token).exists()):
+      if(User_register.objects.filter(token_generated=access_token).exists()):
         pass
       else:
         error.append(
@@ -61,7 +61,7 @@ class CustomListView(ListView):
 
       #vz_id = self.kwargs['vz_id']
          
-      vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
+      vz_id= User_register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
       #tickets = Ticket.objects.filter(vz_id__in=contacts)
       print >> sys.stderr, vz_id
 
@@ -100,7 +100,7 @@ class CustomListView(ListView):
           fields.append(
                   { 
                    'feed':Ticket_create.objects.filter(ticket_id=obj1.ticket_id).filter(date_validity__gte=today).values('vz_id','item_photo','question', 'item', 'description','date_created','date_validity','ticket_id')[0],
-                   'user_details':Register.objects.filter(vz_id=obj1.vz_id).values('pk','token_generated','photo','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')[0],  
+                   'user_details':User_register.objects.filter(vz_id=obj1.vz_id).values('pk','token_generated','company_photo','company_photo','photo','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')[0],  
                    }
                 )
 

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from verify.models import Verify, LANGUAGE_CHOICES, STYLE_CHOICES
 
-from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
+from user_register.models import User_register, LANGUAGE_CHOICES, STYLE_CHOICES
 from django.contrib.auth.models import User, Group
 
 
@@ -28,7 +28,7 @@ class VerifySerializer(serializers.ModelSerializer):
         token = generate_token()
         
 
-        if (Register.objects.filter(phone=validated_data.get('phone')).values('phone')).exists():
+        if (User_register.objects.filter(phone=validated_data.get('phone')).values('phone')).exists():
     	 Verify.objects.filter(phone=validated_data.get('phone')).delete()
 
        
@@ -38,7 +38,7 @@ class VerifySerializer(serializers.ModelSerializer):
         if (User.objects.filter(username=validated_data.get('phone'))).exists():
           User.objects.filter(username=validated_data.get('phone')).delete()
         
-        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
+        if (User_register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
           user=User.objects.create(username=validated_data.get('phone'),password="vzcards")
 
         
@@ -64,14 +64,14 @@ class VerifySerializer(serializers.ModelSerializer):
         application = Application.objects.get(name="vzcards-api")
         expires = datetime.now() + timedelta(seconds=expire_seconds)
 
-        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
+        if (User_register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
             access_token = AccessToken.objects.create(
                     user=user,
                     application=application,
                     token=generate_token(),
                     expires=expires,
                     scope=scopes)
-        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
+        if (User_register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
             refresh_token = RefreshToken.objects.create(
                     user=user,
                     token=generate_token(),
@@ -86,7 +86,7 @@ class VerifySerializer(serializers.ModelSerializer):
         #         'scope': scopes}
 
         import json
-        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
+        if (User_register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
             token = access_token.token
             token= json.dumps(token)
             token = token.replace('"','')
@@ -94,13 +94,13 @@ class VerifySerializer(serializers.ModelSerializer):
 
         
 
-        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
-         Register.objects.filter(phone=validated_data.get('phone')).update(token_generated=token)
+        if (User_register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
+         User_register.objects.filter(phone=validated_data.get('phone')).update(token_generated=token)
         
-        if (Register.objects.filter(phone=validated_data.get('phone')).values('phone')).exists():
-         vz_id= Register.objects.filter(phone=validated_data.get('phone')).values_list('vz_id',flat=True)[0]
+        if (User_register.objects.filter(phone=validated_data.get('phone')).values('phone')).exists():
+         vz_id= User_register.objects.filter(phone=validated_data.get('phone')).values_list('vz_id',flat=True)[0]
 
-        if (Register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
+        if (User_register.objects.filter(phone=validated_data.get('phone')).filter(otp_generated=validated_data.get('otp')).values('phone')).exists():
          objects=Verify.objects.create(phone=validated_data.get('phone'),otp=validated_data.get('otp'),valid=1,token_generated=token,vz_id=vz_id)
 
 

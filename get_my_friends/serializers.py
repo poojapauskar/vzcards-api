@@ -2,7 +2,7 @@ from rest_framework import serializers
 from ticket_create.models import Ticket_create, LANGUAGE_CHOICES, STYLE_CHOICES
 from friends.models import Friends, LANGUAGE_CHOICES, STYLE_CHOICES
 from sync.models import Sync, LANGUAGE_CHOICES, STYLE_CHOICES
-from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
+from user_register.models import User_register, LANGUAGE_CHOICES, STYLE_CHOICES
 
 
 
@@ -15,8 +15,8 @@ class Get_my_friendsSerializer(serializers.ModelSerializer):
     	model = Sync
     	fields = ('friends_vz_id',)
         
-        model = Register
-        fields = ('pk', 'firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','photo')
+        model = User_register
+        fields = ('pk', 'firstname','company_photo', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','photo')
        
         
 

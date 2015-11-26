@@ -1,4 +1,4 @@
-from register.models import Register
+from user_register.models import User_register
 from my_profile.serializers import My_profileSerializer
 from rest_framework import generics
 # from ticket.permissions import IsOwnerOrReadOnly
@@ -6,7 +6,7 @@ from rest_framework import generics
 from django.shortcuts import get_object_or_404
 
 class My_profileList(generics.ListCreateAPIView):
- queryset = Register.objects.all()
+ queryset = User_register.objects.all()
  serializer_class = My_profileSerializer
  # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
@@ -30,10 +30,20 @@ def JSONResponse(data = None, status = StatusCode.OK):
 
 def get_queryset(request):
   access_token = request.GET.get('access_token')
-  if(Register.objects.filter(token_generated=access_token).exists()):
+
+  from django.http import JsonResponse
+  error=[]
+
+  if(User_register.objects.filter(token_generated=access_token).exists()):
     pass
   else:
-    return JSONResponse(status = StatusCode.NOT_FOUND)
+    error.append(
+              {
+                'status':401,
+                'message':"Access Token not valid"
+              }
+        )
+    return JsonResponse(error[0],safe=False)
 
 
   import sys
@@ -43,7 +53,7 @@ def get_queryset(request):
      
   #vz_id= Register.objects.filter(token_generated=access_token).values_list('vz_id',flat=True)[0]
 
-  vz_id= Register.objects.filter(token_generated=access_token).values('vz_id')
+  vz_id= User_register.objects.filter(token_generated=access_token).values('vz_id')
   #tickets = Ticket.objects.filter(vz_id__in=contacts)
   print >> sys.stderr, vz_id
   
@@ -55,7 +65,7 @@ def get_queryset(request):
   #          }
   #         )
 
-  profile=Register.objects.filter(vz_id=vz_id).values('pk','token_generated','photo','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')[0],  
+  profile=User_register.objects.filter(vz_id=vz_id).values('pk','token_generated','company_photo','photo','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')[0],  
   
 
 

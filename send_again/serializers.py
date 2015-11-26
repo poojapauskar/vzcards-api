@@ -2,13 +2,13 @@ from rest_framework import serializers
 import random
 from random import randint
 
-from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
+from user_register.models import User_register, LANGUAGE_CHOICES, STYLE_CHOICES
 from django.http import HttpResponse
 
 
 class Send_againSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Register
+        model = User_register
         fields = ('phone',)
     
 
@@ -19,7 +19,7 @@ class Send_againSerializer(serializers.ModelSerializer):
         otp_generated=str(random.randint(100000, 999999))
         #details=validated_data
         #valid=0
-        Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
+        User_register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
         
         # NEXMO_USERNAME = 'pooja'
         # NEXMO_PASSWORD = 'Pooja22222'
@@ -121,7 +121,7 @@ class Send_againSerializer(serializers.ModelSerializer):
         
 
 
-    from register.models import Register
+    from user_register.models import User_register
 from send_again.serializers import Send_againSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
@@ -131,7 +131,7 @@ from rest_framework.parsers import JSONParser
 from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):
-    create = serializers.PrimaryKeyRelatedField(many=True, queryset=Register.objects.all())
+    create = serializers.PrimaryKeyRelatedField(many=True, queryset=User_register.objects.all())
 
     class Meta:
         model = User
