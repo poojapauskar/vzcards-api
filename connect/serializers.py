@@ -44,13 +44,13 @@ class ConnectSerializer(serializers.ModelSerializer):
         if(User_register.objects.filter(phone=validated_data.get('phone_2')).exists()):
          pass
         else:
-         if(User_register.objects.filter(vz_id=validated_data.get('connecter_vz_id')).exists):
-            name=User_register.objects.get(vz_id=validated_data.get('connecter_vz_id'))
-            msg=name.firstname
+         name=User_register.objects.get(vz_id=validated_data.get('connecter_vz_id'))
+         if(name.firstname==''):
+          msg="your friend"
          else:
-            msg="your friend"
+          msg=name.firstname
 
-         print >> sys.stderr, name
+         print >> sys.stderr, msg
          from pprint import pprint
          import requests
          from django.conf import settings
