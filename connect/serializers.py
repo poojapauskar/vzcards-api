@@ -44,7 +44,7 @@ class ConnectSerializer(serializers.ModelSerializer):
         if(User_register.objects.filter(phone=validated_data.get('phone_2')).exists()):
          pass
         else:
-         if(User_register.objects.get(vz_id=validated_data.get('connecter_vz_id')).exists):
+         if(User_register.objects.filter(vz_id=validated_data.get('connecter_vz_id')).exists):
             name=User_register.objects.get(vz_id=validated_data.get('connecter_vz_id'))
             msg=name.firstname
          else:
