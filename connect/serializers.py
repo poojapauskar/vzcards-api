@@ -9,7 +9,7 @@ class ConnectSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = User_register
-        fields = ('firstname')
+        fields = ('firstname',)
     
         model = Connect
         fields = ('connecter_vz_id','phone_1', 'ticket_id_1', 'phone_2', 'ticket_id_2','my_ticket','reffered_ticket','reffered_phone')
@@ -44,7 +44,7 @@ class ConnectSerializer(serializers.ModelSerializer):
         if(User_register.objects.filter(phone=validated_data.get('phone_2')).exists()):
          pass
         else:
-         name=list(User_register.objects.filter(vz_id=validated_data.get('connecter_vz_id')).values_list('firstname'))
+         name=User_register.objects.get(vz_id=validated_data.get('connecter_vz_id'))
          print >> sys.stderr, name
          from pprint import pprint
          import requests
@@ -71,7 +71,7 @@ class ConnectSerializer(serializers.ModelSerializer):
          r = send_message(sid, token,
              sms_from='09243422233',  # sms_from='8808891988',
              sms_to=phone, # sms_to='9052161119',
-             sms_body='Hey '+validated_data.get('ticket_id_2')+', has shared your contact on VzCards, checkout this awesomes app https://vzcards.com/dl')  # Message body, if any
+             sms_body='Hey '+validated_data.get('ticket_id_2')+','+name.firstname+' has shared your contact on VzCards. Checkout this awesome app https://vzcards.com/dl')  # Message body, if any
          print r.status_code
          pprint(r.json())
 
