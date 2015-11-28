@@ -36,10 +36,10 @@ class ConnectSerializer(serializers.ModelSerializer):
 
        
 
-        if(len(validated_data.get('phone_2'))==12):
-         phone=validated_data.get('phone_2')
-        else:
-         phone="91"+validated_data.get('phone_2')
+        # if(len(validated_data.get('phone_2'))==12):
+        phone=validated_data.get('phone_2')
+        # else:
+        #  phone="91"+validated_data.get('phone_2')
 
         if(User_register.objects.filter(phone=validated_data.get('phone_2')).exists()):
          pass

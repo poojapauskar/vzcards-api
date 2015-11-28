@@ -30,7 +30,6 @@ class Migration(migrations.Migration):
                 ('pin_code', models.CharField(default=b'', max_length=6, blank=True, validators=[django.core.validators.RegexValidator(regex=b'^\\+?1?\\d{6}$', message=b'Enter pin code.')])),
                 ('token_generated', models.TextField(default=b'', blank=True)),
                 ('photo', models.TextField(default=b'', blank=True)),
-                ('company_photo', models.TextField(default=b'', blank=True)),
             ],
             options={
                 'ordering': ('created',),
