@@ -18,8 +18,8 @@ highlighted = models.TextField()
 
 class My_profile(models.Model):
  created = models.DateTimeField(auto_now_add=True) # validators should be a list
- phone_regex = RegexValidator(regex=r'^\+?1?\d{11,13}$', message="Enter country code. Phone number must be entered in the format: '919999999'.")
- phone = models.CharField(max_length=13,validators=[phone_regex], blank=False,default='') # validators should be a list
+ phone_regex = RegexValidator(regex=r'^\+?1?\d{11,14}$', message="Enter country code. Phone number must be entered in the format: '919999999'.")
+ phone = models.CharField(max_length=14,validators=[phone_regex], blank=False,default='') # validators should be a list
  vz_id = models.CharField(blank=True,max_length=15,default='',editable=True)
  firstname = models.CharField(max_length=100, blank=True,default='')
  lastname = models.CharField(max_length=100, blank=True,default='')

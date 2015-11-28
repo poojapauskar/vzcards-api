@@ -19,8 +19,8 @@ owner = models.ForeignKey('auth.User', related_name='verify')
 highlighted = models.TextField()
 
 class Send_again(models.Model):
- phone_regex = RegexValidator(regex=r'^\+?1?\d{11,13}$', message="Enter country code. Phone number must be entered in the format: '+919999999'.")
- phone = models.CharField(max_length=13,validators=[phone_regex], blank=False) # validators should be a list
+ phone_regex = RegexValidator(regex=r'^\+?1?\d{11,14}$', message="Enter country code. Phone number must be entered in the format: '+919999999'.")
+ phone = models.CharField(max_length=14,validators=[phone_regex], blank=False) # validators should be a list
 
 
 
