@@ -72,6 +72,7 @@ INSTALLED_APPS = (
     'history',
     'remove_ticket',
     'vzcard_details',
+    'rest_framework_swagger',
 )
 
 MIDDLEWARE_CLASSES = (
