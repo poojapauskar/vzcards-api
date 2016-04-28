@@ -17,8 +17,9 @@ class SyncSerializer(serializers.ModelSerializer):
         
         #convert array to string
         import json
+        import sys
         print >> sys.stderr, validated_data.get('contact_list')
-        
+
         friends_list=list(User_register.objects.filter(phone__in=validated_data.get('contact_list')).values_list('vz_id', flat=True))
         
         friends_list = json.dumps(friends_list)
@@ -31,7 +32,7 @@ class SyncSerializer(serializers.ModelSerializer):
         # friends_list=friends_list.replace("'","")
         #friends_list=friends_list.replace('"','')
 
-        import sys
+        
         print >> sys.stderr, friends_list
        
 
