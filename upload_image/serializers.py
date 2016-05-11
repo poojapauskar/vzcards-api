@@ -15,9 +15,9 @@ import cloudinary.api
 
 
 cloudinary.config( 
-  cloud_name = "hffrh1pci", 
-  api_key = "286145976162589", 
-  api_secret = "pJedg7LSodzm7SBv9HaiLjLvHT8" 
+  cloud_name = "harnesymz", 
+  api_key = "597912151168824", 
+  api_secret = "u1Dgxp3BDnIgm-PN_gkJ5stDE30" 
 )
 
 ACCOUNT_SID = "ACa6846885206cb0041afeef5d0405ba25"

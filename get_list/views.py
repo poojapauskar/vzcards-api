@@ -1,4 +1,5 @@
 from ticket_create.models import Ticket_create
+from connect.models import Connect
 from friends.models import Friends
 from sync.models import Sync
 from user_register.models import User_register
@@ -155,7 +156,10 @@ class CustomListView(ListView):
                   }
             )
       
-       
+      
+
+      # Connect.objects.all().delete()
+      # Ticket_create.objects.all().delete() 
       # context['list_exams'] = file_exams
       #return files   
       #return JsonResponse(response[0],safe=False)
