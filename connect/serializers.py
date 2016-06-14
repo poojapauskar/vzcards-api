@@ -56,8 +56,8 @@ class ConnectSerializer(serializers.ModelSerializer):
          from django.conf import settings
 
          #from settings import sid, token
-         sid = 'bitjini'
-         token = '85dbbbc18dfaf078290eeee3c185ac6dfd8a208f'
+         sid = 'bitjini1'
+         token = '5bf1a7c16d2b1d5964ca52249289e035b976924c'
 
          def send_message(sid, token, sms_from, sms_to, sms_body):
              return requests.post('https://twilix.exotel.in/v1/Accounts/{sid}/Sms/send.json'.format(sid=sid),
@@ -74,7 +74,7 @@ class ConnectSerializer(serializers.ModelSerializer):
         # For promotional, this will be ignored by the SMS gateway
         # Incase you are wondering who Dr. Rajasekhar is http://en.wikipedia.org/wiki/Dr._Rajasekhar_(actor)
          r = send_message(sid, token,
-             sms_from='09243422233',  # sms_from='8808891988',
+             sms_from='08039534803',  # sms_from='8808891988',
              sms_to=phone, # sms_to='9052161119',
              sms_body='Hey '+validated_data.get('ticket_id_2')+','+msg+' has shared your contact on VzCards. Checkout this awesome app https://vzcards.com/dl')  # Message body, if any
          print r.status_code

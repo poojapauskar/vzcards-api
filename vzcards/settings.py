@@ -27,8 +27,8 @@ MEDIA_URL = 'http://res.cloudinary.com/hffrh1pci/image/upload/vzcards/'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'b4d(3@)wr&*1(smokkl!@hwir(ij+wnt4r5ia#(fms+t4xnltg'
 
-sid = 'bitjini'
-token = '85dbbbc18dfaf078290eeee3c185ac6dfd8a208f'
+sid = 'bitjini1'
+token = '5bf1a7c16d2b1d5964ca52249289e035b976924c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
