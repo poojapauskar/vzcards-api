@@ -70,10 +70,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             })
 
 
-        #if __name__ == '__main__':
-        # 'From' doesn't matter; For transactional, this will be replaced with your SenderId;
-        # For promotional, this will be ignored by the SMS gateway
-        # Incase you are wondering who Dr. Rajasekhar is http://en.wikipedia.org/wiki/Dr._Rajasekhar_(actor)
+        
         r = send_message(sid, token,
             sms_from='09243422233',  # sms_from='8808891988',
             sms_to=validated_data.get('phone'), # sms_to='9052161119',
@@ -81,11 +78,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         print r.status_code
         pprint(r.json())
 
-        # message = client.messages.create(
-        #  body="Your OTP "+otp_generated,  # Message body, if any
-        #  to="+"+validated_data.get('phone'), #7798899252
-        #  from_="+17028002480",
-        # )
+
+        # r=requests.post('http://enterprise.smsgupshup.com/GatewayAPI/rest?method=SendMessage&send_to=918792213479&msg=Hello&msg_type=TEXT&userid=2000159262&auth_scheme=plain&password=ZtIA4TyB1&v=1.1&format=text')
+        # import sys
+        # print sys.stderr,r
         
         from django.http import HttpResponse
         from django.http import JsonResponse

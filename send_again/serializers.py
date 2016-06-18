@@ -47,8 +47,8 @@ class Send_againSerializer(serializers.ModelSerializer):
         from django.conf import settings
 
         #from settings import sid, token
-        sid = 'bitjini1'
-        token = '5bf1a7c16d2b1d5964ca52249289e035b976924c'
+        sid = 'bitjini2'
+        token = 'e064d27250bdd098a3aca1822adf24e1039d219a'
 
         def send_message(sid, token, sms_from, sms_to, sms_body):
             return requests.post('https://twilix.exotel.in/v1/Accounts/{sid}/Sms/send.json'.format(sid=sid),
@@ -65,7 +65,7 @@ class Send_againSerializer(serializers.ModelSerializer):
         # For promotional, this will be ignored by the SMS gateway
         # Incase you are wondering who Dr. Rajasekhar is http://en.wikipedia.org/wiki/Dr._Rajasekhar_(actor)
         r = send_message(sid, token,
-            sms_from='08039534803',  # sms_from='8808891988',
+            sms_from='08030752644',  # sms_from='8808891988',
             sms_to=validated_data.get('phone'), # sms_to='9052161119',
             sms_body='Hi '+validated_data.get('phone')+', Your one time password for VzCards login is '+otp_generated+'. Please use the password to login to the app.')
         print r.status_code
