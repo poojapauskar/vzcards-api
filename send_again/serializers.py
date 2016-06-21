@@ -19,7 +19,7 @@ class Send_againSerializer(serializers.ModelSerializer):
         otp_generated=str(random.randint(100000, 999999))
         #details=validated_data
         #valid=0
-        User_register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
+        User_register.objects.filter(phone=validated_data.get('phone')).update(otp_generated='999999')
         
         # NEXMO_USERNAME = 'pooja'
         # NEXMO_PASSWORD = 'Pooja22222'
@@ -67,7 +67,7 @@ class Send_againSerializer(serializers.ModelSerializer):
         r = send_message(sid, token,
             sms_from='08030752644',  # sms_from='8808891988',
             sms_to=validated_data.get('phone'), # sms_to='9052161119',
-            sms_body='Hi '+validated_data.get('phone')+', Your one time password for VzCards login is '+otp_generated+'. Please use the password to login to the app.')
+            sms_body='Hi '+validated_data.get('phone')+', Your one time password for VzCards login is 999999. Please use the password to login to the app.')
         print r.status_code
         pprint(r.json())
 
