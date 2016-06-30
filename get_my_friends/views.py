@@ -135,7 +135,7 @@ class CustomListView(ListView):
     #VZ1445062511, VZ1445062656, VZ1445613566, VZ1445613959
       # import pdb; 
       # pdb.set_trace()
-      fields=User_register.objects.filter(vz_id__in=objects).values('firstname','lastname','email','company_photo','phone','industry','company','address_line_1','address_line_2','city','pin_code','photo').order_by('firstname','lastname')
+      fields=User_register.objects.filter(vz_id__in=objects).values('firstname','lastname','title','email','company_photo','phone','industry','company','address_line_1','address_line_2','city','pin_code','photo').order_by('firstname','lastname')
       count=len(fields)
 
       # fields = fields[::-1]

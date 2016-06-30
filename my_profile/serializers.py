@@ -18,7 +18,7 @@ cloudinary.config(
 class My_profileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User_register
-        fields = ('phone','company_photo','photo','vz_id','firstname','lastname','email','industry','company','address_line_1','address_line_2','city','pin_code')
+        fields = ('phone','company_photo','photo','vz_id','firstname','lastname','title','email','industry','company','address_line_1','address_line_2','city','pin_code')
         
     def create(self, validated_data): 
  	   
@@ -27,7 +27,7 @@ class My_profileSerializer(serializers.ModelSerializer):
 
 
 
-      User_register.objects.filter(vz_id=validated_data.get('vz_id')).update(phone=obj.phone,photo=validated_data.get('photo'),company_photo=validated_data.get('company_photo'),firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
+      User_register.objects.filter(vz_id=validated_data.get('vz_id')).update(phone=obj.phone,photo=validated_data.get('photo'),company_photo=validated_data.get('company_photo'),firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),title=validated_data.get('title'),email=validated_data.get('email'),industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
       return validated_data
 
     def update(self, instance, validated_data):
@@ -36,6 +36,7 @@ class My_profileSerializer(serializers.ModelSerializer):
         """
         instance.firstname = validated_data.get('firstname', instance.firstname)
         instance.lastname = validated_data.get('lastname', instance.lastname)
+        instance.title = validated_data.get('title', instance.title)
         instance.email = validated_data.get('email', instance.email)
         instance.vz_id = validated_data.get('vz_id', instance.vz_id)
         instance.industry = validated_data.get('industry', instance.industry)

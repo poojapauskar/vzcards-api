@@ -28,7 +28,7 @@ class User_registerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User_register
-        fields = ('pk','token_generated','company_photo','photo','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')
+        fields = ('pk','token_generated','company_photo','photo','firstname', 'lastname','title', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')
         #write_only_fields = ('firstame', 'lastname')
 
     def create(self, validated_data):
@@ -136,7 +136,7 @@ class User_registerSerializer(serializers.ModelSerializer):
 
        # link="http://res.cloudinary.com/hjwxtjtff/image/upload/"+public_id+".pdf"
         #print >> sys.stderr, validated_data.get('photo')
-        objects=User_register.objects.create(token_generated='',company_photo=validated_data.get('company_photo'),photo=validated_data.get('photo'),firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
+        objects=User_register.objects.create(token_generated='',company_photo=validated_data.get('company_photo'),photo=validated_data.get('photo'),firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),title=validated_data.get('title'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
         # print >> sys.stderr, objects
         
 
@@ -152,6 +152,7 @@ class User_registerSerializer(serializers.ModelSerializer):
         instance.photo = validated_data.get('photo', instance.photo)
         instance.company_photo = validated_data.get('company_photo', instance.company_photo)
         instance.lastname = validated_data.get('lastname', instance.lastname)
+        instance.title = validated_data.get('title', instance.title)
         instance.email = validated_data.get('email', instance.email)
         instance.phone = validated_data.get('phone', instance.phone)
         instance.vz_id = validated_data.get('vz_id', instance.vz_id)
