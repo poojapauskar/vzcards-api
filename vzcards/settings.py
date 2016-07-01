@@ -122,7 +122,7 @@ WSGI_APPLICATION = 'vzcards.wsgi.application'
 #     }
 # }
 
-#staging
+#staging.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
