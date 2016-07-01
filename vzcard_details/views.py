@@ -1,3 +1,5 @@
+from upload_image.models import Upload_image
+from connect.models import Connect
 from ticket_create.models import Ticket_create
 from friends.models import Friends
 from sync.models import Sync
@@ -46,20 +48,38 @@ class CustomListView(ListView):
       from django.http import HttpResponse
       #return HttpResponse(objects,content_type='application/json')
 
-      count= len(Verify.objects.filter(valid='1'))
-      latest_valid_user=Verify.objects.filter(valid=1).values_list('phone',flat=True).order_by('-id')[0]
-      print >> sys.stderr, latest_valid_user
+      # count= len(Verify.objects.filter(valid='1'))
+      # latest_valid_user=Verify.objects.filter(valid=1).values_list('phone',flat=True).order_by('-id')[0]
+      # print >> sys.stderr, latest_valid_user
+
+      # fields = []
+
+      # fields.append(
+      #         { 
+      #          'count':count,
+      #          'latest_user':list(User_register.objects.filter(phone=latest_valid_user).values('pk','token_generated','company_photo','photo','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated'))
+      #          }
+      #       )
+  
+      from django.db.models import Q
+      valid_users_count= len(User_register.objects.all().filter(~Q(token_generated = '')))
+      number_of_posts= len(Ticket_create.objects.all())
+      connections= len(Connect.objects.all())/2
+      images_uploaded= len(Upload_image.objects.all())
+      print >> sys.stderr, valid_users_count
 
       fields = []
 
       fields.append(
               { 
-               'count':count,
-               'latest_user':list(User_register.objects.filter(phone=latest_valid_user).values('pk','token_generated','company_photo','photo','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated'))
-               }
+               'valid_users_count':valid_users_count,
+               'number_of_posts':number_of_posts,
+               'connections':connections,
+               'images_uploaded':images_uploaded,
+              }
             )
 
-      return JsonResponse(fields[0],safe=False)
+      return JsonResponse(list(fields),safe=False)
       #return objects
 
 
