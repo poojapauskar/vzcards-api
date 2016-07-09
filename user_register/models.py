@@ -25,6 +25,7 @@ class User_register(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     firstname = models.CharField(max_length=100, blank=True,default='')
     lastname = models.CharField(max_length=100, blank=True,default='')
+    title = models.CharField(max_length=100, blank=True,default='')
     email = models.EmailField(max_length=100, blank=True,default='')
     phone_regex = RegexValidator(regex=r'^\+?1?\d{11,14}$', message="Enter country code. Phone number must be entered in the format: '919999999'.")
     phone = models.CharField(max_length=14,validators=[phone_regex], blank=False) # validators should be a list
@@ -35,8 +36,7 @@ class User_register(models.Model):
     address_line_1 = models.CharField(max_length=100, blank=True,default='')
     address_line_2 = models.CharField(max_length=100, blank=True,default='')
     city = models.CharField(max_length=100, blank=True,default='')
-    pin_regex = RegexValidator(regex=r'^\+?1?\d{6}$', message="Enter pin code.")
-    pin_code = models.CharField(max_length=6,validators=[pin_regex], blank=True,default='')
+    pin_code = models.CharField(max_length=6,blank=True,default='')
     token_generated = models.TextField(blank=True,default='')
     photo = models.TextField(blank=True,default='')
     company_photo = models.TextField(blank=True,default='')

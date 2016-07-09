@@ -90,15 +90,15 @@ class CustomListView(ListView):
           if(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).exists()):
             connections.append(
                       {
-                       'connecter_details':User_register.objects.filter(vz_id=c.connecter_vz_id).values('phone','company_photo','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')[0], 
-                       'reffered_phone_details':User_register.objects.filter(phone=c.reffered_phone).values('phone','company_photo','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')[0], 
+                       'connecter_details':User_register.objects.filter(vz_id=c.connecter_vz_id).values('phone','company_photo','photo','firstname', 'lastname','title', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')[0], 
+                       'reffered_phone_details':User_register.objects.filter(phone=c.reffered_phone).values('phone','company_photo','photo','firstname', 'lastname','title', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')[0], 
                        'reffered_ticket_details':Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')[0], 
                       }
                     )
           else:
             connections.append(
                       {
-                       'connecter_details':User_register.objects.filter(vz_id=c.connecter_vz_id).values('phone','company_photo','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')[0], 
+                       'connecter_details':User_register.objects.filter(vz_id=c.connecter_vz_id).values('phone','company_photo','photo','firstname', 'lastname','title', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')[0], 
                        'reffered_phone_details':c.reffered_phone, 
                        'reffered_ticket_details':c.reffered_ticket,           
                       }

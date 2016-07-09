@@ -23,6 +23,7 @@ class My_profile(models.Model):
  vz_id = models.CharField(blank=True,max_length=15,default='',editable=True)
  firstname = models.CharField(max_length=100, blank=True,default='')
  lastname = models.CharField(max_length=100, blank=True,default='')
+ title = models.CharField(max_length=100, blank=True,default='')
  email = models.EmailField(max_length=100, blank=True,default='')
  industry = models.CharField(max_length=100, blank=True,default='')
  company = models.CharField(max_length=100, blank=True,default='')

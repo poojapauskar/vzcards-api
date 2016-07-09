@@ -105,7 +105,7 @@ class CustomListView(ListView):
             fields.append(
                   { 
                    'feed':Ticket_create.objects.filter(ticket_id=obj1.ticket_id).filter(date_validity__gte=today).values('vz_id','item_photo','question', 'item', 'description','date_created','date_validity','ticket_id')[0],
-                   'user_details':User_register.objects.filter(vz_id=obj1.vz_id).values('pk','token_generated','company_photo','company_photo','photo','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')[0],  
+                   'user_details':User_register.objects.filter(vz_id=obj1.vz_id).values('pk','token_generated','company_photo','company_photo','photo','firstname', 'lastname', 'title', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')[0],  
                    }
                 )
           else :

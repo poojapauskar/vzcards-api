@@ -65,7 +65,7 @@ def get_queryset(request):
   #          }
   #         )
 
-  profile=User_register.objects.filter(vz_id=vz_id).values('pk','token_generated','company_photo','photo','firstname', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')[0],  
+  profile=User_register.objects.filter(vz_id=vz_id).values('pk','token_generated','company_photo','photo','firstname', 'lastname','title', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')[0],  
   
 
 

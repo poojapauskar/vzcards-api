@@ -16,7 +16,7 @@ class Get_my_friendsSerializer(serializers.ModelSerializer):
     	fields = ('friends_vz_id',)
         
         model = User_register
-        fields = ('pk', 'firstname','company_photo', 'lastname', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','photo')
+        fields = ('pk', 'firstname','company_photo', 'lastname','title', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','photo')
        
         
 

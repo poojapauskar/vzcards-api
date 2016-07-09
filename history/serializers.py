@@ -9,7 +9,7 @@ from ticket_create.models import Ticket_create, LANGUAGE_CHOICES, STYLE_CHOICES
 class HistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = User_register
-        fields = ('phone','company_photo','photo','firstname', 'lastname', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')
+        fields = ('phone','company_photo','photo','firstname', 'lastname', 'title','email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')
 
         model = Connect
         fields = ('connecter_vz_id', 'phone_1', 'ticket_id_1', 'phone_2', 'ticket_id_2')
