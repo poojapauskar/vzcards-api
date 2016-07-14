@@ -18,6 +18,12 @@ class Remove_ticketDetail(generics.ListAPIView):
   ticket_id = self.kwargs['ticket_id']
 
   objects1=Ticket_create.objects.filter(ticket_id=ticket_id)
+
+  # item_photo_1=Ticket_create.objects.filter(ticket_id=ticket_id).values_list('item_photo')
+  # import sys
+  # item_photo_2= str(item_photo_1[0]).replace("http://res.cloudinary.com/harnesymz/image/upload/vzcards/","").replace(".jpg","").replace(",","").replace("u","").replace("'","").replace("(","").replace(")","")
+  # print sys.stderr, item_photo_2
+  # cloudinary.api.delete_resources([item_photo_2])
  
   objects=Ticket_create.objects.filter(ticket_id=ticket_id).delete()
   objects3=(Connect.objects.filter(ticket_id_1=ticket_id)|Connect.objects.filter(ticket_id_2=ticket_id)).delete()
