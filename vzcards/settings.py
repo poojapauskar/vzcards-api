@@ -73,6 +73,7 @@ INSTALLED_APPS = (
     'remove_ticket',
     'vzcard_details',
     'rest_framework_swagger',
+    'invite_friends',
 )
 
 MIDDLEWARE_CLASSES = (

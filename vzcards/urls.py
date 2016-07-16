@@ -84,4 +84,5 @@ urlpatterns = patterns('',
     url(r'^', include('history.urls')),
     url(r'^', include('remove_ticket.urls')),
     url(r'^', include('vzcard_details.urls')),
+    url(r'^', include('invite_friends.urls')),
 )
