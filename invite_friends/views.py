@@ -79,7 +79,7 @@ class CustomListView(ListView):
         r = send_message(sid, token,
         	sms_from='08030752644',
         	sms_to=request.META.get('HTTP_PHONE'),
-        	sms_body='Hi '+request.META.get('HTTP_RECEIVER')+', '+request.META.get('HTTP_SENDER')+' has invited you to VzCards. Please click on the link to download the app http://download.vzcards.com/.')
+        	sms_body='Hi '+request.META.get('HTTP_RECEIVER')+', you have been invited by '+request.META.get('HTTP_SENDER')+' on VzCards. Please click on the link to download the app and connect with your friend http://download.vzcards.com/.')
         print r.status_code
         pprint(r.json())
 	  ##--------------------------------------------
@@ -93,7 +93,7 @@ class CustomListView(ListView):
         	'api_secret': '865357d5',
         	'to': request.data['phone'],
         	'from': 'NEXMO',
-        	'text': 'Hi '+request.META.get('HTTP_RECEIVER')+', '+request.META.get('HTTP_SENDER')+' has invited you to VzCards. Please click on the link to download the app http://download.vzcards.com/.'
+        	'text': 'Hi '+request.META.get('HTTP_RECEIVER')+', you have been invited by '+request.META.get('HTTP_SENDER')+' on VzCards. Please click on the link to download the app and connect with your friend http://download.vzcards.com/.'
         }
 
         url = 'https://rest.nexmo.com/sms/json?' + urllib.urlencode(params)
