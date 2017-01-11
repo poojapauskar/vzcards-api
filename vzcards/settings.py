@@ -112,28 +112,28 @@ WSGI_APPLICATION = 'vzcards.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 #development
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dbs3oq88qmdblr',                      
-        'USER': 'yqjzvrxqstqvuo',
-        'PASSWORD': 'VvI_OSk4NlEy4-GC02qSOtjU0u',
-        'HOST': 'ec2-54-225-201-25.compute-1.amazonaws.com',
-        'PORT': '5432',
-    }
-}
-
-#staging.
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'd78prshl430sjd',                      
-#         'USER': 'zuguhtrgtosfow',
-#         'PASSWORD': 'ZMYD_XDQaBpRO_GATZc0xKNBSm',
-#         'HOST': 'ec2-54-197-241-24.compute-1.amazonaws.com',
+#         'NAME': 'dbs3oq88qmdblr',                      
+#         'USER': 'yqjzvrxqstqvuo',
+#         'PASSWORD': 'VvI_OSk4NlEy4-GC02qSOtjU0u',
+#         'HOST': 'ec2-54-225-201-25.compute-1.amazonaws.com',
 #         'PORT': '5432',
 #     }
 # }
+
+#staging.
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd78prshl430sjd',                      
+        'USER': 'zuguhtrgtosfow',
+        'PASSWORD': 'ZMYD_XDQaBpRO_GATZc0xKNBSm',
+        'HOST': 'ec2-54-197-241-24.compute-1.amazonaws.com',
+        'PORT': '5432',
+    }
+}
 
 # DATABASES = {
 #     'default': {
