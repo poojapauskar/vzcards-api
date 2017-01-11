@@ -40,6 +40,7 @@ class User_register(models.Model):
     token_generated = models.TextField(blank=True,default='')
     photo = models.TextField(blank=True,default='')
     company_photo = models.TextField(blank=True,default='')
+    reference_code = models.CharField(max_length=100, blank=True,default='')
 
    # photo = models.ImageField(upload_to="projectimg/",storage=fs, null=True, blank=True)
     
