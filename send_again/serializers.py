@@ -19,7 +19,15 @@ class Send_againSerializer(serializers.ModelSerializer):
         otp_generated=str(random.randint(100000, 999999))
         #details=validated_data
         #valid=0
-        User_register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
+
+        if(User_register.objects.filter(phone=validated_data.get('phone')).exists()):
+         data=User_register.objects.get(phone=validated_data.get('phone'))
+         reference_code=int(data.reference_code)+1
+        else:
+         reference_code=1
+
+        User_register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated,reference_code=reference_code)
+
         
         # NEXMO_USERNAME = 'pooja'
         # NEXMO_PASSWORD = 'Pooja22222'
@@ -48,31 +56,40 @@ class Send_againSerializer(serializers.ModelSerializer):
         if(str(validated_data.get('phone'))[:2] == '91'):
           print sys.stderr, "Indian Numbers" 
           ## Exotel messages------------------------------------------------
-          from pprint import pprint
-          import requests
-          from django.conf import settings
+          # from pprint import pprint
+          # import requests
+          # from django.conf import settings
         
-          sid = 'bitjini2'
-          token = 'e064d27250bdd098a3aca1822adf24e1039d219a'
+          # sid = 'bitjini2'
+          # token = 'e064d27250bdd098a3aca1822adf24e1039d219a'
 
-          def send_message(sid, token, sms_from, sms_to, sms_body):
-              return requests.post('https://twilix.exotel.in/v1/Accounts/{sid}/Sms/send.json'.format(sid=sid),
-              auth=(sid, token),
-              data={
-                  'From': sms_from,
-                  'To': sms_to,
-                  'Body': sms_body
-              })
+          # def send_message(sid, token, sms_from, sms_to, sms_body):
+          #     return requests.post('https://twilix.exotel.in/v1/Accounts/{sid}/Sms/send.json'.format(sid=sid),
+          #     auth=(sid, token),
+          #     data={
+          #         'From': sms_from,
+          #         'To': sms_to,
+          #         'Body': sms_body
+          #     })
 
 
     
-          r = send_message(sid, token,
-              sms_from='08030752644',  
-              sms_to=validated_data.get('phone'), 
-              sms_body='Hi '+validated_data.get('phone')+', Your one time password for VzCards login is '+otp_generated+'. Please use the password to login to the app.')
-          print r.status_code
-          pprint(r.json())
+
+          # r = send_message(sid, token,
+          #     sms_from='08030752644',  
+          #     sms_to=validated_data.get('phone'), 
+          #     sms_body='Hi '+validated_data.get('phone')+', Your one time password for VzCards login is '+otp_generated+'. Please use the password to login to the app.')
+          # print r.status_code
+          # pprint(r.json())
+
           ##--------------------------------------------
+
+
+          otp_msg="http://enterprise.smsgupshup.com/GatewayAPI/rest?msg=Hi "+validated_data.get('phone')+", please use the following One Time Password "+otp_generated+" for login. Reference code "+str(reference_code)+". Thank You for using VzCards.&v=1.1&userid=2000159262&password=ZtIA4TyB1&send_to="+validated_data.get('phone')+"&msg_type=text&method=sendMessage"
+          
+          import requests
+          r = requests.get(otp_msg)
+          r.status_code
         
 
         else:
@@ -86,7 +103,7 @@ class Send_againSerializer(serializers.ModelSerializer):
               'api_secret': '865357d5',
               'to': validated_data.get('phone'),
               'from': 'NEXMO',
-              'text': 'Hi '+validated_data.get('phone')+', Your one time password for VzCards login is '+otp_generated+'. Please use the password to login to the app.'
+              'text': 'Hi '+validated_data.get('phone')+', please use the following One Time Password '+otp_generated+' for login. Reference code '+str(reference_code)+'. Thank You for using VzCards.'
           }
 
           url = 'https://rest.nexmo.com/sms/json?' + urllib.urlencode(params)
