@@ -87,7 +87,7 @@ class CustomListView(ListView):
 
 
         for c in connect:
-          if(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).exists()):
+          if(Ticket_create.objects.filter(ticket_id=c.reffered_ticket).exists() and User_register.objects.filter(vz_id=c.connecter_vz_id).exists() and User_register.objects.filter(phone=c.reffered_phone).exists()):
             connections.append(
                       {
                        'connecter_details':User_register.objects.filter(vz_id=c.connecter_vz_id).values('phone','company_photo','photo','firstname', 'lastname','title', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')[0], 
@@ -95,7 +95,7 @@ class CustomListView(ListView):
                        'reffered_ticket_details':Ticket_create.objects.filter(ticket_id=c.reffered_ticket).values('vz_id','item_photo', 'question', 'item', 'description','date_created', 'date_validity','ticket_id')[0], 
                       }
                     )
-          else:
+          elif(User_register.objects.filter(vz_id=c.connecter_vz_id).exists()):
             connections.append(
                       {
                        'connecter_details':User_register.objects.filter(vz_id=c.connecter_vz_id).values('phone','company_photo','photo','firstname', 'lastname','title', 'email','vz_id','industry','company','address_line_1','address_line_2','city','pin_code')[0], 
