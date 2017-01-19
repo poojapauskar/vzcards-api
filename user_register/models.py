@@ -41,6 +41,7 @@ class User_register(models.Model):
     photo = models.TextField(blank=True,default='')
     company_photo = models.TextField(blank=True,default='')
     reference_code = models.CharField(max_length=100, blank=True,default='')
+    is_organization = models.CharField(max_length=100, blank=True,default='')
 
    # photo = models.ImageField(upload_to="projectimg/",storage=fs, null=True, blank=True)
     

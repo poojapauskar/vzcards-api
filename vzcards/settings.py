@@ -74,6 +74,7 @@ INSTALLED_APPS = (
     'vzcard_details',
     'rest_framework_swagger',
     'invite_friends',
+    'register_organization',
 )
 
 MIDDLEWARE_CLASSES = (

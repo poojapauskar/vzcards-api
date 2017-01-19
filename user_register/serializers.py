@@ -28,7 +28,7 @@ class User_registerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User_register
-        fields = ('pk','reference_code','token_generated','company_photo','photo','firstname', 'lastname','title', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')
+        fields = ('pk','is_organization','reference_code','token_generated','company_photo','photo','firstname', 'lastname','title', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')
         #write_only_fields = ('firstame', 'lastname')
 
     def create(self, validated_data):
