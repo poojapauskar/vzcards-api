@@ -62,7 +62,7 @@ def get_queryset(request):
   
   details.append(
             {
-              'status':'true',
+              'status':200,
               'message':'Users registered in an organization',
             }
           )
