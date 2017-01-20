@@ -86,4 +86,5 @@ urlpatterns = patterns('',
     url(r'^', include('vzcard_details.urls')),
     url(r'^', include('invite_friends.urls')),
     url(r'^', include('register_organization.urls')),
+    url(r'^', include('get_organization_friends.urls')),
 )

@@ -178,7 +178,8 @@ class User_registerSerializer(serializers.ModelSerializer):
         instance.address_line_1 = validated_data.get('address_line_1', instance.address_line_1)
         instance.address_line_2 = validated_data.get('address_line_2', instance.address_line_2)
         instance.city = validated_data.get('city', instance.city)
-        instance.pin_code = validated_data.get('pin_code', instance.pin_codes)
+        instance.pin_code = validated_data.get('pin_code', instance.pin_code)
+        instance.reference_code = validated_data.get('reference_code', instance.reference_code)
         instance.access_token = validated_data.get('pin_code', instance.access_token)
         instance.save()
         return instance

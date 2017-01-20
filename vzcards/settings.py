@@ -75,6 +75,7 @@ INSTALLED_APPS = (
     'rest_framework_swagger',
     'invite_friends',
     'register_organization',
+    'get_organization_friends',
 )
 
 MIDDLEWARE_CLASSES = (

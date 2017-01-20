@@ -26,6 +26,8 @@ def JSONResponse(data = None, status = StatusCode.OK):
 
 def get_queryset(request):
 
+  import time
+
   list_of_phone_nos= request.META.get('HTTP_LIST_OF_PHONE_NOS')
   list_of_phone_nos= list_of_phone_nos.split(",")
 
@@ -46,15 +48,18 @@ def get_queryset(request):
    print sys.stderr, list_of_lastname[i]
    print sys.stderr, company
 
+   vz_id='VZ'+str(int(time.time()))
+
    if(User_register.objects.filter(phone=obj).exists()):
     User_register.objects.filter(phone=obj).update(company=company,is_organization="true")
    else: 
-  	User_register.objects.create(phone=obj,company=company,is_organization="true",firstname=list_of_firstname[i],lastname=list_of_lastname[i])
-    
+  	User_register.objects.create(vz_id=vz_id,reference_code=1,phone=obj,company=company,is_organization="true",firstname=list_of_firstname[i],lastname=list_of_lastname[i])
+   
    i=i+1
 
   details=[]
 
+  
   details.append(
             {
               'status':'true',
@@ -62,30 +67,7 @@ def get_queryset(request):
             }
           )
 
-  
-
   from django.http import JsonResponse
   #return JsonResponse(dict(objects=list(objects)))
   return JsonResponse((list(details)),safe=False)
-
-from django.contrib.auth.models import User
-from get_list.serializers import UserSerializer
-from rest_framework import permissions
-
-
-class UserList(generics.ListAPIView):
- queryset = User.objects.all()
- serializer_class = UserSerializer
-
-
-class UserDetail(generics.RetrieveAPIView):
- queryset = User.objects.all()
- serializer_class = UserSerializer
-
-
-def perform_create(self, serializer):
- serializer.save(owner=self.request.user)
-
-
-
 
