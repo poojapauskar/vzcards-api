@@ -77,6 +77,7 @@ INSTALLED_APPS = (
     'register_organization',
     'get_organization_friends',
     'check_is_organization',
+    'delete_organization',
 )
 
 MIDDLEWARE_CLASSES = (
