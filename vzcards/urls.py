@@ -87,4 +87,5 @@ urlpatterns = patterns('',
     url(r'^', include('invite_friends.urls')),
     url(r'^', include('register_organization.urls')),
     url(r'^', include('get_organization_friends.urls')),
+    url(r'^', include('check_is_organization.urls')),
 )
