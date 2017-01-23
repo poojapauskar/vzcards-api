@@ -130,7 +130,7 @@ class User_registerSerializer(serializers.ModelSerializer):
           response = urllib2.urlopen(request)
 
         #-----------------------------
-
+        
 
         from django.http import HttpResponse
         from django.http import JsonResponse
@@ -151,7 +151,7 @@ class User_registerSerializer(serializers.ModelSerializer):
        # link="http://res.cloudinary.com/hjwxtjtff/image/upload/"+public_id+".pdf"
         #print >> sys.stderr, validated_data.get('photo')
 
-        objects=User_register.objects.create(reference_code=1,token_generated='',company_photo=validated_data.get('company_photo'),photo=validated_data.get('photo'),firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),title=validated_data.get('title'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
+        objects=User_register.objects.create(is_organization="false",reference_code=1,token_generated='',company_photo=validated_data.get('company_photo'),photo=validated_data.get('photo'),firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),title=validated_data.get('title'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
 
         # print >> sys.stderr, objects
         
@@ -180,7 +180,8 @@ class User_registerSerializer(serializers.ModelSerializer):
         instance.city = validated_data.get('city', instance.city)
         instance.pin_code = validated_data.get('pin_code', instance.pin_code)
         instance.reference_code = validated_data.get('reference_code', instance.reference_code)
-        instance.access_token = validated_data.get('pin_code', instance.access_token)
+        instance.access_token = validated_data.get('access_token', instance.access_token)
+        instance.is_organization = validated_data.get('is_organization', instance.is_organization)
         instance.save()
         return instance
 
