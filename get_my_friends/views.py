@@ -67,6 +67,53 @@ class CustomListView(ListView):
       def ValuesQuerySetToDict(vqs):
         return [item for item in vqs]
 
+      is_organization=User_register.objects.filter(vz_id=vz_id).values_list('is_organization',flat=True)[0]
+      if(is_organization=='true'):
+        company= User_register.objects.filter(token_generated=access_token).values_list('company',flat=True)[0]
+        #tickets = Ticket.objects.filter(vz_id__in=contacts)
+        print >> sys.stderr, company
+        my_friends=[] 
+
+        objects=User_register.objects.filter(company=company).values('vz_id')
+      
+      
+        fields=User_register.objects.filter(vz_id__in=objects).values('firstname','lastname','title','email','company_photo','phone','industry','company','address_line_1','address_line_2','city','pin_code','photo').order_by('firstname','lastname')
+        count=len(fields)
+
+        # fields = fields[::-1]
+
+        from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+        # paginator = Paginator(response, self.paginate_by)
+        paginator = Paginator(fields, 20)
+
+        page = self.request.GET.get('page')
+
+        print >> sys.stderr,"-----page------"
+        print >> sys.stderr,page
+      
+
+        try:
+          fields = paginator.page(page)
+        except PageNotAnInteger:
+          fields = paginator.page(1)
+        except EmptyPage:
+          fields = paginator.page(paginator.num_pages)
+
+
+        print >> sys.stderr,"-----fields------"
+        print >> sys.stderr,fields
+
+
+        my_friends.append(
+                    {
+                         'count':count,
+                         'response':list(fields), 
+                    }
+                   )
+
+        #return JsonResponse(dict(objects=list(objects)))
+        return JsonResponse(my_friends[0],safe=False)
+
       import json
       friends_list=list(sync_contact.encode("utf8") for sync_contact in Sync.objects.filter(vz_id=vz_id).values_list('friends_vz_id',flat=True))
 
