@@ -42,7 +42,95 @@ class ConnectSerializer(serializers.ModelSerializer):
         #  phone="91"+validated_data.get('phone_2')
 
         if(User_register.objects.filter(phone=validated_data.get('phone_2')).exists()):
-         pass
+         name=User_register.objects.get(vz_id=validated_data.get('connecter_vz_id'))
+         if(name.firstname==''):
+          msg="your friend"
+         else:
+          msg=name.firstname
+
+         print >> sys.stderr, msg
+         
+
+         import sys
+         print sys.stderr, phone
+
+
+         user_1_details=User_register.objects.get(phone=validated_data.get('phone_1'))
+         connecter_name_details=User_register.objects.get(vz_id=validated_data.get('connecter_vz_id'))
+
+         if(user_1_details.firstname == '' and user_1_details.lastname == ''):
+          user_1_name='contact'
+         elif(user_1_details.firstname == ''):
+          user_1_name=user_1_details.lastname
+         elif(user_1_details.lastname == ''):
+          user_1_name=user_1_details.firstname
+         else:
+          user_1_name=user_1_details.firstname+' '+user_1_details.lastname
+
+         if(connecter_name_details.firstname == '' and connecter_name_details.lastname == ''):
+          connecter_name=connecter_name_details.phone
+         elif(connecter_name_details.firstname == ''):
+          connecter_name=connecter_name_details.lastname
+         elif(connecter_name_details.lastname == ''):
+          connecter_name=connecter_name_details.firstname
+         else:
+          connecter_name=connecter_name_details.firstname+' '+connecter_name_details.lastname
+
+         if(str(phone)[:2] == '91'):
+          print sys.stderr, "Indian Numbers" 
+          ## Exotel messages------------------------------------------------
+          from pprint import pprint
+          import requests
+          from django.conf import settings
+
+          #from settings import sid, token
+          # sid = 'bitjini2'
+          # token = 'e064d27250bdd098a3aca1822adf24e1039d219a'
+
+          # def send_message(sid, token, sms_from, sms_to, sms_body):
+          #  return requests.post('https://twilix.exotel.in/v1/Accounts/{sid}/Sms/send.json'.format(sid=sid),
+          #  auth=(sid, token),
+          #  data={
+          #    'From': sms_from,
+          #    'To': sms_to,
+          #    'Body': sms_body
+          #  })
+
+          # r = send_message(sid, token,
+          #  sms_from='08030752644',  # sms_from='8808891988',
+          #  sms_to=phone, # sms_to='9052161119',
+          #  sms_body='Dear '+validated_data.get('ticket_id_2')+',%0Ayour friend '+validated_data.get('connecter_vz_id')+' has referred you to '+user_1_name+' for a "Ticket". '+user_1_details.firstname+' '+user_1_details.lastname+' phone no. - '+validated_data.get('phone_1'))
+          # print r.status_code
+          # pprint(r.json())
+
+          connect_msg="http://enterprise.smsgupshup.com/GatewayAPI/rest?msg=Dear "+validated_data.get('ticket_id_2')+",%0Ayour friend "+connecter_name+" has referred you to "+user_1_name+" for a 'Ticket'. "+user_1_details.firstname+" "+user_1_details.lastname+" phone no. - "+validated_data.get('phone_1')+".&v=1.1&userid=2000159262&password=ZtIA4TyB1&send_to="+phone+"&msg_type=text&method=sendMessage"
+          
+          import requests
+          r = requests.get(connect_msg)
+          r.status_code
+
+        ##--------------------------------------------
+
+
+         else:
+          print sys.stderr, "International Numbers" 
+          # Nexmo messages
+          import urllib
+          import urllib2
+
+          params = {
+           'api_key': '24def3ee',
+           'api_secret': '865357d5',
+           'to': phone,
+           'from': 'NEXMO',
+           'text': 'Dear '+validated_data.get('ticket_id_2')+',%0Ayour friend '+connecter_name+' has referred you to '+user_1_name+' for a "Ticket". '+user_1_details.firstname+' '+user_1_details.lastname+' phone no. - '+validated_data.get('phone_1')
+          }
+
+          url = 'https://rest.nexmo.com/sms/json?' + urllib.urlencode(params)
+
+          request = urllib2.Request(url)
+          request.add_header('Accept', 'application/json')
+          response = urllib2.urlopen(request)
         else:
          name=User_register.objects.get(vz_id=validated_data.get('connecter_vz_id'))
          if(name.firstname==''):
@@ -64,31 +152,31 @@ class ConnectSerializer(serializers.ModelSerializer):
           from django.conf import settings
 
           #from settings import sid, token
-          sid = 'bitjini2'
-          token = 'e064d27250bdd098a3aca1822adf24e1039d219a'
+          # sid = 'bitjini2'
+          # token = 'e064d27250bdd098a3aca1822adf24e1039d219a'
 
-          def send_message(sid, token, sms_from, sms_to, sms_body):
-           return requests.post('https://twilix.exotel.in/v1/Accounts/{sid}/Sms/send.json'.format(sid=sid),
-           auth=(sid, token),
-           data={
-             'From': sms_from,
-             'To': sms_to,
-             'Body': sms_body
-           })
+          # def send_message(sid, token, sms_from, sms_to, sms_body):
+          #  return requests.post('https://twilix.exotel.in/v1/Accounts/{sid}/Sms/send.json'.format(sid=sid),
+          #  auth=(sid, token),
+          #  data={
+          #    'From': sms_from,
+          #    'To': sms_to,
+          #    'Body': sms_body
+          #  })
 
 
-           #if __name__ == '__main__':
-           # 'From' doesn't matter; For transactional, this will be replaced with your SenderId;
-           # For promotional, this will be ignored by the SMS gateway
-           # Incase you are wondering who Dr. Rajasekhar is http://en.wikipedia.org/wiki/Dr._Rajasekhar_(actor)
-          r = send_message(sid, token,
-           sms_from='08030752644',  # sms_from='8808891988',
-           sms_to=phone, # sms_to='9052161119',
-           sms_body='Hey '+validated_data.get('ticket_id_2')+','+msg+' has shared your contact on VzCards. Checkout this awesome app https://vzcards.com/dl')  # Message body, if any
-          print r.status_code
-          pprint(r.json())
+          # r = send_message(sid, token,
+          #  sms_from='08030752644',  # sms_from='8808891988',
+          #  sms_to=phone, # sms_to='9052161119',
+          #  sms_body='Hey '+validated_data.get('ticket_id_2')+','+msg+' has shared your contact on VzCards. Checkout this awesome app https://vzcards.com/dl')  # Message body, if any
+          # print r.status_code
+          # pprint(r.json())
         ##--------------------------------------------
-
+          connect_msg="http://enterprise.smsgupshup.com/GatewayAPI/rest?msg=Hey "+validated_data.get('ticket_id_2')+","+msg+" has shared your contact on VzCards. Checkout this awesome app https://vzcards.com/dl&v=1.1&userid=2000159262&password=ZtIA4TyB1&send_to="+phone+"&msg_type=text&method=sendMessage"
+          
+          import requests
+          r = requests.get(connect_msg)
+          r.status_code
 
          else:
           print sys.stderr, "International Numbers" 
