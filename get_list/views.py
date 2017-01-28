@@ -66,16 +66,31 @@ class CustomListView(ListView):
       #tickets = Ticket.objects.filter(vz_id__in=contacts)
       print >> sys.stderr, vz_id
 
+      is_organization=User_register.objects.filter(vz_id=vz_id).values_list('is_organization',flat=True)[0]
+      print >> sys.stderr, is_organization
+
+      if(is_organization=='true'):
+       company= User_register.objects.filter(vz_id=vz_id).values_list('company',flat=True)[0]
+       friends_list=list(User_register.objects.filter(company=company).values_list('vz_id',flat=True))
+       print >> sys.stderr, "friends_list 1------------------------>"
+       print >> sys.stderr, friends_list
+       friends_list=str(friends_list).replace('u','').replace('["','').replace('"]','').replace(',','').replace('[','').replace(']','').replace("'",'')
+       print >> sys.stderr, "friends_list 2------------------------>"
+       print >> sys.stderr, friends_list
+      else:
+       friends_list=list(sync_contact.encode("utf8") for sync_contact in Sync.objects.filter(vz_id=vz_id).values_list('friends_vz_id',flat=True))
+       print >> sys.stderr, "friends_list 1------------------------>"
+       print >> sys.stderr, friends_list
+       friends_list=str(friends_list).replace('["','').replace('"]','').replace(',','').replace('[','').replace(']','').replace("'",'')
+       print >> sys.stderr, "friends_list 2------------------------>"
+       print >> sys.stderr, friends_list
+      
+
       import json
-      friends_list=list(sync_contact.encode("utf8") for sync_contact in Sync.objects.filter(vz_id=vz_id).values_list('friends_vz_id',flat=True))
-
-
+      
       import datetime
       today = datetime.datetime.today()
-      friends_list=str(friends_list).replace('["','').replace('"]','').replace(',','').replace('[','').replace(']','').replace("'",'')
-
-
-      print >> sys.stderr, friends_list
+      
 
       print >> sys.stderr, "today"
       print >> sys.stderr, today
