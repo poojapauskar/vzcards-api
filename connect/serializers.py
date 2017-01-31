@@ -42,95 +42,78 @@ class ConnectSerializer(serializers.ModelSerializer):
         #  phone="91"+validated_data.get('phone_2')
 
         if(User_register.objects.filter(phone=validated_data.get('phone_2')).exists()):
-         name=User_register.objects.get(vz_id=validated_data.get('connecter_vz_id'))
-         if(name.firstname==''):
-          msg="your friend"
+         if(Ticket_create.objects.filter(ticket_id=validated_data.get('ticket_id_2')).exists()):
+          pass
          else:
-          msg=name.firstname
+          name=User_register.objects.get(vz_id=validated_data.get('connecter_vz_id'))
+          if(name.firstname==''):
+           msg="your friend"
+          else:
+           msg=name.firstname
 
-         print >> sys.stderr, msg
+          print >> sys.stderr, msg
          
 
-         import sys
-         print sys.stderr, phone
+          import sys
+          print sys.stderr, phone
 
 
-         user_1_details=User_register.objects.get(phone=validated_data.get('phone_1'))
-         connecter_name_details=User_register.objects.get(vz_id=validated_data.get('connecter_vz_id'))
+          user_1_details=User_register.objects.get(phone=validated_data.get('phone_1'))
+          connecter_name_details=User_register.objects.get(vz_id=validated_data.get('connecter_vz_id'))
 
-         if(user_1_details.firstname == '' and user_1_details.lastname == ''):
-          user_1_name='contact'
-         elif(user_1_details.firstname == ''):
-          user_1_name=user_1_details.lastname
-         elif(user_1_details.lastname == ''):
-          user_1_name=user_1_details.firstname
-         else:
-          user_1_name=user_1_details.firstname+' '+user_1_details.lastname
+          if(user_1_details.firstname == '' and user_1_details.lastname == ''):
+           user_1_name='contact'
+          elif(user_1_details.firstname == ''):
+           user_1_name=user_1_details.lastname
+          elif(user_1_details.lastname == ''):
+           user_1_name=user_1_details.firstname
+          else:
+           user_1_name=user_1_details.firstname+' '+user_1_details.lastname
 
-         if(connecter_name_details.firstname == '' and connecter_name_details.lastname == ''):
-          connecter_name=connecter_name_details.phone
-         elif(connecter_name_details.firstname == ''):
-          connecter_name=connecter_name_details.lastname
-         elif(connecter_name_details.lastname == ''):
-          connecter_name=connecter_name_details.firstname
-         else:
-          connecter_name=connecter_name_details.firstname+' '+connecter_name_details.lastname
+          if(connecter_name_details.firstname == '' and connecter_name_details.lastname == ''):
+           connecter_name=connecter_name_details.phone
+          elif(connecter_name_details.firstname == ''):
+           connecter_name=connecter_name_details.lastname
+          elif(connecter_name_details.lastname == ''):
+           connecter_name=connecter_name_details.firstname
+          else:
+           connecter_name=connecter_name_details.firstname+' '+connecter_name_details.lastname
 
-         if(str(phone)[:2] == '91'):
-          print sys.stderr, "Indian Numbers" 
-          ## Exotel messages------------------------------------------------
-          from pprint import pprint
-          import requests
-          from django.conf import settings
+          if(str(phone)[:2] == '91'):
+           print sys.stderr, "Indian Numbers" 
+           ## Exotel messages------------------------------------------------
+           from pprint import pprint
+           import requests
+           from django.conf import settings
 
-          #from settings import sid, token
-          # sid = 'bitjini2'
-          # token = 'e064d27250bdd098a3aca1822adf24e1039d219a'
-
-          # def send_message(sid, token, sms_from, sms_to, sms_body):
-          #  return requests.post('https://twilix.exotel.in/v1/Accounts/{sid}/Sms/send.json'.format(sid=sid),
-          #  auth=(sid, token),
-          #  data={
-          #    'From': sms_from,
-          #    'To': sms_to,
-          #    'Body': sms_body
-          #  })
-
-          # r = send_message(sid, token,
-          #  sms_from='08030752644',  # sms_from='8808891988',
-          #  sms_to=phone, # sms_to='9052161119',
-          #  sms_body='Dear '+validated_data.get('ticket_id_2')+',%0Ayour friend '+validated_data.get('connecter_vz_id')+' has referred you to '+user_1_name+' for a "Ticket". '+user_1_details.firstname+' '+user_1_details.lastname+' phone no. - '+validated_data.get('phone_1'))
-          # print r.status_code
-          # pprint(r.json())
-
-          connect_msg="http://enterprise.smsgupshup.com/GatewayAPI/rest?msg=Dear "+validated_data.get('ticket_id_2')+",%0Ayour friend "+connecter_name+" has referred you to "+user_1_name+" for a 'Ticket'. "+user_1_details.firstname+" "+user_1_details.lastname+" phone no. - "+validated_data.get('phone_1')+".&v=1.1&userid=2000159262&password=ZtIA4TyB1&send_to="+phone+"&msg_type=text&method=sendMessage"
+           connect_msg="http://enterprise.smsgupshup.com/GatewayAPI/rest?msg=Dear "+validated_data.get('ticket_id_2')+",%0Ayour friend "+connecter_name+" has referred you to "+user_1_name+" for a 'Ticket'. "+user_1_details.firstname+" "+user_1_details.lastname+" phone no. - "+validated_data.get('phone_1')+".&v=1.1&userid=2000159262&password=ZtIA4TyB1&send_to="+phone+"&msg_type=text&method=sendMessage"
           
-          import requests
-          r = requests.get(connect_msg)
-          r.status_code
+           import requests
+           r = requests.get(connect_msg)
+           r.status_code
 
         ##--------------------------------------------
 
 
-         else:
-          print sys.stderr, "International Numbers" 
-          # Nexmo messages
-          import urllib
-          import urllib2
+          else:
+           print sys.stderr, "International Numbers" 
+           # Nexmo messages
+           import urllib
+           import urllib2
 
-          params = {
-           'api_key': '24def3ee',
-           'api_secret': '865357d5',
-           'to': phone,
-           'from': 'NEXMO',
-           'text': 'Dear '+validated_data.get('ticket_id_2')+',%0Ayour friend '+connecter_name+' has referred you to '+user_1_name+' for a "Ticket". '+user_1_details.firstname+' '+user_1_details.lastname+' phone no. - '+validated_data.get('phone_1')
-          }
+           params = {
+            'api_key': '24def3ee',
+            'api_secret': '865357d5',
+            'to': phone,
+            'from': 'NEXMO',
+            'text': 'Dear '+validated_data.get('ticket_id_2')+',%0Ayour friend '+connecter_name+' has referred you to '+user_1_name+' for a "Ticket". '+user_1_details.firstname+' '+user_1_details.lastname+' phone no. - '+validated_data.get('phone_1')
+           }
 
-          url = 'https://rest.nexmo.com/sms/json?' + urllib.urlencode(params)
+           url = 'https://rest.nexmo.com/sms/json?' + urllib.urlencode(params)
 
-          request = urllib2.Request(url)
-          request.add_header('Accept', 'application/json')
-          response = urllib2.urlopen(request)
+           request = urllib2.Request(url)
+           request.add_header('Accept', 'application/json')
+           response = urllib2.urlopen(request)
         else:
          name=User_register.objects.get(vz_id=validated_data.get('connecter_vz_id'))
          if(name.firstname==''):
