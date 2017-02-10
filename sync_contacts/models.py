@@ -22,7 +22,7 @@ import ast
 
 
 class ListField(models.TextField):
-    __metaclass__ = models.SubfieldBase
+    # __metaclass__ = models.SubfieldBase
     description = "Stores a python list"
 
     def __init__(self, *args, **kwargs):

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from register.models import Register, LANGUAGE_CHOICES, STYLE_CHOICES
 from twilio import twiml
-from django_twilio.decorators import twilio_view
+# from django_twilio.decorators import twilio_view
 from twilio.rest import TwilioRestClient
 import random
 from random import randint

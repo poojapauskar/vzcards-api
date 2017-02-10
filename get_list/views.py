@@ -38,6 +38,7 @@ from django.views.generic import ListView
 class CustomListView(ListView):
     #paginate_by = 2
     def get(self, request, *args, **kwargs):
+      
       access_token = request.GET.get('access_token')
 
       import sys

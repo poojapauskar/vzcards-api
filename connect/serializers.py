@@ -25,7 +25,7 @@ class ConnectSerializer(serializers.ModelSerializer):
         Connect.objects.create(connecter_vz_id=validated_data.get('connecter_vz_id'),my_ticket=validated_data.get('ticket_id_2'),reffered_ticket=validated_data.get('ticket_id_1'),reffered_phone=validated_data.get('phone_1'))
         
         from twilio import twiml
-        from django_twilio.decorators import twilio_view
+        # from django_twilio.decorators import twilio_view
         from twilio.rest import TwilioRestClient
 
         ACCOUNT_SID = "ACa6846885206cb0041afeef5d0405ba25"

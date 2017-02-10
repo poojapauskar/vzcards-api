@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 
-from django.conf.urls import url, patterns, include
+from django.conf.urls import url, include
 from django.contrib.auth.models import User, Group
 from django.contrib import admin
 admin.autodiscover()
@@ -57,11 +57,11 @@ router.register(r'groups', GroupViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browseable API.
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^docs/', include('rest_framework_swagger.urls')),
+    # url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^', include('register.urls')),
     url(r'^', include('user_register.urls')),
     url(r'^', include('verify.urls')),
@@ -89,4 +89,4 @@ urlpatterns = patterns('',
     url(r'^', include('get_organization_friends.urls')),
     url(r'^', include('check_is_organization.urls')),
     url(r'^', include('delete_organization.urls')),
-)
+]

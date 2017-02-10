@@ -2,7 +2,7 @@ from rest_framework import serializers
 from upload_image.models import Upload_image, LANGUAGE_CHOICES, STYLE_CHOICES
 #from connect.models import Connect, LANGUAGE_CHOICES, STYLE_CHOICES
 from twilio import twiml
-from django_twilio.decorators import twilio_view
+# from django_twilio.decorators import twilio_view
 from twilio.rest import TwilioRestClient
 import random
 from random import randint
