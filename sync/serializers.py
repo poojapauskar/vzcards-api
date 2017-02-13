@@ -10,7 +10,7 @@ class SyncSerializer(serializers.ModelSerializer):
         fields = ('vz_id',)
 
         model = Sync
-        fields = ('vz_id', 'contact_list','friends_vz_id')
+        fields = ('pk','vz_id', 'contact_list','friends_vz_id')
     
 
     def create(self, validated_data):
