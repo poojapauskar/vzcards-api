@@ -23,6 +23,7 @@ class SyncSerializer(serializers.ModelSerializer):
         friends_list=list(User_register.objects.filter(phone__in=validated_data.get('contact_list'),is_organization='false').values_list('vz_id', flat=True))
         
         friends_list = json.dumps(friends_list)
+        friends_list = str(friends_list).replace('"',"'").replace("/","")
 
         #friends_list=str(friends_list)[1:-1]
         
