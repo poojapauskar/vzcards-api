@@ -42,7 +42,7 @@ class User_register(models.Model):
     company_photo = models.TextField(blank=True,default='')
     reference_code = models.CharField(max_length=100, blank=True,default=1)
     is_organization = models.CharField(max_length=100, blank=True,default='')
-
+    otp_created_time = models.CharField(blank=True,max_length=100,default='',editable=True)
    # photo = models.ImageField(upload_to="projectimg/",storage=fs, null=True, blank=True)
     
     

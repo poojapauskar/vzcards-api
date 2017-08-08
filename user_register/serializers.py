@@ -28,7 +28,7 @@ class User_registerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User_register
-        fields = ('pk','is_organization','reference_code','token_generated','company_photo','photo','firstname', 'lastname','title', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')
+        fields = ('otp_created_time','pk','is_organization','reference_code','token_generated','company_photo','photo','firstname', 'lastname','title', 'email', 'phone','vz_id','industry','company','address_line_1','address_line_2','city','pin_code','otp_generated')
         #write_only_fields = ('firstame', 'lastname')
 
     def create(self, validated_data):
@@ -46,9 +46,33 @@ class User_registerSerializer(serializers.ModelSerializer):
         # Sync.objects.all().delete()
         # Ticket.objects.all().delete()
 
+        import datetime
+        current_time= datetime.datetime.now()
+
+        if(User_register.objects.filter(phone=validated_data.get('phone')).exists()):
+         obj1=User_register.objects.filter(phone=validated_data.get('phone')).values('otp_created_time','otp_generated')
+         otp_time1= obj1[0]['otp_created_time']
+         if(otp_time1 == ""):
+          otp_generated=str(random.randint(100000, 999999))
+         else:
+          otp_time1= datetime.datetime.strptime(otp_time1, "%Y-%m-%d %H:%M:%S.%f")
+          diff=(current_time-otp_time1).seconds
+          print "diff"
+          print diff
+          if(diff > 300):
+           otp_generated=str(random.randint(100000, 999999))
+          else:
+           otp_generated=obj1[0]['otp_generated']
+        else:
+         otp_generated=str(random.randint(100000, 999999)) 
+        
+
+        print "---------datetime.datetime.now()---------------"
+        otp_created_time= datetime.datetime.now()
+        print otp_created_time
         
         #User_register.objects.create(**validated_data)
-        otp_generated=str(random.randint(100000, 999999))
+        # otp_generated=str(random.randint(100000, 999999))
         vz_id='VZ'+str(int(time.time()))
 
         if(User_register.objects.filter(phone=validated_data.get('phone')).exists()):
@@ -137,7 +161,7 @@ class User_registerSerializer(serializers.ModelSerializer):
         
        
         if User_register.objects.filter(phone=validated_data.get('phone')).exists():
-          User_register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated,reference_code=reference_code)
+          User_register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated,reference_code=reference_code,otp_created_time=otp_created_time)
         if User_register.objects.filter(phone=validated_data.get('phone')).exists():
           return validated_data
         import sys
@@ -151,7 +175,7 @@ class User_registerSerializer(serializers.ModelSerializer):
        # link="http://res.cloudinary.com/hjwxtjtff/image/upload/"+public_id+".pdf"
         #print >> sys.stderr, validated_data.get('photo')
 
-        objects=User_register.objects.create(is_organization="false",reference_code=1,token_generated='',company_photo=validated_data.get('company_photo'),photo=validated_data.get('photo'),firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),title=validated_data.get('title'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
+        objects=User_register.objects.create(otp_created_time=otp_created_time,is_organization="false",reference_code=1,token_generated='',company_photo=validated_data.get('company_photo'),photo=validated_data.get('photo'),firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),title=validated_data.get('title'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
 
         # print >> sys.stderr, objects
         
