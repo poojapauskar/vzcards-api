@@ -44,9 +44,34 @@ class RegisterSerializer(serializers.ModelSerializer):
         # Sync.objects.all().delete()
         # Ticket.objects.all().delete()
 
+        import datetime
+        current_time= datetime.datetime.now()
+
+        if(Register.objects.filter(phone=validated_data.get('phone')).exists()):
+         obj1=Register.objects.filter(phone=validated_data.get('phone')).values('otp_created_time','otp_generated')
+         otp_time1= obj1[0]['otp_created_time']
+         if(otp_time1 == ""):
+          otp_generated=str(random.randint(100000, 999999))
+         else:
+          otp_time1= datetime.datetime.strptime(otp_time1, "%Y-%m-%d %H:%M:%S.%f")
+          diff=(current_time-otp_time1).seconds
+          print "diff"
+          print diff
+          if(diff > 300):
+           otp_generated=str(random.randint(100000, 999999))
+          else:
+           otp_generated=obj1[0]['otp_generated']
+        else:
+         otp_generated=str(random.randint(100000, 999999)) 
+        
+
+        print "---------datetime.datetime.now()---------------"
+        otp_created_time= datetime.datetime.now()
+        print otp_created_time
+
         
         #Register.objects.create(**validated_data)
-        otp_generated=str(random.randint(100000, 999999))
+        # otp_generated=str(random.randint(100000, 999999))
         vz_id='VZ'+str(int(time.time()))
        
         # Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
@@ -88,7 +113,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         
        
         if Register.objects.filter(phone=validated_data.get('phone')).exists():
-          Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated)
+          Register.objects.filter(phone=validated_data.get('phone')).update(otp_generated=otp_generated,otp_created_time=otp_created_time)
         if Register.objects.filter(phone=validated_data.get('phone')).exists():
           return validated_data
         import sys
@@ -101,7 +126,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
        # link="http://res.cloudinary.com/hjwxtjtff/image/upload/"+public_id+".pdf"
         #print >> sys.stderr, validated_data.get('photo')
-        objects=Register.objects.create(token_generated='',photo=validated_data.get('photo'),firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
+        objects=Register.objects.create(otp_created_time=otp_created_time,token_generated='',photo=validated_data.get('photo'),firstname=validated_data.get('firstname'),lastname=validated_data.get('lastname'),email=validated_data.get('email'),phone=validated_data.get('phone'),vz_id=vz_id,otp_generated=otp_generated,industry=validated_data.get('industry'),company=validated_data.get('company'),address_line_1=validated_data.get('address_line_1'),address_line_2=validated_data.get('address_line_2'),city=validated_data.get('city'),pin_code=validated_data.get('pin_code'))
         # print >> sys.stderr, objects
         
 
@@ -127,6 +152,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         instance.city = validated_data.get('city', instance.city)
         instance.pin_code = validated_data.get('pin_code', instance.pin_codes)
         instance.access_token = validated_data.get('pin_code', instance.access_token)
+        instance.otp_created_time = validated_data.get('otp_created_time', instance.otp_created_time)
         instance.save()
         return instance
 

@@ -41,6 +41,9 @@ class CustomListView(ListView):
       
       access_token = request.GET.get('access_token')
 
+      # User_register.objects.filter(pk=78).update(is_organization="true",company="Samsung",firstname="Veena",lastname="Mawarkar")
+      # User_register.objects.filter(pk=47).update(is_organization="true",company="Samsung")
+
       import sys
       print >> sys.stderr, access_token
 
