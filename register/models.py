@@ -39,7 +39,6 @@ class Register(models.Model):
     pin_code = models.CharField(max_length=6,validators=[pin_regex], blank=True,default='')
     token_generated = models.TextField(blank=True,default='')
     photo = models.TextField(blank=True,default='')
-    otp_created_time = models.CharField(blank=True,max_length=100,default='',editable=True)
     # company_photo = models.TextField(blank=True,default='')
 
    # photo = models.ImageField(upload_to="projectimg/",storage=fs, null=True, blank=True)
